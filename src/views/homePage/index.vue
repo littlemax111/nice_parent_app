@@ -52,6 +52,18 @@
       </div>
       <div class="study_btn">详情</div>
     </div>
+    <div class="hot_news">
+    <h3 class='title'>热门资讯</h3>
+      <ul>
+        <li v-for="(item, index) in newsList" :key="index">
+          <div>
+            <h3 class="title double_wrap">{{item.title}}</h3>
+            <p class='time'>{{item.time}}</p>
+          </div>
+          <img :src="item.img" />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -66,6 +78,23 @@ export default {
       bannerList: [
         require("../../assets/images/home/banner1.png"),
         "https://img.yzcdn.cn/vant/apple-2.jpg",
+      ],
+      newsList: [
+        {
+          img: require("../../assets/images/home/class1.png"),
+          title: "孩子如果不懂得与世界如何相处 所有的教育都是徒劳",
+          time:'2018-12-07 16:58'
+        },
+        {
+          img: require("../../assets/images/home/class1.png"),
+          title: "阅卷老师最讨厌的哪几种字体， 如果你写的是那样就糟了",
+          time:'2018-12-06 17:58'
+        },
+        {
+          img: require("../../assets/images/home/class1.png"),
+          title: "让教育温暖起来,让每一个学生都喜欢上学习",
+          time:'2018-12-05 12:58'
+        },
       ],
       classList: [
         {
@@ -299,8 +328,69 @@ export default {
     background-size: cover;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.05);
     border-radius: 15px;
-    padding:15px 17px;
-    
+    padding: 15px 17px;
+    display: flex;
+    color: #777777;
+    .distance {
+      font-size: 9px;
+    }
+    .name {
+      font-size: 14px;
+      color: #2c3540;
+      margin-top: 5px;
+    }
+    .address {
+      font-size: 11px;
+      margin-top: 6px;
+    }
+    .phone {
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .study_btn {
+      width: 53px;
+      height: 23px;
+      background: #e94831;
+      box-shadow: 0px 5px 10px 0px rgba(233, 72, 49, 0.2);
+      border-radius: 12px;
+      text-align: center;
+      font-size: 9px;
+      color: #fff;
+      line-height: 23px;
+      margin-left: 9px;
+    }
+  }
+  .hot_news{
+      margin-top:32px;
+      padding-left:20px;
+      .title{
+          font-size: 18px;
+          color: #050505;
+          font-weight: 600;
+          margin-bottom: 3px;
+      }
+      li{
+          display: flex;
+          padding:13px 20px 13px 0px;
+          border-bottom: 1px solid #F2F2F2;
+          justify-content: space-between;
+          .title{
+              font-size: 15px;
+              color:#050505;
+              line-height: 21px;
+              font-weight: 400;
+          }
+          img{
+              width:105px;
+              height:73px;
+              margin-left: 20px;
+          }
+          .time{
+              font-size: 12px;
+              color: #A1A5BB;
+              margin-top:17px;
+          }
+      }
   }
 }
 </style>
