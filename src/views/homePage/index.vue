@@ -1,0 +1,306 @@
+<template>
+  <div class="wrap">
+    <div class="top_wrap">
+      <div class="grade_wrap">
+        <span class="grade">{{grade}}</span>
+        <i class="down_icon"></i>
+      </div>
+      <i class="seacher_icon"></i>
+      <i class="shop_icon"></i>
+    </div>
+    <div class="banner_wrap">
+      <van-swipe :autoplay="3000" :show-indicators="false">
+        <van-swipe-item v-for="(image, index) in bannerList" :key="index">
+          <img :src="image" />
+        </van-swipe-item>
+      </van-swipe>
+    </div>
+    <div class="sort_wrap">
+      <ul>
+        <li v-for="(item, index) in sortList" :key="index">
+          <img :src="item.img" />
+          <span>{{item.titel}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="active_wrap">
+      <img src="../../assets/images/home/active.png" alt />
+    </div>
+    <div class="public_class">
+      <div class="title_wrap">
+        <h3 class="title">精选公开课</h3>
+        <span class="more">更多</span>
+      </div>
+      <ul class="class_list">
+        <li v-for="(item, index) in classList" :key="index">
+          <img :src="item.img" alt />
+          <p class="title">{{item.title}}</p>
+          <p class="sub_title">{{item.sub_title}}</p>
+        </li>
+      </ul>
+    </div>
+    <div class="study_center">
+      <div class="study_wrap">
+        <p class="distance">距离您6.04km</p>
+        <p class="name">古墩学习中心</p>
+        <p class="address">
+          <i class="icon_address"></i> 杭州市西湖区古墩路543号大昌盛商务楼2
+        </p>
+        <p class="phone">
+          <i class="icon_phone"></i> 400-688-1614
+        </p>
+      </div>
+      <div class="study_btn">详情</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { Icon } from "vant";
+import { Swipe, SwipeItem, Lazyload } from "vant";
+
+export default {
+  data() {
+    return {
+      grade: "初一",
+      bannerList: [
+        require("../../assets/images/home/banner1.png"),
+        "https://img.yzcdn.cn/vant/apple-2.jpg",
+      ],
+      classList: [
+        {
+          img: require("../../assets/images/home/class1.png"),
+          title: "如何高效学习英语",
+          sub_title: "讲师:顾颖",
+        },
+        {
+          img: require("../../assets/images/home/class2.png"),
+          title: "如何学习动能定理",
+          sub_title: "讲师:章进",
+        },
+      ],
+      sortList: [
+        {
+          img: require("../../assets/images/home/icon_one.png"),
+          titel: "1对1",
+          goPage: "homePage/couse",
+        },
+        {
+          img: require("../../assets/images/home/icon_grade.png"),
+          titel: "小班课",
+          goPage: "homePage/couse",
+        },
+        {
+          img: require("../../assets/images/home/icon_online.png"),
+          titel: "纳思网校",
+          goPage: "homePage/couse",
+        },
+        {
+          img: require("../../assets/images/home/icon_school.png"),
+          titel: "校区查询",
+          goPage: "homePage/couse",
+        },
+      ],
+    };
+  },
+  watch: {},
+  created() {},
+  mounted() {},
+
+  methods: {
+    changeBlur() {
+      window.scroll(0, 0); //失焦后强制让页面归位
+    },
+    getYZM() {
+      let date = new Date();
+      this.YZM =
+        window.LOCAL_CONFIG.API_HOME +
+        "/api/GetValidImg.png?v=" +
+        date.getTime();
+    },
+    getFullText() {
+      if (this.username && this.password && this.valid_code) {
+        this.fullLogin = 1;
+      }
+    },
+    loginIn() {
+      let that = this;
+      let method = "post";
+      let data = {
+        username: this.username,
+        password: this.password,
+        valid_code: this.valid_code,
+      };
+      this.$services.login({ method, data }).success((res) => {
+        if (res.success) {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          this.$router.replace(`index`);
+        } else {
+          that.getYZM();
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.wrap {
+  background: #fff;
+  min-height: 100vh;
+  padding-top: 16px;
+  .top_wrap {
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    height: 21px;
+    position: relative;
+    .grade_wrap {
+      display: flex;
+      align-items: center;
+    }
+    .grade {
+      display: inline-block;
+      color: #050505;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .down_icon {
+      display: inline-block;
+      width: 7px;
+      height: 4px;
+      background: url("../../assets/images/home/down.png");
+      background-size: cover;
+      margin-left: 9px;
+    }
+    .seacher_icon {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      background: url("../../assets/images/home/search.png");
+      background-size: cover;
+      position: absolute;
+      right: 56px;
+    }
+    .shop_icon {
+      width: 18px;
+      height: 19px;
+      display: inline-block;
+      background: url("../../assets/images/home/shopping.png");
+      background-size: cover;
+      position: absolute;
+      right: 17px;
+    }
+  }
+  .banner_wrap {
+    padding: 0 17px;
+    margin-top: 21px;
+    height: 120px;
+  }
+  .van-swipe-item {
+    img {
+      width: 100%;
+      border-radius: 10px;
+      height: 120px;
+    }
+  }
+  .sort_wrap {
+    margin-top: 16px;
+    padding: 0 23px;
+    ul {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    img {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      margin-bottom: 6px;
+    }
+    span {
+      color: #4a4a4a;
+      font-size: 12px;
+    }
+  }
+  .active_wrap {
+    margin-top: 12px;
+    margin-bottom: 20px;
+    padding: 0 16px;
+    height: 104px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .public_class {
+    margin-top: 23px;
+    padding: 0 20px;
+    .title_wrap {
+      display: flex;
+      vertical-align: bottom;
+      justify-content: space-between;
+      position: relative;
+      height: 18px;
+      line-height: 18px;
+    }
+    .title {
+      font-size: 18px;
+      color: #050505;
+      font-weight: 600;
+    }
+    .more {
+      color: #a1a5bb;
+      font-size: 12px;
+      display: inline-block;
+      position: absolute;
+      bottom: 0;
+      right: 20px;
+    }
+  }
+  .class_list {
+    margin-top: 26px;
+    display: flex;
+    justify-content: space-between;
+    li {
+      width: 160px;
+      height: 151px;
+      box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.05);
+      border-radius: 6px;
+      opacity: 0.9;
+    }
+    img {
+      width: 100%;
+      height: 90px;
+    }
+    .title {
+      font-size: 14px;
+      color: #050505;
+      padding-left: 12px;
+    }
+    .sub_title {
+      color: #999999;
+      font-size: 12px;
+      padding-left: 12px;
+    }
+  }
+  .study_center {
+    width: 334px;
+    height: 112px;
+    margin: 0 auto;
+    margin-top: 23px;
+    background: url("../../assets/images/home/school_bg.png");
+    background-size: cover;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    padding:15px 17px;
+    
+  }
+}
+</style>
