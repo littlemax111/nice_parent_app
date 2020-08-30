@@ -10,6 +10,4 @@
 // API_HOME: 'http://47.96.114.235',//敏行
 window.LOCAL_CONFIG = {
     API_HOME: '',
-    IS_SUPER_USER:false,
-    NOTE_UNREAD:0,
 };
