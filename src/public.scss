@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'DIN-Bold';
+  src: url('./static/font/DIN Condensed Bold.ttf');
+  src: local('☺'), url('./static/font/DIN Condensed Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.main{
+  padding-bottom: 50px;
+}
+.single_wrap{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.l{
+  float: left;
+}
+.r{
+  float: right;
+}
+/*多行换行*/
+.double_wrap{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box!important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.triple_wrap{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box!important;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
