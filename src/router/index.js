@@ -21,5 +21,10 @@ export default new Router({
       name: "coursePage",
       component: () => import('@/views/coursePage/index'),
     },
+    {
+      path: "/coursePage/orderDetail",
+      name: "orderDetail",
+      component: () => import('@/views/coursePage/orderDetail'),
+    },
   ],
 });

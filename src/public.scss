@@ -1,29 +1,49 @@
-.main{
+.main {
   padding-bottom: 50px;
 }
+
+.single_wrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.l {
+  float: left;
+}
+
+.r {
+  float: right;
+}
+
+/*多行换行*/
 .single_wrap{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.l{
-  float: left;
-}
-.r{
-  float: right;
-}
-/*多行换行*/
-.double_wrap{
+.double_wrap {
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box!important;
+  display: -webkit-box !important;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.triple_wrap{
+
+.triple_wrap {
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box!important;
+  display: -webkit-box !important;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+// header
+.nav-header {
+  height: 40px;
+  font-size: 14px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  border-bottom:1px solid #EAEAEA;
 }
