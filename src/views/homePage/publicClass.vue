@@ -1,77 +1,143 @@
 <template>
   <div class="wrap">
-    <van-icon name="cross" color="#9BA1B0" class="close_icon" size="21" />
-    <div class="content">
-      <h3 class="title">密码登录</h3>
-      <p class="sub_title">已注册用户可以使用密码登录</p>
-      <div class="input_wrap">
-        <div class="input_item">
-          <input type="number" placeholder="请输入手机号码" />
-        </div>
-        <div class="input_item">
-          <input type="password" placeholder="请输入登录密码" />
-        </div>
-        <div class="input_item submit_btn">登录</div>
-      </div>
-      <div class="forget_wrap">
-        <i>忘记密码</i>
-        <i>密码登录</i>
-      </div>
-    </div>
-    <div class="agree_wrap">
-      <p class="agree">
-        登录代表您已阅读并同意
-        <span>用户协议、隐私协议</span>
-      </p>
+    <van-nav-bar @click-left="backFn">
+      <template #title>
+        <ul class="tab_title">
+          <li
+            v-for="(item, index) in tabTitle"
+            :key="index"
+            :class="{'active':tabIndex==index,'mr':index===0}"
+            @click="addClassname(index)"
+          >{{item}}</li>
+        </ul>
+      </template>
+      <template #left>
+        <i class="icon_back"></i>
+      </template>
+    </van-nav-bar>
+
+    <div class="content_wrap">
+      <h3 class="title">{{tabTitle2}}</h3>
+      <!-- 公开课 -->
+      <ul class="public_class" v-if="tabIndex==0">
+        <li v-for="(item, index) in classList" :key="index">
+          <img :src="item.img" alt />
+          <div>
+            <h4 class="single_wrap">{{item.title}}</h4>
+            <p class="message">
+              <span>{{item.name}}</span>
+              {{item.work}}
+            </p>
+            <p class="time">
+              <span>{{item.time}}</span>
+              <span>|</span>
+              <span>{{item.long}}</span>
+            </p>
+          </div>
+        </li>
+      </ul>
+      <!-- 资讯 -->
+      <ul class="hot_news" v-if="tabIndex==1">
+        <li v-for="(item, index) in newsList" :key="index">
+          <div>
+            <h3 class="new_title double_wrap">{{item.title}}</h3>
+            <p class="time">{{item.time}}</p>
+          </div>
+          <img :src="item.img" />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { Dialog } from "vant";
-import { Icon } from "vant";
+import noData from "../../components/noData.vue";
+import navBar from "../../components/navBar.vue";
+import { Icon } from 'vant';
+import { NavBar } from "vant";
 
 export default {
   data() {
-    return {};
+    return {
+      title: "",
+      content: "当前暂无内容",
+      active: 0,
+      tabTitle: ["公开课", "资讯"],
+      tabIndex: 0,
+      tabTitle2: "精选公开课",
+      newsList: [
+        {
+          img: require("../../assets/images/home/new1.png"),
+          title: "孩子如果不懂得与世界如何相处 所有的教育都是徒劳",
+          time: "2018-12-07 16:58",
+        },
+        {
+          img: require("../../assets/images/home/new2.png"),
+          title: "阅卷老师最讨厌的哪几种字体， 如果你写的是那样就糟了",
+          time: "2018-12-06 17:58",
+        },
+        {
+          img: require("../../assets/images/home/new1.png"),
+          title: "让教育温暖起来,让每一个学生都喜欢上学习",
+          time: "2018-12-05 12:58",
+        },
+      ],
+      classList: [
+        {
+          img: require("../../assets/images/home/teacher.png"),
+          title: "如何利用小游戏，帮助孩子学英语",
+          name: "田慧珍",
+          work: "北京大学心理学教授",
+          time: "2020-04-12 16:00",
+          long: "60分钟",
+        },
+        {
+          img: require("../../assets/images/home/teacher.png"),
+          title: "如何利用小游戏，帮助孩子学英语",
+          name: "田慧珍",
+          work: "北京大学心理学教授",
+          time: "2020-04-12 16:00",
+          long: "60分钟",
+        },
+        {
+          img: require("../../assets/images/home/teacher.png"),
+          title: "如何利用小游戏，帮助孩子学英语",
+          name: "田慧珍",
+          work: "北京大学心理学教授",
+          time: "2020-04-12 16:00",
+          long: "60分钟",
+        },
+        {
+          img: require("../../assets/images/home/teacher.png"),
+          title: "如何利用小游戏，帮助孩子学英语",
+          name: "田慧珍",
+          work: "北京大学心理学教授",
+          time: "2020-04-12 16:00",
+          long: "60分钟",
+        },
+      ],
+    };
   },
-  watch: {},
-  created() {},
-  mounted() {},
-
+  components: {
+    noData,
+    navBar,
+  },
   methods: {
-    changeBlur() {
-      window.scroll(0, 0); //失焦后强制让页面归位
+    backFn(){
+      this.$router.go(-1);//返回上一层
     },
-    getYZM() {
-      let date = new Date();
-      this.YZM =
-        window.LOCAL_CONFIG.API_HOME +
-        "/api/GetValidImg.png?v=" +
-        date.getTime();
-    },
-    getFullText() {
-      if (this.username && this.password && this.valid_code) {
-        this.fullLogin = 1;
+    addClassname(index) {
+      this.tabIndex = index;
+      switch (index) {
+        case 0:
+          this.tabTitle2 = "精选公开课";
+          break;
+        case 1:
+          this.tabTitle2 = "热门资讯";
+          break;
+        default:
+          this.tabTitle2 = "精选公开课";
       }
-    },
-    loginIn() {
-      let that = this;
-      let method = "post";
-      let data = {
-        username: this.username,
-        password: this.password,
-        valid_code: this.valid_code,
-      };
-      this.$services.login({ method, data }).success((res) => {
-        if (res.success) {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          this.$router.replace(`index`);
-        } else {
-          that.getYZM();
-          Dialog({ message: res.msg });
-        }
-      });
     },
   },
 };
@@ -80,79 +146,103 @@ export default {
 .wrap {
   background: #fff;
   height: 100vh;
-  .close_icon {
-    padding-top: 14px;
-    padding-left: 24px;
+  .mr{
+    margin-right:37px;
   }
-  .content {
-    padding: 0 30px;
+  .icon_back {
+    width: 9px;
+    height: 15px;
+    display: inline-block;
+    background: url("../../assets/images/home/back.svg");
+    background-size: cover;
   }
-  .title {
-    height: 38px;
-    font-size: 27px;
-    line-height: 38px;
-    color: #232b36;
-    margin-top: 27px;
-    font-weight: 600;
-  }
-  .sub_title {
-    font-size: 14px;
-    color: #626b80;
-    margin-top: 3px;
-  }
-  .input_wrap {
-    margin-top: 27px;
-  }
-  .input_item {
-    width: 317px;
-    height: 49px;
-    background: #f7f7f7;
-    border-radius: 23px;
-    color: #bebec0;
-    padding-left: 20px;
-    padding-top: 13px;
-    font-size: 16px;
-    margin-bottom: 20px;
-    input {
-      display: block;
-      box-sizing: border-box;
-      width: 100%;
-      min-width: 0;
-      margin: 0;
-      padding: 0;
-      color: #323233;
-      line-height: inherit;
-      text-align: left;
-      background-color: transparent;
-      border: 0;
-      resize: none;
-    }
-  }
-  .submit_btn {
-    background: rgba(233, 72, 49, 0.2);
-    color: #ffffff;
-    text-align: center;
-  }
-  .forget_wrap {
+  .tab_title {
     display: flex;
     justify-content: space-between;
-    color: #626b80;
-    font-size: 14px;
-    i {
-      font-style: normal;
+    font-size: 16px;
+    color: #333333;
+    height: 43px;
+    line-height: 43px;
+    .active {
+      color: #e94831;
+      border-bottom: 2px solid #e94831;
+      
     }
   }
-  .agree_wrap {
-    text-align: center;
-    font-size: 12px;
-    position: absolute;
-    bottom: 21px;
-    color: #a2a7b5;
-    display: flex;
-    justify-content: center;
-    width:100%;
-    span {
-      color: #333;
+  .content_wrap {
+    padding: 0 20px;
+  }
+  .title {
+    margin-top: 19px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #050505;
+  }
+  .public_class {
+    li {
+      width: 335px;
+      height: 110px;
+      box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      margin-top: 15px;
+      padding: 12px 0 0 11px;
+      display: flex;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+    }
+    h4 {
+      font-weight: 500;
+      color: #050505;
+      font-size: 15px;
+      margin-top: 6px;
+      line-height: 15px;
+      width: 214px;
+    }
+    .message {
+      font-size: 14px;
+      color: #4a4a4a;
+      margin-top: 12px;
+      line-height: 14px;
+    }
+    .time {
+      font-size: 12px;
+      color: #a1a5bb;
+      margin-top: 17px;
+      line-height: 12px;
+    }
+  }
+  .hot_news {
+    margin-top: 3px;
+    .title {
+      font-size: 18px;
+      color: #050505;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    li {
+      display: flex;
+      padding: 13px 20px 13px 0px;
+      border-bottom: 1px solid #f2f2f2;
+      justify-content: space-between;
+      .new_title {
+        font-size: 15px;
+        color: #050505;
+        line-height: 21px;
+        font-weight: 400;
+      }
+      img {
+        width: 105px;
+        height: 73px;
+        margin-left: 20px;
+      }
+      .time {
+        font-size: 12px;
+        color: #a1a5bb;
+        margin-top: 17px;
+      }
     }
   }
 }

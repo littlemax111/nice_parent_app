@@ -27,7 +27,7 @@ export default new Router({
       name: "school",
       component: () => import('@/views/homePage/school'),
     },
-    // 公开课列表
+    // 公开课列表+资讯列表
     {
       path: "/homePage/publicClass",
       name: "publicClass",
@@ -38,12 +38,6 @@ export default new Router({
       path: "/homePage/classDetail",
       name: "classDetail",
       component: () => import('@/views/homePage/classDetail'),
-    },
-    // 资讯列表
-    {
-      path: "/homePage/news",
-      name: "news",
-      component: () => import('@/views/homePage/news'),
     },
     // 资讯详情
     {

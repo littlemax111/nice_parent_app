@@ -17,7 +17,7 @@
     </div>
     <div class="sort_wrap">
       <ul>
-        <li v-for="(item, index) in sortList" :key="index">
+        <li v-for="(item, index) in sortList" :key="index" @click='goRoute(item.page)'>
           <img :src="item.img" />
           <span>{{item.titel}}</span>
         </li>
@@ -29,12 +29,12 @@
     <div class="public_class">
       <div class="title_wrap">
         <h3 class="title">精选公开课</h3>
-        <span class="more">更多</span>
+        <span class="more" @click='goRoute("/homePage/publicClass")'>更多</span>
       </div>
       <ul class="class_list">
-        <li v-for="(item, index) in classList" :key="index">
+        <li v-for="(item, index) in classList" :key="index" @click='goRoute("/homePage/classDetail")'>
           <img :src="item.img" alt />
-          <p class="title">{{item.title}}</p>
+          <p class="title class='single_wrap'">{{item.title}}</p>
           <p class="sub_title">{{item.sub_title}}</p>
         </li>
       </ul>
@@ -53,12 +53,12 @@
       <div class="study_btn">详情</div>
     </div>
     <div class="hot_news">
-    <h3 class='title'>热门资讯</h3>
+      <h3 class="title">热门资讯</h3>
       <ul>
-        <li v-for="(item, index) in newsList" :key="index">
+        <li v-for="(item, index) in newsList" :key="index" @click='goRoute("/homePage/newsDetail")'>
           <div>
             <h3 class="title double_wrap">{{item.title}}</h3>
-            <p class='time'>{{item.time}}</p>
+            <p class="time">{{item.time}}</p>
           </div>
           <img :src="item.img" />
         </li>
@@ -83,17 +83,17 @@ export default {
         {
           img: require("../../assets/images/home/new1.png"),
           title: "孩子如果不懂得与世界如何相处 所有的教育都是徒劳",
-          time:'2018-12-07 16:58'
+          time: "2018-12-07 16:58",
         },
         {
           img: require("../../assets/images/home/new2.png"),
           title: "阅卷老师最讨厌的哪几种字体， 如果你写的是那样就糟了",
-          time:'2018-12-06 17:58'
+          time: "2018-12-06 17:58",
         },
         {
           img: require("../../assets/images/home/new1.png"),
           title: "让教育温暖起来,让每一个学生都喜欢上学习",
-          time:'2018-12-05 12:58'
+          time: "2018-12-05 12:58",
         },
       ],
       classList: [
@@ -112,22 +112,22 @@ export default {
         {
           img: require("../../assets/images/home/icon_one.png"),
           titel: "1对1",
-          goPage: "homePage/couse",
+          page: "/homePage/couse",
         },
         {
           img: require("../../assets/images/home/icon_grade.png"),
           titel: "小班课",
-          goPage: "homePage/couse",
+          page: "/homePage/couse",
         },
         {
           img: require("../../assets/images/home/icon_online.png"),
           titel: "纳思网校",
-          goPage: "homePage/couse",
+          page: "/homePage/online",
         },
         {
           img: require("../../assets/images/home/icon_school.png"),
           titel: "校区查询",
-          goPage: "homePage/couse",
+          page: "/homePage/school",
         },
       ],
     };
@@ -137,6 +137,10 @@ export default {
   mounted() {},
 
   methods: {
+    //路由跳转
+    goRoute(name) {
+      this.$router.push(name);
+    },
     changeBlur() {
       window.scroll(0, 0); //失焦后强制让页面归位
     },
@@ -343,21 +347,21 @@ export default {
       font-size: 11px;
       margin-top: 6px;
     }
-    .icon_address{
+    .icon_address {
       background: url("../../assets/images/home/address.svg");
       background-size: cover;
       display: inline-block;
-      width:10px;
-      height:12px;
-      margin-right:5px;
+      width: 10px;
+      height: 12px;
+      margin-right: 5px;
     }
-    .icon_phone{
+    .icon_phone {
       background: url("../../assets/images/home/phone.svg");
       background-size: cover;
       display: inline-block;
-      width:12px;
-      height:12px;
-      margin-right:5px;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
     }
     .phone {
       font-size: 12px;
@@ -376,37 +380,37 @@ export default {
       margin-left: 9px;
     }
   }
-  .hot_news{
-      margin-top:32px;
-      padding-left:20px;
-      .title{
-          font-size: 18px;
-          color: #050505;
-          font-weight: 600;
-          margin-bottom: 3px;
+  .hot_news {
+    margin-top: 32px;
+    padding-left: 20px;
+    .title {
+      font-size: 18px;
+      color: #050505;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    li {
+      display: flex;
+      padding: 13px 20px 13px 0px;
+      border-bottom: 1px solid #f2f2f2;
+      justify-content: space-between;
+      .title {
+        font-size: 15px;
+        color: #050505;
+        line-height: 21px;
+        font-weight: 400;
       }
-      li{
-          display: flex;
-          padding:13px 20px 13px 0px;
-          border-bottom: 1px solid #F2F2F2;
-          justify-content: space-between;
-          .title{
-              font-size: 15px;
-              color:#050505;
-              line-height: 21px;
-              font-weight: 400;
-          }
-          img{
-              width:105px;
-              height:73px;
-              margin-left: 20px;
-          }
-          .time{
-              font-size: 12px;
-              color: #A1A5BB;
-              margin-top:17px;
-          }
+      img {
+        width: 105px;
+        height: 73px;
+        margin-left: 20px;
       }
+      .time {
+        font-size: 12px;
+        color: #a1a5bb;
+        margin-top: 17px;
+      }
+    }
   }
 }
 </style>
