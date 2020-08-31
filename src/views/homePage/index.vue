@@ -77,21 +77,21 @@ export default {
       grade: "初一",
       bannerList: [
         require("../../assets/images/home/banner1.png"),
-        "https://img.yzcdn.cn/vant/apple-2.jpg",
+        require("../../assets/images/home/banner1.png"),
       ],
       newsList: [
         {
-          img: require("../../assets/images/home/class1.png"),
+          img: require("../../assets/images/home/new1.png"),
           title: "孩子如果不懂得与世界如何相处 所有的教育都是徒劳",
           time:'2018-12-07 16:58'
         },
         {
-          img: require("../../assets/images/home/class1.png"),
+          img: require("../../assets/images/home/new2.png"),
           title: "阅卷老师最讨厌的哪几种字体， 如果你写的是那样就糟了",
           time:'2018-12-06 17:58'
         },
         {
-          img: require("../../assets/images/home/class1.png"),
+          img: require("../../assets/images/home/new1.png"),
           title: "让教育温暖起来,让每一个学生都喜欢上学习",
           time:'2018-12-05 12:58'
         },
@@ -198,7 +198,7 @@ export default {
       display: inline-block;
       width: 7px;
       height: 4px;
-      background: url("../../assets/images/home/down.png");
+      background: url("../../assets/images/home/down.svg");
       background-size: cover;
       margin-left: 9px;
     }
@@ -206,7 +206,7 @@ export default {
       width: 18px;
       height: 18px;
       display: inline-block;
-      background: url("../../assets/images/home/search.png");
+      background: url("../../assets/images/home/search.svg");
       background-size: cover;
       position: absolute;
       right: 56px;
@@ -215,7 +215,7 @@ export default {
       width: 18px;
       height: 19px;
       display: inline-block;
-      background: url("../../assets/images/home/shopping.png");
+      background: url("../../assets/images/home/shopping.svg");
       background-size: cover;
       position: absolute;
       right: 17px;
@@ -342,6 +342,22 @@ export default {
     .address {
       font-size: 11px;
       margin-top: 6px;
+    }
+    .icon_address{
+      background: url("../../assets/images/home/address.svg");
+      background-size: cover;
+      display: inline-block;
+      width:10px;
+      height:12px;
+      margin-right:5px;
+    }
+    .icon_phone{
+      background: url("../../assets/images/home/phone.svg");
+      background-size: cover;
+      display: inline-block;
+      width:12px;
+      height:12px;
+      margin-right:5px;
     }
     .phone {
       font-size: 12px;
