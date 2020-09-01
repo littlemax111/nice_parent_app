@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div class="top_wrap">
-      <div class="grade_wrap">
+      <div class="grade_wrap" @click='goRoute("/homePage/grade")'>
         <span class="grade">{{grade}}</span>
         <i class="down_icon"></i>
       </div>
@@ -17,7 +17,7 @@
     </div>
     <div class="sort_wrap">
       <ul>
-        <li v-for="(item, index) in sortList" :key="index" @click='goRoute(item.page)'>
+        <li v-for="(item, index) in sortList" :key="index" @click="goRoute(item.page)">
           <img :src="item.img" />
           <span>{{item.titel}}</span>
         </li>
@@ -32,7 +32,11 @@
         <span class="more" @click='goRoute("/homePage/publicClass")'>更多</span>
       </div>
       <ul class="class_list">
-        <li v-for="(item, index) in classList" :key="index" @click='goRoute("/homePage/classDetail")'>
+        <li
+          v-for="(item, index) in classList"
+          :key="index"
+          @click='goRoute("/homePage/classDetail")'
+        >
           <img :src="item.img" alt />
           <p class="title class='single_wrap'">{{item.title}}</p>
           <p class="sub_title">{{item.sub_title}}</p>
@@ -64,28 +68,28 @@
         </li>
       </ul>
     </div>
-    <div class='tabbar_wrap'>
-      <van-tabbar v-model="active">
-        <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
-           <span style='color:#E94831'>首页</span>
+    <div class="tabbar_wrap">
+      <van-tabbar v-model="active" active-color="#E94831" inactive-color="#A1A5BB">
+        <van-tabbar-item icon="home-o" to="/homePage/index">
+          <span>首页</span>
           <template #icon="props">
             <img :src="props.active ? icon.active : icon.inactive" />
           </template>
         </van-tabbar-item>
-       <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
-           <span>选课</span>
+        <van-tabbar-item icon="home-o" to="/coursePage/index">
+          <span>选课</span>
           <template #icon="props">
             <img :src="props.active ? icon2.active : icon2.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
-           <span >学习</span>
+        <van-tabbar-item icon="home-o">
+          <span>学习</span>
           <template #icon="props">
             <img :src="props.active ? icon3.active : icon3.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
-           <span>我的</span>
+        <van-tabbar-item icon="home-o">
+          <span>我的</span>
           <template #icon="props">
             <img :src="props.active ? icon4.active : icon4.inactive" />
           </template>
@@ -97,7 +101,8 @@
 
 <script>
 import { Icon } from "vant";
-import { Swipe, SwipeItem, Lazyload ,Tabbar, TabbarItem } from "vant";
+import { Swipe, SwipeItem, Lazyload, Tabbar, TabbarItem } from "vant";
+import tabBar from "../../components/tabBar.vue";
 
 export default {
   data() {
@@ -177,6 +182,9 @@ export default {
       ],
     };
   },
+  components: {
+    tabBar,
+  },
   watch: {},
   created() {},
   mounted() {},
@@ -184,6 +192,7 @@ export default {
   methods: {
     //路由跳转
     goRoute(name) {
+      window.scroll(0, 0); //失焦后强制让页面归位
       this.$router.push(name);
     },
     changeBlur() {
@@ -224,7 +233,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wrap {
-  padding-bottom:50px;
+  padding-bottom: 50px;
   background: #fff;
   min-height: 100vh;
   padding-top: 16px;

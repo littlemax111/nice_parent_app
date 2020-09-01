@@ -1,28 +1,28 @@
 <template>
   <div class="wrap">
-    <van-icon name="cross" color="#9BA1B0" class="close_icon" size="21" />
-    <div class="content">
-      <h3 class="title">密码登录</h3>
-      <p class="sub_title">已注册用户可以使用密码登录</p>
-      <div class="input_wrap">
-        <div class="input_item">
-          <input type="number" placeholder="请输入手机号码" />
-        </div>
-        <div class="input_item">
-          <input type="password" placeholder="请输入登录密码" />
-        </div>
-        <div class="input_item submit_btn">登录</div>
-      </div>
-      <div class="forget_wrap">
-        <i>忘记密码</i>
-        <i>密码登录</i>
+    <div class="top_wrap">
+      <van-icon name="cross" color="#9BA1B0" class="close_icon" size="18" @click='backFn()' />
+      <div class="city_wrap" @click='goRoute("/homePage/city")'>
+        <span class="city">{{city}}</span>
+        <i class="down_icon"></i>
       </div>
     </div>
-    <div class="agree_wrap">
-      <p class="agree">
-        登录代表您已阅读并同意
-        <span>用户协议、隐私协议</span>
-      </p>
+    <h3 class="title">选择在读年级</h3>
+    <p class="sub_title">为了更精准推荐课程，请选择孩子所在年级</p>
+    <div>
+      <ul class="select_wrap">
+        <li v-for="(item, index) in gradeList" :key="index">
+          <p>{{item.big}}</p>
+          <div class="grade_item">
+            <i
+              v-for="(value, index) in item.small"
+              :key="index"
+              :class="{'active':gradeIndex==index&&gradeName==item.big}"
+              @click="addClassname(index,item.big)"
+            >{{value}}</i>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -33,45 +33,42 @@ import { Icon } from "vant";
 
 export default {
   data() {
-    return {};
+    return {
+      city: "杭州市",
+      gradeIndex: 0,
+      gradeName:'小学',
+      gradeList: [
+        {
+          big: "小学",
+          small: ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级"],
+        },
+        {
+          big: "初中",
+          small: ["初一", "初二", "初三"],
+        },
+        {
+          big: "高中",
+          small: ["高一", "高二", "高三"],
+        },
+      ],
+    };
   },
   watch: {},
   created() {},
   mounted() {},
 
   methods: {
-    changeBlur() {
+    //路由跳转
+    goRoute(name) {
       window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
     },
-    getYZM() {
-      let date = new Date();
-      this.YZM =
-        window.LOCAL_CONFIG.API_HOME +
-        "/api/GetValidImg.png?v=" +
-        date.getTime();
+    backFn() {
+      this.$router.go(-1); //返回上一层
     },
-    getFullText() {
-      if (this.username && this.password && this.valid_code) {
-        this.fullLogin = 1;
-      }
-    },
-    loginIn() {
-      let that = this;
-      let method = "post";
-      let data = {
-        username: this.username,
-        password: this.password,
-        valid_code: this.valid_code,
-      };
-      this.$services.login({ method, data }).success((res) => {
-        if (res.success) {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          this.$router.replace(`index`);
-        } else {
-          that.getYZM();
-          Dialog({ message: res.msg });
-        }
-      });
+    addClassname(index,name) {
+      this.gradeIndex = index;
+      this.gradeName = name;
     },
   },
 };
@@ -80,79 +77,75 @@ export default {
 .wrap {
   background: #fff;
   height: 100vh;
-  .close_icon {
-    padding-top: 14px;
-    padding-left: 24px;
+  padding: 14px 20px 0 20px;
+  .top_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .content {
-    padding: 0 30px;
+  .city_wrap {
+    display: flex;
+    align-items: center;
+  }
+  .city {
+    display: inline-block;
+    color: #232b36;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  .down_icon {
+    display: inline-block;
+    width: 7px;
+    height: 4px;
+    background: url("../../assets/images/home/down.svg");
+    background-size: cover;
+    margin-left: 9px;
   }
   .title {
-    height: 38px;
     font-size: 27px;
-    line-height: 38px;
-    color: #232b36;
-    margin-top: 27px;
     font-weight: 600;
+    color: #232b36;
+    line-height: 38px;
+    margin-top: 26px;
+    margin-bottom: 6px;
   }
   .sub_title {
     font-size: 14px;
-    color: #626b80;
-    margin-top: 3px;
-  }
-  .input_wrap {
-    margin-top: 27px;
-  }
-  .input_item {
-    width: 317px;
-    height: 49px;
-    background: #f7f7f7;
-    border-radius: 23px;
-    color: #bebec0;
-    padding-left: 20px;
-    padding-top: 13px;
-    font-size: 16px;
-    margin-bottom: 20px;
-    input {
-      display: block;
-      box-sizing: border-box;
-      width: 100%;
-      min-width: 0;
-      margin: 0;
-      padding: 0;
-      color: #323233;
-      line-height: inherit;
-      text-align: left;
-      background-color: transparent;
-      border: 0;
-      resize: none;
-    }
-  }
-  .submit_btn {
-    background: rgba(233, 72, 49, 0.2);
-    color: #ffffff;
-    text-align: center;
-  }
-  .forget_wrap {
-    display: flex;
-    justify-content: space-between;
-    color: #626b80;
-    font-size: 14px;
-    i {
-      font-style: normal;
-    }
-  }
-  .agree_wrap {
-    text-align: center;
-    font-size: 12px;
-    position: absolute;
-    bottom: 21px;
     color: #a2a7b5;
-    display: flex;
-    justify-content: center;
-    width:100%;
-    span {
-      color: #333;
+    margin-bottom: 48px;
+  }
+  .select_wrap {
+    li {
+      margin-bottom: 22px;
+      p {
+        font-size: 15px;
+        color: #a2a7b5;
+        margin-bottom: 12px;
+      }
+      .grade_item {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      i {
+        display: inline-block;
+        width: 105px;
+        height: 44px;
+        background: #f7f7f7;
+        border-radius: 21px;
+        font-style: normal;
+        font-size: 15px;
+        text-align: center;
+        line-height: 44px;
+        color: #232b36;
+        margin-bottom: 10px;
+      }
+      .active {
+        color: #e94831;
+        background: rgba(233, 72, 49, 0.1);
+        border-radius: 43px;
+      }
     }
   }
 }

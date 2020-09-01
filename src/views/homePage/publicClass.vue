@@ -19,8 +19,8 @@
     <div class="content_wrap">
       <h3 class="title">{{tabTitle2}}</h3>
       <!-- 公开课 -->
-      <ul class="public_class" v-if="tabIndex==0">
-        <li v-for="(item, index) in classList" :key="index">
+      <ul class="public_class" v-if="tabIndex==0" @click='goRoute("/homePage/classDetail")'>
+        <li v-for="(item, index) in classList" :key="index" > 
           <img :src="item.img" alt />
           <div>
             <h4 class="single_wrap">{{item.title}}</h4>
@@ -38,7 +38,7 @@
       </ul>
       <!-- 资讯 -->
       <ul class="hot_news" v-if="tabIndex==1">
-        <li v-for="(item, index) in newsList" :key="index">
+        <li v-for="(item, index) in newsList" :key="index"  @click='goRoute("/homePage/newsDetail")'>
           <div>
             <h3 class="new_title double_wrap">{{item.title}}</h3>
             <p class="time">{{item.time}}</p>
@@ -123,6 +123,11 @@ export default {
     navBar,
   },
   methods: {
+    //路由跳转
+    goRoute(name) {
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
+    },
     backFn(){
       this.$router.go(-1);//返回上一层
     },
