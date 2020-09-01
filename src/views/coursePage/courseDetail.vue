@@ -158,6 +158,7 @@ export default {
       color: #ffffff;
       background: #e94831;
       border-radius: 0px 22px 22px 0px;
+       border: 1px solid #e94831;
     }
   }
   .customer-service-wait {
