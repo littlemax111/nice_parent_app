@@ -75,7 +75,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .out-course {
-  padding: 18px 20px 0;
+  padding: 18px 20px 59px;
   background: #fff;
   .course-message {
     height: auto;

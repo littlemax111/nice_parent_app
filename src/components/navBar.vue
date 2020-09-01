@@ -31,6 +31,8 @@ export default {
 
 <style scoped lang="scss">
 .navWrap{
+  position: sticky;
+  top: 0;
    .icon_back {
     width: 9px;
     height: 15px;
