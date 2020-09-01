@@ -42,20 +42,100 @@
         </h3>
       </div>
     </div>
-    <div class="pay-way">
+    <div class="order-flow" v-if="status !== 'waitPay'">
+      <p>
+        <span>订单编号</span>
+        <span>2048909067890987</span>
+      </p>
+      <p>
+        <span>下单时间</span>
+        <span>2019-01-10 16:56</span>
+      </p>
+      <p>
+        <span>支付方式</span>
+        <span>支付宝</span>
+      </p>
+    </div>
+    <div class="pay-way" v-if="status === 'waitPay'">
       <h2 class="nav-header">
         <p>支付方式</p>
       </h2>
+      <van-radio-group v-model="radio" checked-color="#E94831">
+        <van-cell-group>
+          <van-cell clickable @click="radio = '1'" size="large">
+            <template #title>
+              <img :src="payWay[0]" alt="" />
+              <span class="custom-title">支付宝</span>
+            </template>
+            <template #right-icon>
+              <van-radio name="1" />
+            </template>
+          </van-cell>
+          <van-cell clickable @click="radio = '2'" size="large">
+            <template #title>
+              <img :src="payWay[1]" alt="" />
+              <span class="custom-title">微信</span>
+            </template>
+            <template #right-icon>
+              <van-radio name="2" />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </div>
+    <div class="pay-detail" v-if="status === 'cancelPay'">
+      <div class="detail">
+        <p>
+          <span>缴费金额</span>
+          <span>￥3200</span>
+        </p>
+        <p>
+          <span>课时消费</span>
+          <span>-￥0</span>
+        </p>
+        <h3>
+          <span>实退</span>
+          <span>
+            <i>￥</i>
+            <i>3200</i>
+          </span>
+        </h3>
+      </div>
+    </div>
+    <div class="pay-bar" v-if="status === 'waitPay'" @click="choosePay">
+      待支付￥3200
     </div>
   </div>
 </template>
 <script>
+import { RadioGroup, Radio, Dialog } from "vant";
 export default {
   data() {
     return {
       status: this.$route.query.type,
       bg: require("../../assets/images/course/pay-bg.png"),
+      payWay: [
+        require("../../assets/images/course/ali-pay.png"),
+        require("../../assets/images/course/wechat-pay.png"),
+      ],
+      radio: "1",
     };
+  },
+  methods: {
+    choosePay() {
+      Dialog.confirm({
+        title: "订单确认",
+        message: "是否确认下单？",
+      })
+        .then(() => {
+          this.status = 'successPay'
+          // on confirm
+        })
+        .catch(() => {
+          this.status = 'cancelPay'
+          // on cancel
+        });
+    },
   },
 };
 </script>
@@ -65,7 +145,6 @@ $normalMargin: 10px;
   width: 100%;
   height: 70px;
   font-size: 17px;
-  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: #ffffff;
   background: url("../../assets/images/course/pay-bg.png") no-repeat center
@@ -77,7 +156,6 @@ $normalMargin: 10px;
   padding: 0 16px;
   span.time {
     font-size: 13px;
-    font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #ffffff;
   }
@@ -85,8 +163,11 @@ $normalMargin: 10px;
 .detail-card {
   padding: 10px 14px 13px;
   background: #ffffff;
+
   h2 {
     font-size: 0;
+    display: flex;
+    justify-content: space-between;
     .title {
       font-size: 15px;
       color: #333333;
@@ -102,14 +183,13 @@ $normalMargin: 10px;
   }
   p {
     font-size: 13px;
-    font-family: PingFangSC-Regular, PingFang SC;
     color: #999999;
     margin-top: 9px;
     line-height: 19px;
   }
 }
 .pay-detail {
-  margin-top: $normalMargin;
+  margin: $normalMargin 0;
   .detail {
     background: #ffffff;
     height: auto;
@@ -118,14 +198,13 @@ $normalMargin: 10px;
       height: 18px;
       line-height: 18px;
       font-size: 13px;
-      margin-bottom: 9px;;
-      font-family: PingFangSC-Regular, PingFang SC;
+      margin-bottom: 9px;
       color: #999999;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    p:last-child{
+    p:last-child {
       margin-bottom: 20px;
     }
     h3 {
@@ -150,6 +229,38 @@ $normalMargin: 10px;
         }
       }
     }
+  }
+}
+.pay-way {
+  background: #ffffff;
+
+  .van-cell__title {
+    display: flex;
+    img {
+      height: 24px;
+      margin-right: 18px;
+    }
+    .custom-title {
+      font-size: 16px;
+      color: #333333;
+    }
+  }
+  .van-cell::after {
+    border-bottom: none;
+  }
+}
+.order-flow {
+  background: #ffffff;
+  padding: 8px 15px;
+  margin: 10px 0;
+  p {
+    font-size: 13px;
+    height: 30px;
+    line-height: 30px;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 </style>

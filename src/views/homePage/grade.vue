@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <van-icon name="cross" color="#9BA1B0" class="close_icon" size="21" @click='backFn/>
+    <van-icon name="cross" color="#9BA1B0" class="close_icon" size="21" />
     <div class="content">
       <h3 class="title">密码登录</h3>
       <p class="sub_title">已注册用户可以使用密码登录</p>
@@ -40,8 +40,38 @@ export default {
   mounted() {},
 
   methods: {
-    backFn() {
-      this.$router.go(-1); //返回上一层
+    changeBlur() {
+      window.scroll(0, 0); //失焦后强制让页面归位
+    },
+    getYZM() {
+      let date = new Date();
+      this.YZM =
+        window.LOCAL_CONFIG.API_HOME +
+        "/api/GetValidImg.png?v=" +
+        date.getTime();
+    },
+    getFullText() {
+      if (this.username && this.password && this.valid_code) {
+        this.fullLogin = 1;
+      }
+    },
+    loginIn() {
+      let that = this;
+      let method = "post";
+      let data = {
+        username: this.username,
+        password: this.password,
+        valid_code: this.valid_code,
+      };
+      this.$services.login({ method, data }).success((res) => {
+        if (res.success) {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          this.$router.replace(`index`);
+        } else {
+          that.getYZM();
+          Dialog({ message: res.msg });
+        }
+      });
     },
   },
 };
@@ -120,7 +150,7 @@ export default {
     color: #a2a7b5;
     display: flex;
     justify-content: center;
-    width: 100%;
+    width:100%;
     span {
       color: #333;
     }

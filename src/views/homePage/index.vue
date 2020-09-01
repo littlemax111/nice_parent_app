@@ -17,7 +17,7 @@
     </div>
     <div class="sort_wrap">
       <ul>
-        <li v-for="(item, index) in sortList" :key="index">
+        <li v-for="(item, index) in sortList" :key="index" @click='goRoute(item.page)'>
           <img :src="item.img" />
           <span>{{item.titel}}</span>
         </li>
@@ -29,12 +29,12 @@
     <div class="public_class">
       <div class="title_wrap">
         <h3 class="title">精选公开课</h3>
-        <span class="more">更多</span>
+        <span class="more" @click='goRoute("/homePage/publicClass")'>更多</span>
       </div>
       <ul class="class_list">
-        <li v-for="(item, index) in classList" :key="index">
+        <li v-for="(item, index) in classList" :key="index" @click='goRoute("/homePage/classDetail")'>
           <img :src="item.img" alt />
-          <p class="title">{{item.title}}</p>
+          <p class="title class='single_wrap'">{{item.title}}</p>
           <p class="sub_title">{{item.sub_title}}</p>
         </li>
       </ul>
@@ -52,20 +52,94 @@
       </div>
       <div class="study_btn">详情</div>
     </div>
+    <div class="hot_news">
+      <h3 class="title">热门资讯</h3>
+      <ul>
+        <li v-for="(item, index) in newsList" :key="index" @click='goRoute("/homePage/newsDetail")'>
+          <div>
+            <h3 class="title double_wrap">{{item.title}}</h3>
+            <p class="time">{{item.time}}</p>
+          </div>
+          <img :src="item.img" />
+        </li>
+      </ul>
+    </div>
+    <div class='tabbar_wrap'>
+      <van-tabbar v-model="active">
+        <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
+           <span style='color:#E94831'>首页</span>
+          <template #icon="props">
+            <img :src="props.active ? icon.active : icon.inactive" />
+          </template>
+        </van-tabbar-item>
+       <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
+           <span>选课</span>
+          <template #icon="props">
+            <img :src="props.active ? icon2.active : icon2.inactive" />
+          </template>
+        </van-tabbar-item>
+        <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
+           <span >学习</span>
+          <template #icon="props">
+            <img :src="props.active ? icon3.active : icon3.inactive" />
+          </template>
+        </van-tabbar-item>
+        <van-tabbar-item icon="home-o" inactive-color="#A1A5BB">
+           <span>我的</span>
+          <template #icon="props">
+            <img :src="props.active ? icon4.active : icon4.inactive" />
+          </template>
+        </van-tabbar-item>
+      </van-tabbar>
+    </div>
   </div>
 </template>
 
 <script>
 import { Icon } from "vant";
-import { Swipe, SwipeItem, Lazyload } from "vant";
+import { Swipe, SwipeItem, Lazyload ,Tabbar, TabbarItem } from "vant";
 
 export default {
   data() {
     return {
+      active: 0,
+      icon: {
+        active: require("../../assets/images/home/home_yes.png"),
+        inactive: require("../../assets/images/home/home_none.png"),
+      },
+      icon2: {
+        active: require("../../assets/images/home/course_yes.png"),
+        inactive: require("../../assets/images/home/course_none.png"),
+      },
+      icon3: {
+        active: require("../../assets/images/home/study_yes.png"),
+        inactive: require("../../assets/images/home/study_none.png"),
+      },
+      icon4: {
+        active: require("../../assets/images/home/my_yes.png"),
+        inactive: require("../../assets/images/home/my_none.png"),
+      },
       grade: "初一",
       bannerList: [
         require("../../assets/images/home/banner1.png"),
-        "https://img.yzcdn.cn/vant/apple-2.jpg",
+        require("../../assets/images/home/banner1.png"),
+      ],
+      newsList: [
+        {
+          img: require("../../assets/images/home/new1.png"),
+          title: "孩子如果不懂得与世界如何相处 所有的教育都是徒劳",
+          time: "2018-12-07 16:58",
+        },
+        {
+          img: require("../../assets/images/home/new2.png"),
+          title: "阅卷老师最讨厌的哪几种字体， 如果你写的是那样就糟了",
+          time: "2018-12-06 17:58",
+        },
+        {
+          img: require("../../assets/images/home/new1.png"),
+          title: "让教育温暖起来,让每一个学生都喜欢上学习",
+          time: "2018-12-05 12:58",
+        },
       ],
       classList: [
         {
@@ -83,22 +157,22 @@ export default {
         {
           img: require("../../assets/images/home/icon_one.png"),
           titel: "1对1",
-          goPage: "homePage/couse",
+          page: "/homePage/couse",
         },
         {
           img: require("../../assets/images/home/icon_grade.png"),
           titel: "小班课",
-          goPage: "homePage/couse",
+          page: "/homePage/couse",
         },
         {
           img: require("../../assets/images/home/icon_online.png"),
           titel: "纳思网校",
-          goPage: "homePage/couse",
+          page: "/homePage/online",
         },
         {
           img: require("../../assets/images/home/icon_school.png"),
           titel: "校区查询",
-          goPage: "homePage/couse",
+          page: "/homePage/school",
         },
       ],
     };
@@ -108,6 +182,10 @@ export default {
   mounted() {},
 
   methods: {
+    //路由跳转
+    goRoute(name) {
+      this.$router.push(name);
+    },
     changeBlur() {
       window.scroll(0, 0); //失焦后强制让页面归位
     },
@@ -146,6 +224,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wrap {
+  padding-bottom:50px;
   background: #fff;
   min-height: 100vh;
   padding-top: 16px;
@@ -169,7 +248,7 @@ export default {
       display: inline-block;
       width: 7px;
       height: 4px;
-      background: url("../../assets/images/home/down.png");
+      background: url("../../assets/images/home/down.svg");
       background-size: cover;
       margin-left: 9px;
     }
@@ -177,7 +256,7 @@ export default {
       width: 18px;
       height: 18px;
       display: inline-block;
-      background: url("../../assets/images/home/search.png");
+      background: url("../../assets/images/home/search.svg");
       background-size: cover;
       position: absolute;
       right: 56px;
@@ -186,7 +265,7 @@ export default {
       width: 18px;
       height: 19px;
       display: inline-block;
-      background: url("../../assets/images/home/shopping.png");
+      background: url("../../assets/images/home/shopping.svg");
       background-size: cover;
       position: absolute;
       right: 17px;
@@ -299,8 +378,85 @@ export default {
     background-size: cover;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.05);
     border-radius: 15px;
-    padding:15px 17px;
-    
+    padding: 15px 17px;
+    display: flex;
+    color: #777777;
+    .distance {
+      font-size: 9px;
+    }
+    .name {
+      font-size: 14px;
+      color: #2c3540;
+      margin-top: 5px;
+    }
+    .address {
+      font-size: 11px;
+      margin-top: 6px;
+    }
+    .icon_address {
+      background: url("../../assets/images/home/address.svg");
+      background-size: cover;
+      display: inline-block;
+      width: 10px;
+      height: 12px;
+      margin-right: 5px;
+    }
+    .icon_phone {
+      background: url("../../assets/images/home/phone.svg");
+      background-size: cover;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+    }
+    .phone {
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .study_btn {
+      width: 53px;
+      height: 23px;
+      background: #e94831;
+      box-shadow: 0px 5px 10px 0px rgba(233, 72, 49, 0.2);
+      border-radius: 12px;
+      text-align: center;
+      font-size: 9px;
+      color: #fff;
+      line-height: 23px;
+      margin-left: 9px;
+    }
+  }
+  .hot_news {
+    margin-top: 32px;
+    padding-left: 20px;
+    .title {
+      font-size: 18px;
+      color: #050505;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    li {
+      display: flex;
+      padding: 13px 20px 13px 0px;
+      border-bottom: 1px solid #f2f2f2;
+      justify-content: space-between;
+      .title {
+        font-size: 15px;
+        color: #050505;
+        line-height: 21px;
+        font-weight: 400;
+      }
+      img {
+        width: 105px;
+        height: 73px;
+        margin-left: 20px;
+      }
+      .time {
+        font-size: 12px;
+        color: #a1a5bb;
+        margin-top: 17px;
+      }
+    }
   }
 }
 </style>

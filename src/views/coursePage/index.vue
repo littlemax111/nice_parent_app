@@ -1,19 +1,43 @@
 <template>
   <div>
     <div class="header">
+      <div class="top_wrap">
+        <div class="grade_wrap">
+          <span class="tips">选课</span>
+          <div class="grade-tips">
+            <span class="grade">{{ grade }}</span>
+            <i class="down_icon"></i>
+          </div>
+        </div>
+        <i class="shop_icon" @click="$router.push(`/coursePage/courseCar`)"></i>
+      </div>
       <ul class="nav">
         <li
           :class="{ isActive: index === 0 }"
           v-for="(item, index) in navList"
           :key="index"
+         
         >
           {{ item.name }}
         </li>
       </ul>
     </div>
-    <div class="main-content">
+    <div class="wrap">
+      <div class="bread-crumb">
+        <div class="left">
+          <span>查看意向校区课程</span>
+          <span>
+            滨江学习中心
+            <img :src="moreIcon" alt="" />
+          </span>
+        </div>
+        <div class="right">
+          <img :src="addressIcon" alt="" />
+          更换校区
+        </div>
+      </div>
       <ul class="list">
-        <li v-for="(item, index) in courseList" :key="index">
+        <li v-for="(item, index) in courseList" :key="index"  @click="toDetails(index)">
           <div class="top">
             <div class="title">
               <span class="tips">{{ item.tips }}</span>
@@ -40,6 +64,7 @@
 export default {
   data() {
     return {
+      grade: "初一",
       navList: [
         {
           name: "推荐",
@@ -98,12 +123,74 @@ export default {
           total: 999,
         },
       ],
+      addressIcon: require("../../assets/images/course/address.png"),
+      moreIcon: require("../../assets/images/course/more.png"),
     };
+  },
+  methods: {
+    toDetails(val) {
+      let type = val % 2 === 0 ? "done" : "wait";
+      this.$router.push(`/coursePage/courseDetail?type=${type}`)
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 .header {
+  background: #ffffff;
+  padding-top: 25px;
+  position: sticky;
+  top: 0;
+  .top_wrap {
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    height: 23px;
+    position: relative;
+    margin-bottom: 12px;
+
+    .grade_wrap {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      line-height: 100%;
+    }
+    .tips {
+      font-size: 23px;
+      line-height: 23px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .grade-tips {
+      font-size: 0;
+      height: 100%;
+      margin-left: 11px;
+      .grade {
+        display: inline-block;
+        color: #666666;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .down_icon {
+        display: inline-block;
+        width: 7px;
+        height: 4px;
+        background: url("../../assets/images/home/down.svg");
+        background-size: cover;
+        margin-left: 6px;
+      }
+    }
+
+    .shop_icon {
+      width: 22px;
+      height: 20px;
+      display: inline-block;
+      background: url("../../assets/images/course/shopping-car.png");
+      background-size: cover;
+      position: absolute;
+      right: 17px;
+    }
+  }
   .nav {
     width: 100%;
     display: flex;
@@ -113,6 +200,7 @@ export default {
       flex: 1;
       font-size: 14px;
       color: #999999;
+      text-align: center;
     }
     .isActive {
       font-size: 15px;
@@ -121,7 +209,38 @@ export default {
     }
   }
 }
-.main-content {
+.wrap {
+  .bread-crumb {
+    display: flex;
+    margin: 22px 0;
+    padding: 0 19px;
+    justify-content: space-between;
+    .left {
+      display: flex;
+      span:first-child {
+        font-size: 12px;
+        color: #333333;
+      }
+      span:last-child {
+        font-size: 12px;
+        margin-left: 8px;
+        color: #e94831;
+        img {
+          width: 7px;
+          height: 11px;
+          margin-left: 10px;
+        }
+      }
+    }
+    .right {
+      font-size: 12px;
+      color: #333333;
+      img {
+        width: 10px;
+        height: 12px;
+      }
+    }
+  }
   ul.list {
     width: 100%;
     height: auto;
@@ -151,7 +270,6 @@ export default {
           }
           .course-name {
             font-size: 17px;
-            font-family: PingFangSC-Medium, PingFang SC;
             font-weight: 500;
             color: #333333;
           }
@@ -161,7 +279,6 @@ export default {
           overflow: hidden;
           font-size: 0px;
           line-height: 13px;
-          font-family: PingFangSC-Regular, PingFang SC;
           color: #a2a7b5;
           .time-tips {
             font-size: 13px;
@@ -176,7 +293,6 @@ export default {
         .place {
           font-size: 13px;
           line-height: 13px;
-          font-family: PingFangSC-Regular, PingFang SC;
           color: #a2a7b5;
         }
       }
@@ -185,7 +301,7 @@ export default {
         font-size: 0;
         text-align: right;
         .price {
-            line-height: 18px;
+          line-height: 18px;
           span {
             color: #e94831;
           }
