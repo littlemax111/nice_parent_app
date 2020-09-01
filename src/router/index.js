@@ -111,5 +111,11 @@ export default new Router({
     },
     
     
+    // 我的
+    {
+      path: "/myPage/index",
+      name: "myPage",
+      component: () => import('@/views/myPage/index'),
+    },
   ],
 });

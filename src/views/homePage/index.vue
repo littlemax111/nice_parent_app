@@ -88,7 +88,7 @@
             <img :src="props.active ? icon3.active : icon3.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o">
+        <van-tabbar-item icon="home-o" to="/myPage/index">
           <span>我的</span>
           <template #icon="props">
             <img :src="props.active ? icon4.active : icon4.inactive" />
