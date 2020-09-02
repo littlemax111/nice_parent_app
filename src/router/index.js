@@ -117,5 +117,71 @@ export default new Router({
       name: "myPage",
       component: () => import('@/views/myPage/index'),
     },
+    // 订单
+    {
+      path: "/myPage/order",
+      name: "order",
+      component: () => import('@/views/myPage/order'),
+    },
+    // 课程
+    {
+      path: "/myPage/course",
+      name: "course",
+      component: () => import('@/views/myPage/course'),
+    },
+    // 消息中心
+    {
+      path: "/myPage/message",
+      name: "message",
+      component: () => import('@/views/myPage/message'),
+    },
+    // 意见反馈
+    {
+      path: "/myPage/advice",
+      name: "advice",
+      component: () => import('@/views/myPage/advice'),
+    },
+    // 设置
+    {
+      path: "/myPage/setting",
+      name: "setting",
+      component: () => import('@/views/myPage/setting'),
+    },
+    // 钱包
+    {
+      path: "/myPage/money",
+      name: "money",
+      component: () => import('@/views/myPage/money'),
+    },
+    // 优惠卷
+    {
+      path: "/myPage/coupon",
+      name: "coupon",
+      component: () => import('@/views/myPage/coupon'),
+    },
+    // 个人资料
+    {
+      path: "/myPage/person",
+      name: "person",
+      component: () => import('@/views/myPage/person'),
+    },
+    // 学校编辑
+    {
+      path: "/myPage/changeSchool",
+      name: "changeSchool",
+      component: () => import('@/views/myPage/changeSchool'),
+    },
+    // 学员
+    {
+      path: "/myPage/student",
+      name: "student",
+      component: () => import('@/views/myPage/student'),
+    },
+    // 添加学员
+    {
+      path: "/myPage/addStudent",
+      name: "addStudent",
+      component: () => import('@/views/myPage/addStudent'),
+    },
   ],
 });

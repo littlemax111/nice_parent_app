@@ -1,10 +1,10 @@
 <template>
   <div class="wrap">
     <div class="wrap_top">
-      <p class="change_student">
+      <p class="change_student" @click='goRoute("/myPage/student")'>
         <i class="icon_change"></i>切换学员
       </p>
-      <div class="person_wrap">
+      <div class="person_wrap" @click='goRoute("/myPage/person")'>
         <img src="../../assets/images/my/person.jpg" alt />
         <div class="msg_wrap">
           <p class="name">
@@ -17,38 +17,38 @@
       </div>
     </div>
     <ul class="money_wrap">
-      <li>
+      <li @click='goRoute("/myPage/money")'>
         <i class="icon_money"></i>
         <p>我的钱包</p>
       </li>
-      <li>
+      <li @click='goRoute("/myPage/coupon")'>
         <i class="icon_coupon"></i>
         <p>优惠券</p>
       </li>
     </ul>
     <ul class="sort_wrap">
-      <li>
-        <i class="order"></i>
+      <li @click='goRoute("/myPage/order")'>
+        <i class="order" ></i>
         <span>我的订单</span>
         <i class="enter_arrow"></i>
       </li>
-       <li>
-        <i class="course"></i>
+       <li @click='goRoute("/myPage/course")'>
+        <i class="course" ></i>
         <span>我的课程</span>
         <i class="enter_arrow"></i>
       </li>
-       <li>
-        <i class="message"></i>
+       <li @click='goRoute("/myPage/message")'>
+        <i class="message" ></i>
         <span>消息中心</span>
         <i class="enter_arrow"></i>
       </li>
-       <li>
-        <i class="advice"></i>
+       <li @click='goRoute("/myPage/advice")'>
+        <i class="advice" ></i>
         <span>意见反馈</span>
         <i class="enter_arrow"></i>
       </li>
-       <li>
-        <i class="setting"></i>
+       <li @click='goRoute("/myPage/setting")'>
+        <i class="setting" ></i>
         <span>设置</span>
         <i class="enter_arrow"></i>
       </li>

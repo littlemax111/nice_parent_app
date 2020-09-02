@@ -1,31 +1,109 @@
 <template>
-  <div class='wrap'>
-    <navBar :title='title' ></navBar>
-    <noData :content='content'></noData>
+  <div class="wrap">
+    <nav-bar :title="title"></nav-bar>
+    <ul class="list">
+      <li class="photo">
+        <span>孩子头像</span>
+        <div class="img_wrap">
+          <img src="../../assets/images/my/person.jpg" alt />
+          <i class="icon_arrow"></i>
+        </div>
+      </li>
+      <li>
+        <span>孩子姓名</span>
+        <span class="icon_word">肖剑</span>
+      </li>
+      <li>
+        <span>在读年级</span>
+        <span class="icon_word">初二</span>
+      </li>
+      <li>
+        <span>所在城市</span>
+        <span class="icon_word">杭州</span>
+      </li>
+      <li>
+        <span>孩子性别</span>
+        <p class="disflex">
+          <span class="icon_word">女生</span>
+          <i class="icon_arrow ml"></i>
+        </p>
+      </li>
+      <li>
+        <span>在读学校</span>
+        <p class="disflex">
+          <span class="icon_word">江南实验小学</span>
+          <i class="icon_arrow ml"></i>
+        </p>
+      </li>
+      <li>
+        <span>学员编号</span>
+        <span class="icon_word">571020073138343</span>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import noData from "../../components/noData.vue"
-import navBar from "../../components/navBar.vue"
-
+import navBar from "../../components/navBar.vue";
 
 export default {
   data() {
     return {
-      title:'纳思网校',
-      content:'当前暂无内容'
+      title: "个人资料",
     };
   },
-  components:{
-    noData,
-    navBar
-  }
+  components: {
+    navBar,
+  },
 };
 </script>
 <style lang="scss" scoped>
 .wrap {
-  background: #f6f6f6;
-  height: 100vh;
+  background: #fff;
+  min-height: 100vh;
+  .disflex {
+    display: flex;
+    align-items: center;
+  }
+  .ml{
+    margin-left: 14px;
+  }
+  .list {
+    padding-left: 20px;
+    li {
+      height: 57px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #333;
+      font-size: 16px;
+      border-bottom: 1px solid #e2e2e2;
+      padding-right: 22px;
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        margin-right: 7px;
+      }
+    }
+    .photo {
+      height: 92px;
+    }
+    .icon_arrow {
+      width: 8px;
+      height: 13px;
+      display: inline-block;
+      background: url("../../assets/images/my/more.svg");
+      background-size: cover;
+    }
+    .img_wrap {
+      display: flex;
+      align-items: center;
+    }
+    .icon_word {
+      color: #666666;
+      font-size: 14px;
+    }
+  }
 }
 </style>

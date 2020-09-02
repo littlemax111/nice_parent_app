@@ -1,7 +1,7 @@
 <template>
   <div class='wrap'>
-    <navBar :title='title' ></navBar>
-    <noData :content='content'></noData>
+    <nav-bar :title='title' ></nav-bar>
+    <no-data :content='content'></no-data>
   </div>
 </template>
 
