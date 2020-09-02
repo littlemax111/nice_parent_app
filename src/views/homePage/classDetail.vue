@@ -132,7 +132,7 @@ export default {
       width: 18px;
       height: 19px;
       display: inline-block;
-      background: url("../../assets/images/home/shopping.svg");
+      background: url("../../assets/images/home/share.svg");
       background-size: cover;
     }
     .title {
