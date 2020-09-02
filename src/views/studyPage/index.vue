@@ -1,3 +1,3 @@
 <template>
-    <div></div>
+    <div>学习</div>
 </template>

@@ -105,6 +105,11 @@ export default new Router({
     },
     /* 学习模块 */
     {
+      path: "/studyPage/index",
+      name: "studyPage",
+      component: () => import('@/views/studyPage/index'),
+    },
+    {
       path: "/studyPage/myTimetable",
       name: "myTimetable",
       component: () => import('@/views/studyPage/myTimetable'),
