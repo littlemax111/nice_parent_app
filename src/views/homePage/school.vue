@@ -31,7 +31,7 @@
       </div>
     </div>
     <!-- <div v-else class='mt'> 
-      <noData ></noData>
+      <no-data ></no-data>
     </div> -->
   </div>
 </template>
