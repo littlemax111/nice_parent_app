@@ -67,7 +67,7 @@
             <img :src="props.active ? icon2.active : icon2.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o">
+         <van-tabbar-item icon="home-o" to="/studyPage/index">
           <span>学习</span>
           <template #icon="props">
             <img :src="props.active ? icon3.active : icon3.inactive" />

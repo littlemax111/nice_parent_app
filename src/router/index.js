@@ -104,18 +104,60 @@ export default new Router({
       component: () => import('@/views/coursePage/appointmented'),
     },
     /* 学习模块 */
+    // 首页
     {
       path: "/studyPage/index",
       name: "studyPage",
       component: () => import('@/views/studyPage/index'),
     },
+    // 我的课表
     {
       path: "/studyPage/myTimetable",
       name: "myTimetable",
       component: () => import('@/views/studyPage/myTimetable'),
     },
-    
-    
+    // 服务统计
+    {
+      path: "/studyPage/serviceStatistics",
+      name: "serviceStatistics",
+      component: () => import('@/views/studyPage/serviceStatistics'),
+    },
+    // 学习报告
+    {
+      path: "/studyPage/studyReport",
+      name: "studyReport",
+      component: () => import('@/views/studyPage/studyReport'),
+    },
+    // 待看回放
+    {
+      path: "/studyPage/playBack",
+      name: "playBack",
+      component: () => import('@/views/studyPage/playBack'),
+    },
+    // 精品课列表
+    {
+      path: "/studyPage/courseList",
+      name: "courseList",
+      component: () => import('@/views/studyPage/courseList'),
+    },
+      // 作业管理
+      {
+        path: "/studyPage/jobManagement",
+        name: "jobManagement",
+        component: () => import('@/views/studyPage/jobManagement'),
+      },
+    // 学习资料
+    {
+      path: "/studyPage/learningMaterials",
+      name: "learningMaterials",
+      component: () => import('@/views/studyPage/learningMaterials'),
+    },
+    // 讲次详情
+    {
+      path: "/studyPage/details",
+      name: "details",
+      component: () => import('@/views/studyPage/details'),
+    },
     // 我的
     {
       path: "/myPage/index",

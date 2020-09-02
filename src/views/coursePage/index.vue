@@ -72,7 +72,7 @@
             <img :src="props.active ? icon2.active : icon2.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o">
+        <van-tabbar-item icon="home-o" to="/studyPage/index">
           <span>学习</span>
           <template #icon="props">
             <img :src="props.active ? icon3.active : icon3.inactive" />
@@ -306,11 +306,15 @@ export default {
           line-height: 17px;
           display: flex;
           .tips {
+             display: block;
+            width: 29px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
             font-size: 10px;
             color: #d94831;
             background: #fce4e0;
             border-radius: 2px;
-            padding: 2px 4px;
             margin-right: 5px;
           }
           .course-name {
@@ -323,6 +327,7 @@ export default {
           margin: 15px 0 10px;
           overflow: hidden;
           font-size: 0px;
+          height: 13px;
           line-height: 13px;
           color: #a2a7b5;
           .time-tips {
