@@ -24,7 +24,7 @@
           <p>客服</p>
         </div>
         <div class="customer-service" v-if="type === 'done'">
-          <div class="l">加入选课单</div>
+          <div class="l" @click="goCar">加入选课单</div>
           <div class="r" @click="goBying">立即购课</div>
         </div>
         <div class="customer-service-wait" v-if="type === 'wait'" @click="goAppointment">
@@ -69,6 +69,9 @@ export default {
     },
     goBying(){
         this.$router.push(`/coursePage/byingCourseMessage`)
+    },
+    goCar(){
+         this.$router.push(`/coursePage/courseCar`)
     }
   },
 };

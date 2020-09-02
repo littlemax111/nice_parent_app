@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navBar :title="title" class="nav_wrap"></navBar>
     <div v-if="status === 'waitPay'">
       <div class="pay-status">
         <span>等待付款</span>
@@ -108,10 +109,15 @@
   </div>
 </template>
 <script>
+import navBar from "../../components/navBar.vue";
 import { RadioGroup, Radio, Dialog } from "vant";
 export default {
+    components: {
+    navBar,
+  },
   data() {
     return {
+      title:'订单详情',
       status: this.$route.query.type,
       bg: require("../../assets/images/course/pay-bg.png"),
       payWay: [
