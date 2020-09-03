@@ -42,8 +42,8 @@
               </span>
             </p>
             <p class="btn_wrap" v-if="item.status===1">
-              <i class="cancel_btn">取消订单</i>
-              <i class="success_btn">立即支付</i>
+              <i class="cancel_btn" >取消订单</i>
+              <i class="success_btn" @click='goRoute("/coursePage/byingCourseMessage")'>立即支付</i>
             </p>
           </div>
         </li>
@@ -109,6 +109,11 @@ export default {
     navBar,
   },
   methods: {
+    //路由跳转
+    goRoute(name) {
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
+    },
     addClassname(index) {
       this.tabIndex = index;
       switch (index) {

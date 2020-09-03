@@ -14,7 +14,7 @@
         </p>
       </div>
     </div>
-    <van-index-bar z-index=2 :index-list="indexList">
+    <van-index-bar :index-list="indexList" highlight-color='#E94831'>
       <van-index-anchor index="A" />
       <van-cell title="安徽省" />
       <van-cell title="安徽省" />

@@ -173,7 +173,7 @@ export default {
     display: flex;
     align-items: center;
     i {
-      background: url("../../assets/images/my/address.svg");
+      background: url("../../assets/images/my/white_address.svg");
       background-size: cover;
       display: inline-block;
       width: 10px;
