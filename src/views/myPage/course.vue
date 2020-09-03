@@ -169,18 +169,18 @@ export default {
       padding-right: 10px;
       position: relative;
       .status_ing {
-        display: inline-block;
+        display: block;
         width: 29px;
-        height: 14px;
+        height: 16px;
         background: #7c8592;
-        border-radius: 4px 2px 4px 2px;
+        border-radius: 4px 1px 4px 1px;
         color: #fff;
         font-size: 10px;
         font-style: normal;
         text-align: center;
-        line-height: 14px;
+        line-height: 16px;
         margin-right: 3px;
-        padding-top:1px;
+       
       }
       .status_end {
         display: inline-block;
@@ -247,9 +247,10 @@ export default {
           .shu {
             background: #e2e2e2;
             height: 11px;
-            width: 2px;
+            width: 1px;
             display: inline-block;
             margin-right: 10px;
+            margin-top: 1px;
           }
           .course-tips {
             font-size: 13px;

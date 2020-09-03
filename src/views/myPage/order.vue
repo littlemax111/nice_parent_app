@@ -281,20 +281,20 @@ export default {
         width: 100px;
         height: 32px;
         text-align: center;
-        line-height: 32px;
+        line-height: 30px;
         border-radius: 16px;
         font-style: normal;
       }
     }
     .cancel_btn {
       color: #2c3540;
-      border: 2px solid #dddddd;
+      border: 1px solid #dddddd;
       margin-right: 6px;
     }
     .success_btn {
       color: #fff;
       background: #e94831;
-      border: 2px solid #e94831;
+      border: 1px solid #e94831;
     }
   }
 }
