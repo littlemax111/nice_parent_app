@@ -24,7 +24,7 @@
           <span>筛选</span>
         </div>
       </div>
-      <ul class="list">
+      <ul class="list" v-if="flag">
         <li v-for="(item, index) in courseList" :key="index">
           <div class="top">
             <div class="time">
@@ -48,7 +48,16 @@
           </div>
         </li>
       </ul>
+     <div v-if="!flag">
+        <div class="dataWrap">
+          <img src="../../assets/images/home/no_data.png" alt />
+        </div>
+        <p class="content">{{ content }}</p>
+        <div class="choose-course-btn">去选课</div>
+      </div>
     </div>
+    
+
     <!-- 筛选弹窗 -->
     <van-popup
       v-model="show"
@@ -69,13 +78,17 @@
           </div>
         </li>
         <div class="operation-bar clear">
-          <div class="l">重置</div>
-          <div class="r">确定</div>
+          <div class="l" @click="flag = true,show = false">重置</div>
+          <div class="r" @click="flag = false,show = false">确定</div>
         </div>
       </ul>
     </van-popup>
-     <div class="tabbar_wrap">
-      <van-tabbar v-model="active" active-color="#E94831" inactive-color="#A1A5BB">
+    <div class="tabbar_wrap">
+      <van-tabbar
+        v-model="active"
+        active-color="#E94831"
+        inactive-color="#A1A5BB"
+      >
         <van-tabbar-item icon="home-o" to="/homePage/index">
           <span>首页</span>
           <template #icon="props">
@@ -106,15 +119,19 @@
 </template>
 <script>
 import navBar from "../../components/navBar.vue";
+import noData from "../../components/noData.vue";
 import { Popup } from "vant";
 export default {
   components: {
     navBar,
+    noData,
   },
   data() {
     return {
-       active: 2,
-       icon: {
+      flag: true,
+      active: 2,
+      content: "暂无课程，快去选课吧~",
+      icon: {
         active: require("../../assets/images/home/home_yes.png"),
         inactive: require("../../assets/images/home/home_none.png"),
       },
@@ -418,6 +435,33 @@ export default {
       }
     }
   }
+ .dataWrap {
+  width: 150px;
+ height: 125px;
+  margin: 0 auto;
+  margin-top: 41px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.content {
+  color: #a1a5bb;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+}
+.choose-course-btn {
+  width: 115px;
+  height: 35px;
+  line-height: 35px;
+  background: #e94831;
+  border-radius: 17px;
+  font-size: 12px;
+  text-align: center;
+  margin: 16px auto 0;
+  color: #ffffff;
+}
 }
 .screen {
   h2 {

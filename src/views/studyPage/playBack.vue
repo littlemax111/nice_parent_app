@@ -11,7 +11,7 @@
             </div>
             <span class="over-status">待观看</span>
           </div>
-          <div class="bottom" @click="toCourse">
+          <div class="bottom">
             <div class="title">
               <span class="tips">{{ item.tips }}</span>
               <span class="course-name">{{ item.courseNmae }}</span>
@@ -54,7 +54,7 @@ export default {
         },
         {
           Ltime: "2020.04.20 ",
-          tips: "在线",
+          tips: "面授",
           courseNmae: "初一英语寒假精品课",
           time: "09月02日-01月07日",
           couse: "6课时",
@@ -63,7 +63,7 @@ export default {
         },
         {
           Ltime: "2020.04.20 ",
-          tips: "在线",
+          tips: "面授",
           courseNmae: "初三科学寒假精品课",
           time: "09月02日-01月07日",
           couse: "8课时",

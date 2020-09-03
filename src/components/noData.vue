@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div class="dataWrap">
+    <div class="dataWrap" :style='style'>
       <img src="../assets/images/home/no_data.png" alt />
     </div>
+    {{style}}
     <p class="content">{{content}}</p>
   </div>
 </template>
@@ -13,14 +14,14 @@ export default {
   data() {
     return {};
   },
-  props:['content']
+  props:['content','style']
 };
 </script>
 
 <style scoped lang="scss">
 .dataWrap {
   width: 150px;
-  height: 123px;
+  height: 125px;
   margin: 0 auto;
   margin-top: 182px;
   img {
@@ -32,6 +33,6 @@ export default {
   color: #a1a5bb;
   font-size: 14px;
   text-align: center;
-  margin-top: 23px;
+  margin-top: 20px;
 }
 </style>

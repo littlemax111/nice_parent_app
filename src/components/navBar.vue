@@ -33,6 +33,7 @@ export default {
 .navWrap{
   position: sticky;
   top: 0;
+  z-index: 100;
    .icon_back {
     width: 9px;
     height: 15px;
