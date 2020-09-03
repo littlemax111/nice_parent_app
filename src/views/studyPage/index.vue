@@ -372,8 +372,8 @@ export default {
       .bottom {
         padding-top: 18px;
         .title {
-          height: 17px;
-          line-height: 17px;
+          height: 18px;
+          line-height: 18px;
           display: flex;
           .tips {
             display: block;
