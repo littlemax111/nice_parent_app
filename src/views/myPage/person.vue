@@ -2,44 +2,54 @@
   <div class="wrap">
     <nav-bar :title="title"></nav-bar>
     <ul class="list">
-      <li class="photo">
+      <li class="photo" @click="show = true">
         <span>孩子头像</span>
         <div class="img_wrap">
-          <img src="../../assets/images/my/person.jpg" alt />
+          <img :src="msg.img" alt />
           <i class="icon_arrow"></i>
         </div>
       </li>
       <li>
         <span>孩子姓名</span>
-        <span class="icon_word">肖剑</span>
+        <span class="icon_word">{{msg.name}}</span>
       </li>
       <li>
         <span>在读年级</span>
-        <span class="icon_word">初二</span>
+        <span class="icon_word">{{msg.grade}}</span>
       </li>
       <li>
         <span>所在城市</span>
-        <span class="icon_word">杭州</span>
+        <span class="icon_word">{{msg.city}}</span>
       </li>
-      <li>
+      <li @click="showPicker2 = true">
         <span>孩子性别</span>
         <p class="disflex">
-          <span class="icon_word">女生</span>
+          <span class="icon_word">{{msg.sex}}</span>
           <i class="icon_arrow ml"></i>
         </p>
       </li>
-      <li>
+      <li @click='goRoute("/myPage/editSchool")'>
         <span>在读学校</span>
         <p class="disflex">
-          <span class="icon_word">江南实验小学</span>
+          <span class="icon_word">{{msg.school}}</span>
           <i class="icon_arrow ml"></i>
         </p>
       </li>
       <li>
         <span>学员编号</span>
-        <span class="icon_word">571020073138343</span>
+        <span class="icon_word">{{msg.num}}</span>
       </li>
     </ul>
+    <p class='contact'>如需修改孩子姓名、在读年级和所在城市，请联系我们</p>
+    <van-action-sheet v-model="show" :actions="actions" close-on-click-action @cancel="onCancel" />
+    <van-popup v-model="showPicker2" position="bottom">
+      <van-picker
+        show-toolbar
+        :columns="sexList"
+        @confirm="onConfirm2"
+        @cancel="showPicker2 = false"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -50,10 +60,37 @@ export default {
   data() {
     return {
       title: "个人资料",
+      show: false,
+      actions: [{ name: "牌照" }, { name: "从相册选择" }, { name: "取消" }],
+      sexList: ["女", "男"],
+      showPicker2: false,
+      msg: {
+        img: require("../../assets/images/my/person.jpg"),
+        name: "肖剑",
+        grade: "初二",
+        city: "杭州",
+        sex: "女",
+        school: "江南实验小学",
+        num: "571020073138343",
+      },
     };
   },
   components: {
     navBar,
+  },
+  methods: {
+    //路由跳转
+    goRoute(name) {
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
+    },
+    onCancel() {
+      //Toast('取消');
+    },
+    onConfirm2(value) {
+      this.msg.sex = value;
+      this.showPicker2 = false;
+    },
   },
 };
 </script>
@@ -65,7 +102,7 @@ export default {
     display: flex;
     align-items: center;
   }
-  .ml{
+  .ml {
     margin-left: 14px;
   }
   .list {
@@ -104,6 +141,13 @@ export default {
       color: #666666;
       font-size: 14px;
     }
+  }
+  .contact{
+    font-size: 12px;
+    color: #666666;
+    line-height: 16px;
+    margin-top:24px;
+    padding-left: 20px;
   }
 }
 </style>

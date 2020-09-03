@@ -212,6 +212,12 @@ export default new Router({
       name: "person",
       component: () => import('@/views/myPage/person'),
     },
+    // 个人资料-学校编辑
+    {
+      path: "/myPage/editSchool",
+      name: "editSchool",
+      component: () => import('@/views/myPage/editSchool'),
+    },
     // 学校编辑
     {
       path: "/myPage/changeSchool",

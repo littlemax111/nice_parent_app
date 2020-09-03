@@ -59,7 +59,8 @@ export default {
   .money_wrap {
     width: 345px;
     height: 112px;
-    background: linear-gradient(270deg, #eb4f37 0%, #f37255 100%);
+    background: url("../../assets/images/my/money_bg.png");
+    background-size: cover;
     border-radius: 9px;
     margin: 14px auto;
     color: #fff;
