@@ -12,6 +12,24 @@ export default new Router({
       name: "login",
       component: () => import('@/views/login'),
     },
+    //找回密码
+    {
+      path: "/findPwd",
+      name: "findPwd",
+      component: () => import('@/views/findPwd'),
+    },
+    //验证码登录
+    {
+      path: "/codeLogin",
+      name: "codeLogin",
+      component: () => import('@/views/codeLogin'),
+    },
+    //设置密码
+    {
+      path: "/setPwd",
+      name: "setPwd",
+      component: () => import('@/views/setPwd'),
+    },
     // 首页
     {
       path: "/homePage/index",
@@ -193,6 +211,54 @@ export default new Router({
       path: "/myPage/setting",
       name: "setting",
       component: () => import('@/views/myPage/setting'),
+    },
+    // 设置-关于
+    {
+      path: "/myPage/about",
+      name: "about",
+      component: () => import('@/views/myPage/setAbout'),
+    },
+    // 设置-账号安全
+    {
+      path: "/myPage/safe",
+      name: "safe",
+      component: () => import('@/views/myPage/setSafe'),
+    },
+    // 设置-更换手机
+    {
+      path: "/myPage/changePhone",
+      name: "changePhone",
+      component: () => import('@/views/myPage/changePhone'),
+    },
+    // 设置-绑定手机
+    {
+      path: "/myPage/bindPhone",
+      name: "bindPhone",
+      component: () => import('@/views/myPage/bindPhone'),
+    },
+    // 设置-修改密码
+    {
+      path: "/myPage/editPwd",
+      name: "editPwd",
+      component: () => import('@/views/myPage/editPwd'),
+    },
+    // 设置-地址管理
+    {
+      path: "/myPage/address",
+      name: "address",
+      component: () => import('@/views/myPage/address'),
+    },
+    // 设置-地址管理-添加
+    {
+      path: "/myPage/addAddress",
+      name: "addAddress",
+      component: () => import('@/views/myPage/addAddress'),
+    },
+    // 设置-地址管理-编辑
+    {
+      path: "/myPage/editAddress",
+      name: "editAddress",
+      component: () => import('@/views/myPage/editAddress'),
     },
     // 钱包
     {

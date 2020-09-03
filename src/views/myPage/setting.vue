@@ -3,11 +3,11 @@
     <nav-bar :title="title"></nav-bar>
     <div>
       <ul class="setting_wrap">
-        <li>
+        <li @click="goRoute('/myPage/safe')">
           <span>账号安全</span>
           <i class="icon_arrow"></i>
         </li>
-        <li>
+        <li @click="goRoute('/myPage/address')">
           <span>地址管理</span>
           <i class="icon_arrow"></i>
         </li>
@@ -15,7 +15,7 @@
       <ul class="setting_wrap">
         <li>
           <span>接受推送通知</span>
-          <i class="icon_arrow"></i>
+          <van-switch v-model="checked" active-color="#E94831" />
         </li>
         <li>
           <span>清除缓存</span>
@@ -28,7 +28,7 @@
           <span>去评分</span>
           <i class="icon_arrow"></i>
         </li>
-        <li>
+        <li @click="goRoute('/myPage/about')">
           <span>关于</span>
           <p>
             <span class="icon_word">当前版本 1.1.2</span>
@@ -48,11 +48,19 @@ export default {
   data() {
     return {
       title: "设置",
+      checked:false,
     };
   },
   components: {
     navBar,
   },
+  methods:{
+    //路由跳转
+    goRoute(name) {
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
+    },
+  }
 };
 </script>
 <style lang="scss" scoped>
