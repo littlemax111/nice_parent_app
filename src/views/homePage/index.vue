@@ -162,12 +162,12 @@ export default {
         {
           img: require("../../assets/images/home/icon_one.png"),
           titel: "1对1",
-          page: "/homePage/couse",
+          page: "/coursePage/index",
         },
         {
           img: require("../../assets/images/home/icon_grade.png"),
           titel: "小班课",
-          page: "/homePage/couse",
+          page: "/coursePage/index",
         },
         {
           img: require("../../assets/images/home/icon_online.png"),

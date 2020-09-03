@@ -16,10 +16,7 @@
           :class="{ isActive: index === 0 }"
           v-for="(item, index) in navList"
           :key="index"
-         
-        >
-          {{ item.name }}
-        </li>
+        >{{ item.name }}</li>
       </ul>
     </div>
     <div class="wrap">
@@ -28,16 +25,16 @@
           <span>查看意向校区课程</span>
           <span>
             滨江学习中心
-            <img :src="moreIcon" alt="" />
+            <img :src="moreIcon" alt />
           </span>
         </div>
         <div class="right">
-          <img :src="addressIcon" alt="" />
+          <img :src="addressIcon" alt />
           更换校区
         </div>
       </div>
       <ul class="list">
-        <li v-for="(item, index) in courseList" :key="index"  @click="toDetails(index)">
+        <li v-for="(item, index) in courseList" :key="index" @click="toDetails(index)">
           <div class="top">
             <div class="title">
               <span class="tips">{{ item.tips }}</span>
@@ -89,11 +86,12 @@
   </div>
 </template>
 <script>
+import tabBar from "../../components/tabBar.vue";
 export default {
   data() {
     return {
       active: 1,
-      grade:'初二',
+      grade: "初二",
       icon: {
         active: require("../../assets/images/home/home_yes.png"),
         inactive: require("../../assets/images/home/home_none.png"),
@@ -175,8 +173,11 @@ export default {
   methods: {
     toDetails(val) {
       let type = val % 2 === 0 ? "done" : "wait";
-      this.$router.push(`/coursePage/courseDetail?type=${type}`)
+      this.$router.push(`/coursePage/courseDetail?type=${type}`);
     },
+  },
+  components: {
+    tabBar,
   },
 };
 </script>
@@ -306,7 +307,7 @@ export default {
           line-height: 17px;
           display: flex;
           .tips {
-             display: block;
+            display: block;
             width: 29px;
             height: 18px;
             line-height: 18px;

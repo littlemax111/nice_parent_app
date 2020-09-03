@@ -14,7 +14,7 @@
             <img :src="props.active ? icon2.active : icon2.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o" >
+        <van-tabbar-item icon="home-o">
           <span>学习</span>
           <template #icon="props">
             <img :src="props.active ? icon3.active : icon3.inactive" />
@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import {Tabbar, TabbarItem } from "vant";
+import { Tabbar, TabbarItem } from "vant";
 export default {
   name: "tabBar",
   data() {
     return {
-      active:0,
+      active: 0,
       icon: {
         active: require("../assets/images/home/home_yes.png"),
         inactive: require("../assets/images/home/home_none.png"),
@@ -56,11 +56,15 @@ export default {
       },
     };
   },
-  mounted(){
-    console.log(this.$router.path)
+  props: ["acitveIndex"],
+  watch: {
+    acitveIndex: (newVal, oldVal) => {
+      console.log(newVal)
+      this.active = newVal;
+    },
   },
-  methods:{
-  }
+
+  methods: {},
 };
 </script>
 

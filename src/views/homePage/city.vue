@@ -14,28 +14,36 @@
         </p>
       </div>
     </div>
-    <van-index-bar>
+    <van-index-bar z-index=2 :index-list="indexList">
       <van-index-anchor index="A" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
+      <van-cell title="安徽省" />
+      <van-cell title="安徽省" />
+      <van-cell title="安徽省" />
 
       <van-index-anchor index="B" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
+      <van-cell title="北京省" />
+      <van-cell title="北京省" />
+      <van-cell title="北京省" />
       <van-index-anchor index="C" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
+      <van-cell title="重庆省" />
+      <van-cell title="重庆省" />
+      <van-cell title="重庆省" />
       <van-index-anchor index="D" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
+      <van-cell title="大连" />
+      <van-cell title="大连" />
+      <van-cell title="大连" />
+      <van-index-anchor index=E />
+      <van-cell title="鄂城" />
+      <van-cell title="鄂城" />
+      <van-cell title="鄂城" />
       <van-index-anchor index=F />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
-      <van-cell title="文本" />
+      <van-cell title="福建省" />
+      <van-cell title="福建省" />
+      <van-cell title="福建省" />
+      <van-index-anchor index=G />
+      <van-cell title="甘肃省" />
+      <van-cell title="甘肃省" />
+      <van-cell title="甘肃省" />
     </van-index-bar>
   </div>
 </template>
@@ -48,6 +56,7 @@ export default {
   data() {
     return {
       title: "选择城市",
+      indexList: ['A', 'B', 'C', 'D', 'E', 'F', 'G',],
     };
   },
   components: {
@@ -62,6 +71,9 @@ export default {
   .top_wrap {
     padding: 20px 16px;
     border-bottom: 9px solid #f6f6f6;
+    position: absolute;
+    width:100%;
+    z-index: 1000;
   }
   .positioning_wrap {
     margin-top: 27px;
@@ -94,5 +106,14 @@ export default {
     font-size: 12px;
     color: #e94831;
   }
+}
+/deep/ .van-index-bar__sidebar{
+  margin-top:90px;
+}
+/deep/ .van-index-bar{
+  margin-top:200px;
+  position: relative;
+  z-index: 100;
+  background: #fff;
 }
 </style>

@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div class="dataWrap" :style='style'>
+    <div class="dataWrap" >
       <img src="../assets/images/home/no_data.png" alt />
     </div>
-    {{style}}
     <p class="content">{{content}}</p>
   </div>
 </template>
@@ -14,7 +13,7 @@ export default {
   data() {
     return {};
   },
-  props:['content','style']
+  props:['content',]
 };
 </script>
 
