@@ -48,7 +48,7 @@
           </div>
         </li>
       </ul>
-     <div v-if="!flag">
+      <div v-if="!flag">
         <div class="dataWrap">
           <img src="../../assets/images/home/no_data.png" alt />
         </div>
@@ -56,7 +56,6 @@
         <div class="choose-course-btn">去选课</div>
       </div>
     </div>
-    
 
     <!-- 筛选弹窗 -->
     <van-popup
@@ -78,8 +77,8 @@
           </div>
         </li>
         <div class="operation-bar clear">
-          <div class="l" @click="flag = true,show = false">重置</div>
-          <div class="r" @click="flag = false,show = false">确定</div>
+          <div class="l" @click="(flag = true), (show = false)">重置</div>
+          <div class="r" @click="(flag = false), (show = false)">确定</div>
         </div>
       </ul>
     </van-popup>
@@ -268,6 +267,8 @@ export default {
   background-size: cover;
   position: relative;
   padding: 22px 0 0 20px;
+  position: sticky;
+  top: 0;
   h2 {
     height: 28px;
     font-size: 20px;
@@ -335,8 +336,8 @@ export default {
   }
   ul.list {
     width: 100%;
-    height: auto;
-    padding: 0 0 50px;
+    height: calc(100vh - 312px);
+    overflow-y: auto;
     li {
       width: 100%;
       height: 155px;
@@ -435,33 +436,33 @@ export default {
       }
     }
   }
- .dataWrap {
-  width: 150px;
- height: 125px;
-  margin: 0 auto;
-  margin-top: 41px;
-  img {
-    width: 100%;
-    height: 100%;
+  .dataWrap {
+    width: 150px;
+    height: 125px;
+    margin: 0 auto;
+    margin-top: 41px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
-}
-.content {
-  color: #a1a5bb;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 20px;
-}
-.choose-course-btn {
-  width: 115px;
-  height: 35px;
-  line-height: 35px;
-  background: #e94831;
-  border-radius: 17px;
-  font-size: 12px;
-  text-align: center;
-  margin: 16px auto 0;
-  color: #ffffff;
-}
+  .content {
+    color: #a1a5bb;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .choose-course-btn {
+    width: 115px;
+    height: 35px;
+    line-height: 35px;
+    background: #e94831;
+    border-radius: 17px;
+    font-size: 12px;
+    text-align: center;
+    margin: 16px auto 0;
+    color: #ffffff;
+  }
 }
 .screen {
   h2 {

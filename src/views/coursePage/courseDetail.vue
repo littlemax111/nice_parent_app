@@ -9,6 +9,10 @@
             <span>时间</span>
             <span>09月02日-01月07日</span>
           </p>
+          <h3>
+            <span>￥</span>
+            <span>3200</span>
+          </h3>
         </div>
         <div class="pic">
           <img :src="imgList[0]" alt="" />
@@ -19,7 +23,7 @@
         </div>
       </div>
       <div class="appointment-bar">
-        <div class="customer-icon">
+        <div class="customer-icon" @click="show = true">
           <img :src="customerIcon" alt="" />
           <p>客服</p>
         </div>
@@ -27,10 +31,22 @@
           <div class="l" @click="goCar">加入选课单</div>
           <div class="r" @click="goBying">立即购课</div>
         </div>
-        <div class="customer-service-wait" v-if="type === 'wait'" @click="goAppointment">
+        <div
+          class="customer-service-wait"
+          v-if="type === 'wait'"
+          @click="goAppointment"
+        >
           <div class="m">我要预约</div>
         </div>
       </div>
+      <!-- 客服弹窗 -->
+      <van-action-sheet
+        v-model="show"
+        :actions="actions"
+        cancel-text="取消"
+        close-on-click-action
+        @select="onSelect"
+      />
     </div>
   </div>
 </template>
@@ -50,6 +66,11 @@ export default {
         require("../../assets/images/course/course-five.png"),
       ],
       customerIcon: require("../../assets/images/course/customer.png"),
+       show: false,
+      actions: [ {
+        name:'呼叫  400 688 1614',
+        color:'rgb(14, 153, 255)'
+      }],
     };
   },
   components: {
@@ -64,24 +85,30 @@ export default {
       this.value = value;
       this.showPicker = false;
     },
-    goAppointment(){
-        this.$router.push(`/coursePage/appointment`)
+    goAppointment() {
+      this.$router.push(`/coursePage/appointment`);
     },
-    goBying(){
-        this.$router.push(`/coursePage/byingCourseMessage`)
+    goBying() {
+      this.$router.push(`/coursePage/byingCourseMessage`);
     },
-    goCar(){
-         this.$router.push(`/coursePage/courseCar`)
+    goCar() {
+      this.$router.push(`/coursePage/courseCar`);
+    },
+    onSelect(){
+      window.location.href = 'tel:010-123451'
     }
   },
 };
 </script>
 <style lang="scss" scoped>
 .out-course {
-  padding: 18px 20px 59px;
-  background: #fff;
+  margin-bottom: 10px;
+  padding-bottom: 50px;
   .course-message {
+    padding: 18px 20px 0;
     height: auto;
+    background: #ffffff;
+    margin-bottom: 10px;
     h2 {
       height: 32px;
       line-height: 32px;
@@ -95,19 +122,36 @@ export default {
       line-height: 20px;
       span:first-child {
         display: inline-block;
+        vertical-align: top;
         font-size: 14px;
         color: #999999;
       }
       span:last-child {
         display: inline-block;
+        vertical-align: top;
         font-size: 14px;
         font-weight: 400;
         color: #333333;
       }
     }
+    h3 {
+      height: 54px;
+      line-height: 54px;
+      margin-top: 18px;
+      border-top: 1px solid #e2e2e2;
+      font-size: 0;
+      span:first-child {
+        font-size: 12px;
+        color: #e94831;
+      }
+      span:last-child {
+        font-size: 20px;
+        font-weight: 600;
+        color: #e94831;
+      }
+    }
   }
   .pic {
-    margin-top: 10px;
     img {
       display: block;
       width: 100%;
@@ -161,7 +205,7 @@ export default {
       color: #ffffff;
       background: #e94831;
       border-radius: 0px 22px 22px 0px;
-       border: 1px solid #e94831;
+      border: 1px solid #e94831;
     }
   }
   .customer-service-wait {

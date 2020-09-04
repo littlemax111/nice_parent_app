@@ -13,10 +13,13 @@
       </div>
       <ul class="nav">
         <li
-          :class="{ isActive: index === 0 }"
+          :class="{ isActive: index === tabIndex }"
           v-for="(item, index) in navList"
           :key="index"
-        >{{ item.name }}</li>
+          @click="changeTab(index)"
+        >
+          {{ item.name }}
+        </li>
       </ul>
     </div>
     <div class="wrap">
@@ -34,7 +37,11 @@
         </div>
       </div>
       <ul class="list">
-        <li v-for="(item, index) in courseList" :key="index" @click="toDetails(index)">
+        <li
+          v-for="(item, index) in courseList"
+          :key="index"
+          @click="toDetails(index)"
+        >
           <div class="top">
             <div class="title">
               <span class="tips">{{ item.tips }}</span>
@@ -56,7 +63,11 @@
       </ul>
     </div>
     <div class="tabbar_wrap">
-      <van-tabbar v-model="active" active-color="#E94831" inactive-color="#A1A5BB">
+      <van-tabbar
+        v-model="active"
+        active-color="#E94831"
+        inactive-color="#A1A5BB"
+      >
         <van-tabbar-item icon="home-o" to="/homePage/index">
           <span>首页</span>
           <template #icon="props">
@@ -130,8 +141,12 @@ export default {
         {
           name: "历史",
         },
+        {
+          name: "生物",
+        },
       ],
       isActive: true,
+      tabIndex:0,
       courseList: [
         {
           tips: "面授",
@@ -175,6 +190,9 @@ export default {
       let type = val % 2 === 0 ? "done" : "wait";
       this.$router.push(`/coursePage/courseDetail?type=${type}`);
     },
+    changeTab(index){
+      this.tabIndex = index
+    }
   },
   components: {
     tabBar,
@@ -211,6 +229,9 @@ export default {
       font-size: 0;
       height: 100%;
       margin-left: 11px;
+      display: flex;
+      align-items: center;
+      padding-top: 6px;
       .grade {
         display: inline-block;
         color: #666666;
@@ -239,18 +260,30 @@ export default {
   }
   .nav {
     width: 100%;
-    display: flex;
     height: 33px;
     line-height: 33px;
+    padding: 0 11px;
+    white-space:nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
     li {
-      flex: 1;
+      display: inline-block;
       font-size: 14px;
       color: #999999;
       text-align: center;
+      padding: 0 11px;
+      text-align: center;
+      vertical-align: top;
+    }
+    li:first-child{
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #ffffff;
     }
     .isActive {
       font-size: 15px;
-      font-weight: 500;
+      font-weight: 600;
       color: #333333;
     }
   }
