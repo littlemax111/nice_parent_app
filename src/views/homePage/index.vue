@@ -236,13 +236,16 @@ export default {
   padding-bottom: 50px;
   background: #fff;
   min-height: 100vh;
-  padding-top: 16px;
   .top_wrap {
-    padding: 0 17px;
+    padding: 16px 17px 21px 17px;
     display: flex;
     align-items: center;
-    height: 21px;
-    position: relative;
+    height: 58px;
+    position: fixed;
+    top:0px;
+    width:100%;
+    z-index:99;
+    background: #fff;
     .grade_wrap {
       display: flex;
       align-items: center;
@@ -282,8 +285,8 @@ export default {
   }
   .banner_wrap {
     padding: 0 17px;
-    margin-top: 21px;
     height: 120px;
+    margin-top: 58px;
   }
   .van-swipe-item {
     img {

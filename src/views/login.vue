@@ -6,12 +6,18 @@
       <p class="sub_title">已注册用户可以使用密码登录</p>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="number" placeholder="请输入手机号码" />
+          <input type="number" placeholder="请输入手机号码" v-model="phone" />
         </div>
         <div class="input_item">
-          <input type="password" placeholder="请输入登录密码" />
+          <input type="password" placeholder="请输入登录密码" v-model="password"/>
         </div>
-        <div class="input_item submit_btn">登录</div>
+        <button 
+          class="input_item submit_btn"
+          :class="{'disable-btn':!submitAllow,'orange-btn':submitAllow}" 
+          :disabled="!submitAllow"
+          @click.stop="handleSubmit('/homePage/index')">
+          登录
+        </button>
       </div>
       <div class="forget_wrap">
         <i @click='goRoute("/findPwd")'>忘记密码</i>
@@ -33,15 +39,29 @@ import { Icon } from "vant";
 
 export default {
   data() {
-    return {};
+    return {
+      phone:'',
+      password:'',
+    };
   },
   watch: {},
   created() {},
   mounted() {},
-
+  computed:{
+    submitAllow(){
+      if(this.phone && this.password ){
+        return true
+      }
+      return false
+    }
+  },
   methods: {
     //路由跳转
     goRoute(name) {
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
+    },
+    handleSubmit(name){
       window.scroll(0, 0); //失焦后强制让页面归位
       this.$router.push(name);
     },
@@ -103,10 +123,18 @@ export default {
       resize: none;
     }
   }
-  .submit_btn {
+  .disable-btn{
     background: rgba(233, 72, 49, 0.2);
+  }
+  .orange-btn{
+    background: rgb(233, 72, 49,);
+  }
+  .submit_btn {
+    border:none;
     color: #ffffff;
     text-align: center;
+    padding:0;
+    display: block;
   }
   .forget_wrap {
     display: flex;

@@ -10,10 +10,16 @@
       <p class="phone">187****9212</p>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="password" placeholder="请输入验证码" class="yan_input" />
+          <input type="password" placeholder="请输入验证码" class="yan_input"  v-model="code"/>
           <span>获取验证码</span>
         </div>
-        <div class="submit_btn">下一步</div>
+         <button 
+          class="submit_btn"
+          :class="{'disable-btn':!submitAllow,'orange-btn':submitAllow}" 
+          :disabled="!submitAllow"
+          @click.stop="handleSubmit('/myPage/bindPhone')">
+          下一步
+        </button>
       </div>
     </div>
     <p class="call_phone">
@@ -30,11 +36,26 @@ export default {
   data() {
     return {
       title: "更换手机号",
+      code:'',
     };
   },
   components: {
     navBar,
   },
+  computed:{
+    submitAllow(){
+      if(this.code ){
+        return true
+      }
+      return false
+    }
+  },
+  methods:{
+    handleSubmit(name){
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
+    },
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -95,17 +116,22 @@ export default {
       width: 60%;
     }
   }
-  .submit_btn {
+  .disable-btn{
     background: rgba(233, 72, 49, 0.2);
+  }
+  .orange-btn{
+    background: rgb(233, 72, 49,);
+  }
+  .submit_btn {
     color: #ffffff;
     text-align: center;
     width: 317px;
     height: 49px;
     border-radius: 23px;
-    padding-left: 20px;
-    padding-top: 13px;
     font-size: 16px;
     margin-bottom: 20px;
+    border:none;
+    display: block;
   }
   .call_phone {
     font-size: 12px;

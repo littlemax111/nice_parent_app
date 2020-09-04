@@ -23,7 +23,12 @@
         <span>(选填)</span>
       </h2>
       <ul class="list clear">
-        <li v-for="(item,index) in typeList" :key="index">{{item.name}}</li>
+        <li
+          v-for="(item,index) in typeList"
+          :key="index"
+          :class="{'active':tabIndex==index}"
+          @click="addClassname(index)"
+        >{{item.name}}</li>
       </ul>
       <h2>
         类型&nbsp;&nbsp;
@@ -42,6 +47,7 @@ import { Field, Uploader } from "vant";
 export default {
   data() {
     return {
+      tabIndex: 0,
       title: "意见反馈",
       message: "",
       typeList: [
@@ -63,12 +69,15 @@ export default {
   components: {
     navBar,
   },
-  methods:{
+  methods: {
+    addClassname(index) {
+      this.tabIndex = index;
+    },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       console.log(file);
     },
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -113,14 +122,21 @@ export default {
       margin-right: 11px;
       margin-bottom: 8px;
     }
+    .active {
+      background: #e94831;
+      color: #fff;
+    }
     li:nth-child(4n) {
       margin-right: 0;
     }
   }
 }
 /deep/ .van-uploader {
-  border:1px solid #CCCCCC;
   margin-left: 16px;
-  margin-top:15px;
+  margin-top: 15px;
+}
+/deep/ .van-uploader__upload {
+  background: #f7f7f7;
+  border: 1px solid #cccccc;
 }
 </style>

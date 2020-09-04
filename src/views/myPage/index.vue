@@ -158,6 +158,7 @@ export default {
       background-size: cover;
       position: absolute;
       right: 68px;
+      top:2px;
     }
   }
   .person_wrap {

@@ -36,7 +36,7 @@
           </p>
         </li>
       </ul>
-      <p class='logout_btn'>退出当前账号</p>
+      <p class='logout_btn' @click='goRoute("/login")'>退出当前账号</p>
     </div>
   </div>
 </template>

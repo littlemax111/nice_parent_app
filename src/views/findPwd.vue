@@ -5,13 +5,19 @@
       <h3 class="title">找回密码</h3>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="number" placeholder="请输入手机号码" />
+          <input type="number" placeholder="请输入手机号码"  v-model="phone"/>
         </div>
         <div class="input_item">
-          <input type="password" placeholder="请输入验证码" class="yan_input" />
+          <input type="password" placeholder="请输入验证码" v-model="code" class="yan_input" />
           <span>获取验证码</span>
         </div>
-        <div class="submit_btn" @click='goRoute("/setPwd")'>下一步</div>
+        <button 
+          class="submit_btn"
+          :class="{'disable-btn':!submitAllow,'orange-btn':submitAllow}" 
+          :disabled="!submitAllow"
+          @click.stop="handleSubmit('/setPwd')">
+          下一步
+        </button>
       </div>
     </div>
   </div>
@@ -23,12 +29,22 @@ import { Icon } from "vant";
 
 export default {
   data() {
-    return {};
+    return {
+      phone:'',
+      code:'',
+    };
   },
   watch: {},
   created() {},
   mounted() {},
-
+  computed:{
+    submitAllow(){
+      if(this.phone && this.code ){
+        return true
+      }
+      return false
+    }
+  },
   methods: {
     //路由跳转
     goRoute(name) {
@@ -37,6 +53,10 @@ export default {
     },
     backFn() {
       this.$router.go(-1); //返回上一层
+    },
+    handleSubmit(name){
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
     },
   },
 };
@@ -100,17 +120,22 @@ export default {
       width: 60%;
     }
   }
-  .submit_btn {
+  .disable-btn{
     background: rgba(233, 72, 49, 0.2);
+  }
+  .orange-btn{
+    background: rgb(233, 72, 49,);
+  }
+  .submit_btn {
+    display: block;
     color: #ffffff;
     text-align: center;
     width: 317px;
     height: 49px;
     border-radius: 23px;
-    padding-left: 20px;
-    padding-top: 13px;
     font-size: 16px;
     margin-bottom: 20px;
+    border: none;
   }
 }
 </style>

@@ -5,9 +5,15 @@
       <h3 class="title">设置新密码</h3>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="number" placeholder="设置8位以上登录密码" />
+          <input type="number" placeholder="设置8位以上登录密码" v-model="password"/>
         </div>
-        <div class="submit_btn" @click='goRoute("/login")'>确定</div>
+        <button 
+          class="submit_btn"
+          :class="{'disable-btn':!submitAllow,'orange-btn':submitAllow}" 
+          :disabled="!submitAllow"
+          @click.stop="handleSubmit('/login')">
+          确定
+        </button>
       </div>
     </div>
   </div>
@@ -19,15 +25,28 @@ import { Icon } from "vant";
 
 export default {
   data() {
-    return {};
+    return {
+      password:'',
+    };
   },
   watch: {},
   created() {},
   mounted() {},
-
+  computed:{
+    submitAllow(){
+      if(this.password ){
+        return true
+      }
+      return false
+    }
+  },
   methods: {
     //路由跳转
     goRoute(name) {
+      window.scroll(0, 0); //失焦后强制让页面归位
+      this.$router.push(name);
+    },
+    handleSubmit(name){
       window.scroll(0, 0); //失焦后强制让页面归位
       this.$router.push(name);
     },
@@ -96,17 +115,22 @@ export default {
       width: 60%;
     }
   }
-  .submit_btn {
+  .disable-btn{
     background: rgba(233, 72, 49, 0.2);
+  }
+  .orange-btn{
+    background: rgb(233, 72, 49,);
+  }
+  .submit_btn {
+    display: block;
     color: #ffffff;
     text-align: center;
     width: 317px;
     height: 49px;
     border-radius: 23px;
-    padding-left: 20px;
-    padding-top: 13px;
     font-size: 16px;
     margin-bottom: 20px;
+    border: none;
   }
 }
 </style>

@@ -2,12 +2,15 @@
   <div class="wrap">
     <nav-bar :title="title"></nav-bar>
     <ul class="list">
-      <li class="photo" @click="show = true">
+      <li class="photo">
         <span>孩子头像</span>
         <div class="img_wrap">
           <img :src="msg.img" alt />
           <i class="icon_arrow"></i>
         </div>
+        <van-uploader>
+          <div class="upload_wrap"></div>
+        </van-uploader>
       </li>
       <li>
         <span>孩子姓名</span>
@@ -40,8 +43,7 @@
         <span class="icon_word">{{msg.num}}</span>
       </li>
     </ul>
-    <p class='contact'>如需修改孩子姓名、在读年级和所在城市，请联系我们</p>
-    <van-action-sheet v-model="show" :actions="actions" close-on-click-action @cancel="onCancel" />
+    <p class="contact">如需修改孩子姓名、在读年级和所在城市，请联系我们</p>
     <van-popup v-model="showPicker2" position="bottom">
       <van-picker
         show-toolbar
@@ -60,8 +62,6 @@ export default {
   data() {
     return {
       title: "个人资料",
-      show: false,
-      actions: [{ name: "牌照" }, { name: "从相册选择" }, { name: "取消" }],
       sexList: ["女", "男"],
       showPicker2: false,
       msg: {
@@ -125,6 +125,7 @@ export default {
     }
     .photo {
       height: 92px;
+      position: relative;
     }
     .icon_arrow {
       width: 8px;
@@ -142,12 +143,23 @@ export default {
       font-size: 14px;
     }
   }
-  .contact{
+  .contact {
     font-size: 12px;
     color: #666666;
     line-height: 16px;
-    margin-top:24px;
+    margin-top: 24px;
     padding-left: 20px;
   }
+}
+/deep/ .van-uploader {
+  position: absolute;
+  height: 92px;
+  width: 355px;
+  top: 0;
+  left: 0;
+}
+/deep/ .van-uploader__input-wrapper{
+  height: 92px;
+  width: 355px;
 }
 </style>

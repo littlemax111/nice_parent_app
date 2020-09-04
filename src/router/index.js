@@ -5,7 +5,7 @@ export default new Router({
   routes: [
     {
       path:'/',
-      redirect:"/homePage/index",
+      redirect:"/login",
     },
     {
       path: "/login",
