@@ -1,6 +1,15 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <div class="navWrap">
+      <van-nav-bar  @click-left="goRoute('/myPage/index')">
+          <template #title>
+            <span class='navTitle single_wrap'>{{title}}</span>
+          </template>
+          <template #left>
+            <i class="icon_back"></i>
+          </template>
+        </van-nav-bar>
+      </div>
     <div>
       <ul class="setting_wrap">
         <li @click="goRoute('/myPage/safe')">
@@ -100,6 +109,23 @@ export default {
     margin-top:12px;
     background: #fff;
     font-size: 16px;
+  }
+}
+.navWrap{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+   .icon_back {
+    width: 9px;
+    height: 15px;
+    display: inline-block;
+    background: url("../../assets/images/home/back.svg");
+    background-size: cover;
+  }
+  .navTitle{
+    color:#232B36;
+    font-size: 18px;
+    font-weight: 400;
   }
 }
 </style>

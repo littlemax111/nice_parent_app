@@ -8,10 +8,10 @@
       </p>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="password" placeholder="请输入手机号码" v-model="phone"/>
+          <input type="number" placeholder="请输入手机号码" v-model="phone"/>
         </div>
         <div class="input_item">
-          <input type="password" placeholder="请输入验证码" class="yan_input" v-model="code"/>
+          <input type="number" placeholder="请输入验证码" class="yan_input" v-model="code"/>
           <span>获取验证码</span>
         </div>
         <button 
