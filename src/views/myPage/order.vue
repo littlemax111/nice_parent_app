@@ -205,6 +205,10 @@ export default {
   background: #f7f7f7;
   min-height: 100vh;
   .tab_title {
+    top:46px;
+    position: sticky;
+    z-index:100;
+    width:100%;
     display: flex;
     justify-content: space-around;
     font-size: 16px;

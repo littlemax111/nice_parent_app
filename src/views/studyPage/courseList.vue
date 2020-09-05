@@ -2,38 +2,29 @@
   <div>
     <div class="header">
       <div class="person-message">
-        <van-icon name="arrow-left" class="arrow-left" @click="$router.go(-1)"/>
+        <van-icon name="arrow-left" class="arrow-left" @click="$router.go(-1)" />
         <h2>初二数学寒假精品课</h2>
         <h3>01月04日-01月06日</h3>
         <div class="teacher-message">
-          <img :src="teacherPic" alt="" />
+          <img :src="teacherPic" alt />
           <span>主讲老师</span>
         </div>
         <ul class="modules clear">
-          <li
-            v-for="(item, index) in navList"
-            :key="index"
-            @click="toMoudles(item.router)"
-          >
-            <img :src="item.icon" alt="" />
+          <li v-for="(item, index) in navList" :key="index" @click="toMoudles(item.router)">
+            <img :src="item.icon" alt />
             <p>{{ item.name }}</p>
           </li>
         </ul>
       </div>
       <div class="wrap">
         <ul class="list">
-          <li
-            class="clear"
-            v-for="(item, index) in courseList"
-            :key="index"
-            @click="toDetails"
-          >
+          <li class="clear" v-for="(item, index) in courseList" :key="index" @click="toDetails">
             <div class="l">
               <p class="course-nmae single_wrap">{{ item.courseNmae }}</p>
               <p class="time single_wrap">{{ item.time }}</p>
             </div>
             <div class="r">
-              <van-icon name="arrow" class="arrow"/>
+              <van-icon name="arrow" class="arrow" />
             </div>
           </li>
         </ul>
@@ -87,6 +78,18 @@ export default {
           courseNmae: "第4讲 数学 · 无理数和3d轴",
           time: "2月21日 · 周五 19:00-21:00",
         },
+        {
+          courseNmae: "第4讲 数学 · 无理数和3d轴",
+          time: "2月21日 · 周五 19:00-21:00",
+        },
+        {
+          courseNmae: "第4讲 数学 · 无理数和3d轴",
+          time: "2月21日 · 周五 19:00-21:00",
+        },
+        {
+          courseNmae: "第4讲 数学 · 无理数和3d轴",
+          time: "2月21日 · 周五 19:00-21:00",
+        },
       ],
       screenList: [
         {
@@ -130,13 +133,11 @@ export default {
     toDetails() {
       this.$router.push(`/studyPage/details`);
     },
-    toMoudles(url){
-      if(url){
-this.$router.push(`${url}`);
+    toMoudles(url) {
+      if (url) {
+        this.$router.push(`${url}`);
       }
-      
-    }
-   
+    },
   },
 };
 </script>
@@ -209,11 +210,13 @@ this.$router.push(`${url}`);
     width: 345px;
     position: absolute;
     top: 235px;
-
+    height: calc(100vh - 235px);
+    overflow-y: auto;
+    background: #f5f5f5;
     ul.list {
       width: 100%;
       height: auto;
-      padding: 0 0 50px;
+      padding: 0 0 0;
       li {
         width: 100%;
         height: 90px;
@@ -240,9 +243,9 @@ this.$router.push(`${url}`);
           width: 20%;
           text-align: right;
           margin-top: 18px;
-          .arrow{
-              color: #999999;
-              font-size: 20px;
+          .arrow {
+            color: #999999;
+            font-size: 20px;
           }
         }
       }

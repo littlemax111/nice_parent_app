@@ -313,7 +313,7 @@ export default {
 .wrap {
   padding: 0 21px;
   .select-nav {
-    margin: 70px 0 21px;
+    margin: 70px 0 6px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -335,6 +335,7 @@ export default {
     }
   }
   ul.list {
+    padding-top:16px;
     width: 100%;
     height: calc(100vh - 312px);
     overflow-y: auto;

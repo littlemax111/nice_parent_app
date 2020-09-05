@@ -68,6 +68,36 @@ export default {
           place: "滨江学习中心",
           total: 2099,
         },
+        {
+          status: 1,
+          classTime: "19:00-20:00",
+          tips: "面授",
+          courseNmae: "初二数学寒假精品课",
+          time: "09月02日-01月07日",
+          couse: "10课时",
+          place: "滨江学习中心",
+          total: 1299,
+        },
+        {
+          status: 1,
+          classTime: "19:00-20:00",
+          tips: "面授",
+          courseNmae: "初二数学寒假精品课",
+          time: "09月02日-01月07日",
+          couse: "10课时",
+          place: "滨江学习中心",
+          total: 1299,
+        },
+        {
+          status: 1,
+          classTime: "19:00-20:00",
+          tips: "面授",
+          courseNmae: "初二数学寒假精品课",
+          time: "09月02日-01月07日",
+          couse: "10课时",
+          place: "滨江学习中心",
+          total: 1299,
+        },
       ],
       tabTitle: ["全部", "进行中", "已完结"],
       tabIndex: 0,
@@ -142,6 +172,10 @@ export default {
   background: #f7f7f7;
   min-height: 100vh;
   .tab_title {
+    top:46px;
+    position: sticky;
+    z-index:100;
+    width:100%;
     display: flex;
     justify-content: space-around;
     font-size: 16px;

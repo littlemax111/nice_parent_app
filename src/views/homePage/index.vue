@@ -240,7 +240,7 @@ export default {
     padding: 16px 17px 21px 17px;
     display: flex;
     align-items: center;
-    height: 58px;
+    height: 38px;
     position: fixed;
     top:0px;
     width:100%;
@@ -284,9 +284,9 @@ export default {
     }
   }
   .banner_wrap {
-    padding: 0 17px;
-    height: 120px;
-    margin-top: 58px;
+    padding: 20px 17px 0 17px;
+    height: 140px;
+    margin-top: 38px;
   }
   .van-swipe-item {
     img {

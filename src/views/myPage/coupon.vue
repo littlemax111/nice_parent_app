@@ -59,6 +59,41 @@ export default {
           time: "2020.01.07 - 2020.01.21",
           usePerson: "仅限新生使用",
         },
+        {
+          status: 0,
+          money: "20",
+          title: "寒假班两科联报优惠券",
+          time: "2020.01.07 - 2020.01.21",
+          usePerson: "仅限新生使用",
+        },
+        {
+          status: 0,
+          money: "20",
+          title: "寒假班两科联报优惠券",
+          time: "2020.01.07 - 2020.01.21",
+          usePerson: "仅限新生使用",
+        },
+        {
+          status: 0,
+          money: "20",
+          title: "寒假班两科联报优惠券",
+          time: "2020.01.07 - 2020.01.21",
+          usePerson: "仅限新生使用",
+        },
+        {
+          status: 0,
+          money: "20",
+          title: "寒假班两科联报优惠券",
+          time: "2020.01.07 - 2020.01.21",
+          usePerson: "仅限新生使用",
+        },
+        {
+          status: 0,
+          money: "20",
+          title: "寒假班两科联报优惠券",
+          time: "2020.01.07 - 2020.01.21",
+          usePerson: "仅限新生使用",
+        },
       ],
       tabTitle: ["未使用", "已使用", "已过期"],
       tabIndex: 0,
@@ -121,6 +156,10 @@ export default {
   background: #f7f7f7;
   min-height: 100vh;
   .tab_title {
+    top:46px;
+    position: sticky;
+    width:100%;
+    z-index:100;
     display: flex;
     justify-content: space-around;
     font-size: 16px;

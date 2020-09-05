@@ -1,18 +1,20 @@
 <template>
   <div class="wrap">
     <nav-bar :title="title"></nav-bar>
-    <div class="money_wrap">
-      <p class="money_title">余额(元)</p>
-      <p class="num">111110.0</p>
+    <div class='gray_bg'>
+      <div class="money_wrap">
+        <p class="money_title">余额(元)</p>
+        <p class="num">111110.0</p>
+      </div>
     </div>
     <h3 class="title">账户明细</h3>
     <ul class="bill_list">
       <li v-for="(item, index) in billList" :key="index">
-        <div class='course_wrap'>
+        <div class="course_wrap">
           <p class="course_title">{{item.title}}</p>
           <p class="time">{{item.time}}</p>
         </div>
-        <div class='total_wrap'>
+        <div class="total_wrap">
           <span class="total">{{item.total}}</span>
           <i class="icon_back"></i>
         </div>
@@ -44,6 +46,26 @@ export default {
           title: "初二数学寒假精品课",
           time: "2017-09-12 02:02:44",
         },
+        {
+          total: "-3180",
+          title: "初二数学寒假精品课",
+          time: "2017-09-12 02:02:44",
+        },
+        {
+          total: "-3180",
+          title: "初二数学寒假精品课",
+          time: "2017-09-12 02:02:44",
+        },
+        {
+          total: "-3180",
+          title: "初二数学寒假精品课",
+          time: "2017-09-12 02:02:44",
+        },
+        {
+          total: "-3180",
+          title: "初二数学寒假精品课",
+          time: "2017-09-12 02:02:44",
+        },
       ],
     };
   },
@@ -56,13 +78,21 @@ export default {
 .wrap {
   background: #f7f7f7;
   min-height: 100vh;
+  padding-bottom: 20px;
+  .gray_bg{
+    background: #f7f7f7;
+    top: 46px;
+    position: sticky;
+    z-index: 100;
+    width: 100%;
+    padding:14px 15px;
+  }
   .money_wrap {
     width: 345px;
     height: 112px;
     background: url("../../assets/images/my/money_bg.png");
     background-size: cover;
     border-radius: 9px;
-    margin: 14px auto;
     color: #fff;
     padding-top: 21px;
   }
@@ -80,14 +110,19 @@ export default {
     line-height: 49px;
   }
   .title {
-    padding: 8px 15px 0 15px;
+    top: 180px;
+    position: sticky;
+    z-index: 100;
+    width: 100%;
+    padding: 8px 15px 8px 15px;
     font-size: 16px;
     font-weight: 500;
     color: #333333;
     line-height: 26px;
+    background: #f7f7f7;
   }
   .bill_list {
-    margin-top: 21px;
+    margin-top: 13px;
     background: #fff;
     padding-left: 15px;
     li {
@@ -102,12 +137,12 @@ export default {
       font-size: 17px;
       line-height: 17px;
       color: #333;
-      margin-top:19px;
+      margin-top: 19px;
     }
     .time {
       font-size: 13px;
       color: #999999;
-      margin-top:15px;
+      margin-top: 15px;
       line-height: 12px;
     }
     .total {
@@ -123,11 +158,11 @@ export default {
     background-size: cover;
     margin-left: 9px;
   }
-  .course_wrap{
-    height:100%;
+  .course_wrap {
+    height: 100%;
   }
-  .total_wrap{
-    height:100%;
+  .total_wrap {
+    height: 100%;
     display: flex;
     align-items: center;
   }

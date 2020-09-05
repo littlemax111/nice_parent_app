@@ -5,7 +5,7 @@
       <van-field v-model="name" label="收货人" placeholder="填写姓名" />
       <van-field v-model="phone" type="tel" label="联系电话" placeholder="填写手机号" />
       <van-field v-model="city" label="所在地区" placeholder="选择所在地区" right-icon="arrow" @click='selectCity' />
-      <van-field v-model="address" label="详细地址" placeholder="详细地址" />
+      <van-field v-model="address" type="textarea" label="详细地址" placeholder="详细地址" rows="4" />
     </div>
     <div class="mt">
       <van-cell center title="设置为默认地址">

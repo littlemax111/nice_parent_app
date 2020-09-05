@@ -11,7 +11,7 @@
         right-icon="arrow"
         @click="selectCity"
       />
-      <van-field v-model="address" label="详细地址" placeholder="详细地址" />
+      <van-field v-model="address" type="textarea" label="详细地址" placeholder="详细地址" rows="4" />
     </div>
     <div class="mt">
       <van-cell center title="设置为默认地址">
