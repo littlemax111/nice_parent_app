@@ -56,7 +56,7 @@ export default {
       },
     };
   },
-  props: ["acitveIndex"],
+  props: [],
   // watch: {
   //   acitveIndex: (newVal, oldVal) => {
   //     console.log(newVal)
