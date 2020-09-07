@@ -68,34 +68,7 @@
         </li>
       </ul>
     </div>
-    <div class="tabbar_wrap">
-      <van-tabbar v-model="active" active-color="#E94831" inactive-color="#A1A5BB">
-        <van-tabbar-item icon="home-o" to="/homePage/index">
-          <span>首页</span>
-          <template #icon="props">
-            <img :src="props.active ? icon.active : icon.inactive" />
-          </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="home-o" to="/coursePage/index">
-          <span>选课</span>
-          <template #icon="props">
-            <img :src="props.active ? icon2.active : icon2.inactive" />
-          </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="home-o" to="/studyPage/index">
-          <span>学习</span>
-          <template #icon="props">
-            <img :src="props.active ? icon3.active : icon3.inactive" />
-          </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="home-o" to="/myPage/index">
-          <span>我的</span>
-          <template #icon="props">
-            <img :src="props.active ? icon4.active : icon4.inactive" />
-          </template>
-        </van-tabbar-item>
-      </van-tabbar>
-    </div>
+    <tab-bar></tab-bar>
   </div>
 </template>
 
@@ -107,23 +80,6 @@ import tabBar from "../../components/tabBar.vue";
 export default {
   data() {
     return {
-      active: 0,
-      icon: {
-        active: require("../../assets/images/home/home_yes.png"),
-        inactive: require("../../assets/images/home/home_none.png"),
-      },
-      icon2: {
-        active: require("../../assets/images/home/course_yes.png"),
-        inactive: require("../../assets/images/home/course_none.png"),
-      },
-      icon3: {
-        active: require("../../assets/images/home/study_yes.png"),
-        inactive: require("../../assets/images/home/study_none.png"),
-      },
-      icon4: {
-        active: require("../../assets/images/home/my_yes.png"),
-        inactive: require("../../assets/images/home/my_none.png"),
-      },
       grade: "初一",
       bannerList: [
         require("../../assets/images/home/banner1.png"),

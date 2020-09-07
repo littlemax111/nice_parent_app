@@ -14,13 +14,13 @@
             <img :src="props.active ? icon2.active : icon2.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o">
+        <van-tabbar-item icon="home-o" to="/studyPage/index">
           <span>学习</span>
           <template #icon="props">
             <img :src="props.active ? icon3.active : icon3.inactive" />
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="home-o">
+        <van-tabbar-item icon="home-o" to="/myPage/index">
           <span>我的</span>
           <template #icon="props">
             <img :src="props.active ? icon4.active : icon4.inactive" />
@@ -57,13 +57,23 @@ export default {
     };
   },
   props: ["acitveIndex"],
-  watch: {
-    acitveIndex: (newVal, oldVal) => {
-      console.log(newVal)
-      this.active = newVal;
+  // watch: {
+  //   acitveIndex: (newVal, oldVal) => {
+  //     console.log(newVal)
+  //     this.active = newVal;
+  //   },
+  // },
+ mounted(){
+        if(this.$route.path === '/homePage/index'){
+        this.active = 0
+      }else if(this.$route.path === '/coursePage/index'){
+        this.active = 1
+      }else if(this.$route.path === '/studyPage/index'){
+        this.active = 2
+      }else if(this.$route.path === '/myPage/index'){
+        this.active = 3
+      }
     },
-  },
-
   methods: {},
 };
 </script>

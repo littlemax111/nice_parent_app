@@ -82,7 +82,8 @@
         </div>
       </ul>
     </van-popup>
-    <div class="tabbar_wrap">
+    <tab-bar></tab-bar>
+    <!-- <div class="tabbar_wrap">
       <van-tabbar
         v-model="active"
         active-color="#E94831"
@@ -113,39 +114,25 @@
           </template>
         </van-tabbar-item>
       </van-tabbar>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 import navBar from "../../components/navBar.vue";
 import noData from "../../components/noData.vue";
+import tabBar from "../../components/tabBar.vue";
 import { Popup } from "vant";
 export default {
   components: {
     navBar,
     noData,
+    tabBar
   },
   data() {
     return {
       flag: true,
-      active: 2,
+     
       content: "暂无课程，快去选课吧~",
-      icon: {
-        active: require("../../assets/images/home/home_yes.png"),
-        inactive: require("../../assets/images/home/home_none.png"),
-      },
-      icon2: {
-        active: require("../../assets/images/home/course_yes.png"),
-        inactive: require("../../assets/images/home/course_none.png"),
-      },
-      icon3: {
-        active: require("../../assets/images/home/study_yes.png"),
-        inactive: require("../../assets/images/home/study_none.png"),
-      },
-      icon4: {
-        active: require("../../assets/images/home/my_yes.png"),
-        inactive: require("../../assets/images/home/my_none.png"),
-      },
       show: false,
       navList: [
         {
