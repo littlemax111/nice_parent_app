@@ -20,9 +20,10 @@
           v-model="result"
           ref="checkboxGroup"
           checked-color="#E94831"
+          @change="getChecked"
         >
           <li v-for="(item, index) in courseList" :key="index">
-            <van-checkbox name="a">
+            <van-checkbox :name="item">
               <div class="top">
                 <div class="title">
                   <span class="tips">{{ item.tips }}</span>
@@ -50,19 +51,19 @@
         <span>合计：</span>
         <span>
           <i class="tag">￥</i>
-          <i class="price">3180</i>
+          <i class="price">{{total}}</i>
         </span>
       </div>
       <div class="right" v-if="flag" @click="goOrderDetail">
         去结算
       </div>
       <div class="left" v-if="!flag">
-        <van-checkbox v-model="checked" checked-color="#E94831"
+        <van-checkbox v-model="checked" checked-color="#E94831" @click="checkAll"
           >全选</van-checkbox
         >
       </div>
       <div class="right" v-if="!flag">
-        删除（2）
+        删除（{{this.result.length}}）
       </div>
     </div>
   </div>
@@ -76,7 +77,7 @@ export default {
       title: "购物单",
       result: [],
       checked: false,
-     
+      total:0,
       courseList: [
         {
           id: 1,
@@ -101,12 +102,13 @@ export default {
   },
   computed:{
       status:function(){
-          console.log(this.flag)
           return this.flag?'编辑':'完成'
       }
   },
   methods: {
     onClickRight() {
+      this.result = [];
+      this.checked = false;
       this.flag = !this.flag;
     },
     toDetails(val) {
@@ -118,6 +120,21 @@ export default {
     },
      goOrderDetail(){
         this.$router.push(`/coursePage/orderDetail?type=waitPay`)
+    },
+    checkAll(){
+      this.checked? this.$refs.checkboxGroup.toggleAll(true): this.$refs.checkboxGroup.toggleAll()
+    },
+    getChecked(){
+      if(this.result.length === this.courseList.length){
+        this.checked = true
+      }else{
+        this.checked = false
+      }
+      console.log(this.result)
+      this.total = 0;
+      this.result.map(item => {
+        this.total+=item.total
+      })
     }
   },
 };

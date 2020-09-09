@@ -76,11 +76,11 @@
             >
           </div>
         </li>
-        <div class="operation-bar clear">
+      </ul>
+       <div class="operation-bar clear">
           <div class="l" @click="(flag = true), (show = false)">重置</div>
           <div class="r" @click="(flag = false), (show = false)">确定</div>
         </div>
-      </ul>
     </van-popup>
     <tab-bar></tab-bar>
     <!-- <div class="tabbar_wrap">
@@ -462,6 +462,8 @@ export default {
 }
 .select_wrap {
   padding: 18px 15px 20px 16px;
+  height: calc(100vh - 66px);
+    overflow-y: auto;
   h3 {
     height: 25px;
     font-size: 20px;
@@ -502,7 +504,10 @@ export default {
       border-radius: 43px;
     }
   }
-  .operation-bar {
+ 
+}
+ .operation-bar {
+   padding-left: 16px;
     position: fixed;
     bottom: 20px;
     div {
@@ -523,5 +528,4 @@ export default {
       background: #e94831;
     }
   }
-}
 </style>
