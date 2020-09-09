@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div class="top_wrap">
-      <van-icon name="cross" color="#9BA1B0" class="close_icon" size="18" @click='backFn()' />
+      <van-icon name="cross" color="#9BA1B0" class="close_icon" size="18" @click="backFn()" />
       <div class="city_wrap" @click='goRoute("/homePage/city")'>
         <span class="city">{{city}}</span>
         <i class="down_icon"></i>
@@ -16,10 +16,10 @@
           <div class="grade_item">
             <i
               v-for="(value, index) in item.small"
-              :key="index"
-              :class="{'active':gradeIndex==index&&gradeName==item.big}"
-              @click="addClassname(index,item.big)"
-            >{{value}}</i>
+              :key="value.id"
+              :class="{'active':grade.id===value.id}"
+              @click="addClassname(value)"
+            >{{value.name}}</i>
           </div>
         </li>
       </ul>
@@ -30,25 +30,39 @@
 <script>
 import { Dialog } from "vant";
 import { Icon } from "vant";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       city: "杭州市",
-      gradeIndex: 0,
-      gradeName:'小学',
       gradeList: [
         {
           big: "小学",
-          small: ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级"],
+          small: [
+            { name: "一年级", id: 1 },
+            { name: "二年级", id: 2 },
+            { name: "三年级", id: 3 },
+            { name: "四年级", id: 4 },
+            { name: "五年级", id: 5 },
+            { name: "六年级", id: 6 },
+          ],
         },
         {
           big: "初中",
-          small: ["初一", "初二", "初三"],
+          small: [
+            { name: "初一", id: 7 },
+            { name: "初二", id: 8 },
+            { name: "初三", id: 9 },
+          ],
         },
         {
           big: "高中",
-          small: ["高一", "高二", "高三"],
+          small: [
+            { name: "高一", id: 10 },
+            { name: "高二", id: 11 },
+            { name: "高三", id: 12 },
+          ],
         },
       ],
     };
@@ -56,7 +70,9 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-
+  computed: {
+    ...mapState(["grade"]),
+  },
   methods: {
     //路由跳转
     goRoute(name) {
@@ -66,9 +82,8 @@ export default {
     backFn() {
       this.$router.go(-1); //返回上一层
     },
-    addClassname(index,name) {
-      this.gradeIndex = index;
-      this.gradeName = name;
+    addClassname(value) {
+      this.$store.commit("grade", value);
     },
   },
 };

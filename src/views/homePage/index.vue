@@ -2,11 +2,11 @@
   <div class="wrap">
     <div class="top_wrap">
       <div class="grade_wrap" @click='goRoute("/homePage/grade")'>
-        <span class="grade">{{grade}}</span>
+        <span class="grade">{{grade.name}}</span>
         <i class="down_icon"></i>
       </div>
       <i class="seacher_icon"></i>
-      <i class="shop_icon"></i>
+      <i class="shop_icon" @click='goRoute("/coursePage/courseCar")'></i>
     </div>
     <div class="banner_wrap">
       <van-swipe :autoplay="3000" :show-indicators="false">
@@ -76,11 +76,11 @@
 import { Icon } from "vant";
 import { Swipe, SwipeItem, Lazyload, Tabbar, TabbarItem } from "vant";
 import tabBar from "../../components/tabBar.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      grade: "初一",
       bannerList: [
         require("../../assets/images/home/banner1.png"),
         require("../../assets/images/home/banner1.png"),
@@ -144,7 +144,9 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-
+  computed: {
+    ...mapState(["grade"]),
+  },
   methods: {
     //路由跳转
     goRoute(name) {
