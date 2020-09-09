@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="wrap">
       <h2>所在学习中心</h2>
       <div class="location">
@@ -47,6 +47,7 @@ import { Field, Uploader } from "vant";
 export default {
   data() {
     return {
+      routeName:'',
       tabIndex: 0,
       title: "意见反馈",
       message: "",

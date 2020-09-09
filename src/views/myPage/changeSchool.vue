@@ -1,6 +1,6 @@
 <template>
   <div class='wrap'>
-    <nav-bar :title='title' ></nav-bar>
+    <nav-bar :title='title' ::routeName="routeName"></nav-bar>
     <no-data :content='content'></no-data>
   </div>
 </template>
@@ -14,7 +14,8 @@ export default {
   data() {
     return {
       title:'纳思网校',
-      content:'当前暂无内容'
+      content:'当前暂无内容',
+      routeName:'',
     };
   },
   components:{

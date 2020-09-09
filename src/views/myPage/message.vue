@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <ul class="message_wrap" v-if="messageList.length>0">
       <li v-for="(item, index) in messageList" :key="index">
         <p class="time">{{item.time}}</p>
@@ -25,6 +25,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'',
       title: "消息中心",
       content: "暂无消息",
       messageList: [

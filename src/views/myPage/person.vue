@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <ul class="list">
       <li class="photo">
         <span>孩子头像</span>
@@ -61,6 +61,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'',
       title: "个人资料",
       sexList: ["女", "男"],
       showPicker2: false,

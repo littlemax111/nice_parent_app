@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="video_wrap">
       <video src="../../assets/images/home/case.mp4" controls></video>
     </div>
@@ -93,6 +93,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'',
       show: false,
       title: "趣味跟读",
       classList: [

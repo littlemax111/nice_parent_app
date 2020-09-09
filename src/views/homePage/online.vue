@@ -1,6 +1,6 @@
 <template>
   <div class='wrap'>
-    <nav-bar :title='title' ></nav-bar>
+    <nav-bar :title='title' :routeName="routeName"></nav-bar>
     <no-data :content='content'></no-data>
   </div>
 </template>
@@ -13,6 +13,7 @@ import navBar from "../../components/navBar.vue"
 export default {
   data() {
     return {
+      routeName:'',
       title:'纳思网校',
       content:'当前暂无内容'
     };

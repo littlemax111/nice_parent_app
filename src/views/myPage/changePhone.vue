@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="content">
       <h3 class="title">验证旧手机号</h3>
       <p class="sub_title">
@@ -35,6 +35,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'',
       title: "更换手机号",
       code:'',
     };

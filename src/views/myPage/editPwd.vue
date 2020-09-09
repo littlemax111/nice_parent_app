@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="content">
       <h3 class="title">修改密码</h3>
       <div class="input_wrap">
@@ -31,6 +31,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'',
       title: "设置密码",
       oldPassword:'',
       newPassword:'',

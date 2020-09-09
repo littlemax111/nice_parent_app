@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="top_wrap">
       <div class="city_wrap">
         <p class="title">当前选择城市</p>
@@ -38,6 +38,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      routeName:'',
       title: "选择城市",
       indexList: ["A", "B", "C", "D", "E", "F", "G"],
       cityList: [

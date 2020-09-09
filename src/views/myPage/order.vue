@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <ul class="tab_title">
       <li
         v-for="(item, index) in tabTitle"
@@ -60,6 +60,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'',
       title: "我的订单",
       content: "您还没有相关订单哦~",
       orderList: [

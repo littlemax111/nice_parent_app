@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <van-cell-group class='mt'>
       <van-field v-model="value" label="" placeholder="请输入在读学校" />
     </van-cell-group>
@@ -15,7 +15,8 @@ export default {
   data() {
     return {
       title: "在读学校",
-      value:''
+      value:'',
+      routeName:'',
     };
   },
   components: {

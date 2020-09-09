@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class='gray_bg'>
       <div class="money_wrap">
         <p class="money_title">余额(元)</p>
@@ -29,6 +29,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'',
       title: "我的钱包",
       billList: [
         {

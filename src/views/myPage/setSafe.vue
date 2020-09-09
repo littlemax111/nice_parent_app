@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="course-message">
       <ul>
         <li @click='goRoute("/myPage/changePhone")'>
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       title: "账号安全",
+      routeName:'',
     };
   },
   components: {
