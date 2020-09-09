@@ -20,8 +20,8 @@
           <li
             v-for="(item, index) in schoolList"
             :key="index"
-            :class="{'active':schoolIndex==index}"
-            @click="addActive(index)"
+            :class="{'active':school.id===item.id}"
+            @click="addActive(item)"
           >
             <h4 class="address_title">{{item.title}}</h4>
             <p>{{item.detail}}</p>
@@ -39,6 +39,7 @@
 <script>
 import noData from "../../components/noData.vue";
 import navBar from "../../components/navBar.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -47,30 +48,36 @@ export default {
       addressList: ["西湖区", "萧山区", "下城区", "上城区", "拱墅区", "江干区"],
       schoolList: [
         {
+          id:1,
           title: "教工路学习中心",
           detail: "杭州市西湖区教工路88号立元大厦1楼",
         },
         {
+          id:2,
           title: "古墩学习中心",
           detail: "杭州市西湖区古墩路543号",
         },
         {
+          id:3,
           title: "文一学习中心",
           detail: "杭州市西湖区教工路88号立元大厦1楼",
         },
         {
+          id:4,
           title: "三墩学习中心",
           detail: "杭州市西湖区教工路88号立元大厦1楼",
         },
       ],
       addressIndex: 0,
-      schoolIndex: 0,
       content:'当前城市暂无学习中心哦~'
     };
   },
   components: {
     noData,
     navBar,
+  },
+  computed: {
+    ...mapState(["school"]),
   },
   watch: {},
   created() {},
@@ -84,26 +91,30 @@ export default {
       } else {
         this.schoolList = [
           {
+            id:1,
             title: "教工路学习中心",
             detail: "杭州市西湖区教工路88号立元大厦1楼",
           },
           {
+            id:2,
             title: "古墩学习中心",
             detail: "杭州市西湖区古墩路543号",
           },
           {
+            id:3,
             title: "文一学习中心",
             detail: "杭州市西湖区教工路88号立元大厦1楼",
           },
           {
+            id:4,
             title: "三墩学习中心",
             detail: "杭州市西湖区教工路88号立元大厦1楼",
           },
         ];
       }
     },
-    addActive(index) {
-      this.schoolIndex = index;
+    addActive(value) {
+      this.$store.commit("school", value);
     },
   },
 };

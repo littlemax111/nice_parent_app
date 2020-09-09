@@ -3,7 +3,7 @@
     <div class="top_wrap">
       <van-icon name="cross" color="#9BA1B0" class="close_icon" size="18" @click="backFn()" />
       <div class="city_wrap" @click='goRoute("/homePage/city")'>
-        <span class="city">{{city}}</span>
+        <span class="city">{{city.name}}</span>
         <i class="down_icon"></i>
       </div>
     </div>
@@ -35,7 +35,6 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      city: "杭州市",
       gradeList: [
         {
           big: "小学",
@@ -71,7 +70,7 @@ export default {
   created() {},
   mounted() {},
   computed: {
-    ...mapState(["grade"]),
+    ...mapState(["grade","city"]),
   },
   methods: {
     //路由跳转

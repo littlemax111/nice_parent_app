@@ -126,7 +126,7 @@ export default {
       this.showPicker3 = false;
     },
     goAppointment() {
-      this.$router.push(`/coursePage/appointmented`);
+      this.$router.push(`/myPage/student`);
     },
   },
 };

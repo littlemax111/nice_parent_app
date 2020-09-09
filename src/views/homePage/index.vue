@@ -195,7 +195,7 @@ export default {
   background: #fff;
   min-height: 100vh;
   .top_wrap {
-    padding: 16px 17px 21px 17px;
+    padding: 18px 17px 19px 17px;
     display: flex;
     align-items: center;
     height: 38px;

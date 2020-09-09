@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="mt">
       <van-field v-model="name" label="收货人" placeholder="填写姓名" />
       <van-field v-model="phone" type="tel" label="联系电话" placeholder="填写手机号" />
@@ -20,7 +20,7 @@
         </template>
       </van-cell>
     </div>
-    <div class="pay-bar">保存</div>
+    <div class="pay-bar" @click='$router.push(`/myPage/address`)'>保存</div>
     <van-popup v-model="show" position="bottom">
       <van-area title :area-list="areaList" @confirm="onConfirm" @cancel="show = false" />
     </van-popup>
@@ -34,6 +34,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
+      routeName:'/myPage/address',
       show: false,
       title: "编辑地址",
       name: "肖智华",

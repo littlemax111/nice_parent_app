@@ -4,7 +4,7 @@
     <div class="top_wrap">
       <div class="city_wrap">
         <p class="title">当前选择城市</p>
-        <p class="city">杭州</p>
+        <p class="city">{{city.name}}</p>
       </div>
       <div class="positioning_wrap">
         <p class="title">当前定位城市</p>
@@ -14,36 +14,18 @@
         </p>
       </div>
     </div>
-    <van-index-bar :index-list="indexList" highlight-color='#E94831'>
-      <van-index-anchor index="A" />
-      <van-cell title="安徽省" />
-      <van-cell title="安徽省" />
-      <van-cell title="安徽省" />
-
-      <van-index-anchor index="B" />
-      <van-cell title="北京省" />
-      <van-cell title="北京省" />
-      <van-cell title="北京省" />
-      <van-index-anchor index="C" />
-      <van-cell title="重庆省" />
-      <van-cell title="重庆省" />
-      <van-cell title="重庆省" />
-      <van-index-anchor index="D" />
-      <van-cell title="大连" />
-      <van-cell title="大连" />
-      <van-cell title="大连" />
-      <van-index-anchor index=E />
-      <van-cell title="鄂城" />
-      <van-cell title="鄂城" />
-      <van-cell title="鄂城" />
-      <van-index-anchor index=F />
-      <van-cell title="福建省" />
-      <van-cell title="福建省" />
-      <van-cell title="福建省" />
-      <van-index-anchor index=G />
-      <van-cell title="甘肃省" />
-      <van-cell title="甘肃省" />
-      <van-cell title="甘肃省" />
+    <van-index-bar :index-list="indexList" highlight-color="#E94831">
+      <div v-for="(item, index) in cityList" :key="index">
+      <van-index-anchor :index="item.title"  />
+      <van-cell
+        :title="value.name"
+        v-for="(value, index) in item.list"
+        :key="value.id"
+        :class="{'active':city.id===value.id}"
+        @click="addClassname(value)"
+      />
+      </div>
+      
     </van-index-bar>
   </div>
 </template>
@@ -51,16 +33,83 @@
 <script>
 import navBar from "../../components/navBar.vue";
 import { IndexBar, IndexAnchor } from "vant";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       title: "选择城市",
-      indexList: ['A', 'B', 'C', 'D', 'E', 'F', 'G',],
+      indexList: ["A", "B", "C", "D", "E", "F", "G"],
+      cityList: [
+        {
+          title: "A",
+          list: [
+            { id: 1, name: "安徽省1" },
+            { id: 2, name: "安徽省2" },
+            { id: 3, name: "安徽省3" },
+          ],
+        },
+        {
+          title: "B",
+          list: [
+            { id: 4, name: "北京省1" },
+            { id: 5, name: "北京省2" },
+            { id: 6, name: "北京省3" },
+          ],
+        },
+        {
+          title: "C",
+          list: [
+            { id: 7, name: "重庆省1" },
+            { id: 8, name: "重庆省2" },
+            { id: 9, name: "重庆省3" },
+          ],
+        },
+        {
+          title: "D",
+          list: [
+            { id: 10, name: "大连1" },
+            { id: 11, name: "大连2" },
+            { id: 12, name: "大连3" },
+          ],
+        },
+        {
+          title: "E",
+          list: [
+            { id: 13, name: "鄂城1" },
+            { id: 14, name: "鄂城2" },
+            { id: 15, name: "鄂城3" },
+          ],
+        },
+        {
+          title: "F",
+          list: [
+            { id: 16, name: "福建省1" },
+            { id: 17, name: "福建省2" },
+            { id: 18, name: "福建省3" },
+          ],
+        },
+        {
+          title: "G",
+          list: [
+            { id: 19, city: "甘肃省1" },
+            { id: 20, city: "甘肃省2" },
+            { id: 21, city: "甘肃省3" },
+          ],
+        },
+      ],
     };
   },
   components: {
     navBar,
+  },
+  computed: {
+    ...mapState(["city"]),
+  },
+  methods: {
+    addClassname(value) {
+      this.$store.commit("city", value);
+    },
   },
 };
 </script>
@@ -72,7 +121,7 @@ export default {
     padding: 20px 16px;
     border-bottom: 9px solid #f6f6f6;
     position: absolute;
-    width:100%;
+    width: 100%;
     z-index: 1000;
   }
   .positioning_wrap {
@@ -107,13 +156,16 @@ export default {
     color: #e94831;
   }
 }
-/deep/ .van-index-bar__sidebar{
-  margin-top:90px;
+/deep/ .van-index-bar__sidebar {
+  margin-top: 90px;
 }
-/deep/ .van-index-bar{
-  margin-top:200px;
+/deep/ .van-index-bar {
+  margin-top: 200px;
   position: relative;
   z-index: 100;
   background: #fff;
+}
+.active span{
+  color:#e94831
 }
 </style>

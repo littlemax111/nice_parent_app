@@ -20,10 +20,14 @@ export default {
       
     }
   },
-  props:["title"],
+  props:["title",'routeName'],
   methods:{
     backFn(){
-      this.$router.go(-1);//返回上一层
+      if(this.routeName){
+        this.$router.push(this.routeName)
+      }else{
+        this.$router.go(-1);//返回上一层
+      }
     }
   }
 }

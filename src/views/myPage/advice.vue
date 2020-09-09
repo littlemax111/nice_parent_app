@@ -36,7 +36,7 @@
       </h2>
       <van-uploader :after-read="afterRead" />
     </div>
-    <div class="pay-bar">提&nbsp;&nbsp;交</div>
+    <div class="pay-bar" @click='$router.push(`/myPage/index`)'>提&nbsp;&nbsp;交</div>
   </div>
 </template>
 

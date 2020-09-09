@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div v-if="list.length>0">
       <ul class="address_list">
         <li v-for="(item, index) in list" :key="index">
@@ -29,6 +29,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'/myPage/setting',
       title: "地址管理",
       content: "暂无地址，快去添加地址吧~",
       list: [

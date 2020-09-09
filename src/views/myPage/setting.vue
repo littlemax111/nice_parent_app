@@ -1,16 +1,6 @@
 <template>
   <div class="wrap">
-    <div class="navWrap">
-      <van-nav-bar  @click-left="goRoute('/myPage/index')">
-          <template #title>
-            <span class='navTitle single_wrap'>{{title}}</span>
-          </template>
-          <template #left>
-            <i class="icon_back"></i>
-          </template>
-        </van-nav-bar>
-      </div>
-    <div>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
       <ul class="setting_wrap">
         <li @click="goRoute('/myPage/safe')">
           <span>账号安全</span>
@@ -56,6 +46,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'/myPage/index',
       title: "设置",
       checked:false,
     };
@@ -109,23 +100,6 @@ export default {
     margin-top:12px;
     background: #fff;
     font-size: 16px;
-  }
-}
-.navWrap{
-  position: sticky;
-  top: 0;
-  z-index: 100;
-   .icon_back {
-    width: 9px;
-    height: 15px;
-    display: inline-block;
-    background: url("../../assets/images/home/back.svg");
-    background-size: cover;
-  }
-  .navTitle{
-    color:#232B36;
-    font-size: 18px;
-    font-weight: 400;
   }
 }
 </style>

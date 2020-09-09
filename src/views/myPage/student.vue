@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title"></nav-bar>
+    <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div class="student_wrap">
       <div class="student_msg">
         <div class="msg_wrap">
@@ -38,6 +38,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'/myPage/index',
       title: "我的学员",
       msg: {
         name: "肖剑",

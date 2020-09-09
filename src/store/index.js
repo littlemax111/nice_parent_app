@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 const state={
   grade:{id:10,name:'高一'},
-  school:{id:5,name:'滨江学习中心'},
+  school:{id:1,title:'教工路学习中心'},
   city:{id:6,name:'杭州'}
 }
 

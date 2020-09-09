@@ -4,8 +4,8 @@
       <div class="top_wrap">
         <div class="grade_wrap">
           <span class="tips">选课</span>
-          <div class="grade-tips">
-            <span class="grade">{{ grade }}</span>
+          <div class="grade-tips" @click="$router.push(`/homePage/grade`)">
+            <span class="grade">{{ grade.name }}</span>
             <i class="down_icon"></i>
           </div>
         </div>
@@ -27,12 +27,12 @@
         <div class="left">
           <span>查看意向校区课程</span>
           <span>
-            滨江学习中心
+            {{school.title}}
             <img :src="moreIcon" alt />
           </span>
         </div>
-        <div class="right">
-          <img :src="addressIcon" alt />
+        <div class="right" @click="$router.push(`/homePage/school`)">
+          <img :src="addressIcon" alt  />
           更换校区
         </div>
       </div>
@@ -67,10 +67,10 @@
 </template>
 <script>
 import tabBar from "../../components/tabBar.vue";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
-      grade: "初二",
       navList: [
         {
           name: "推荐",
@@ -148,6 +148,9 @@ export default {
   },
   components: {
     tabBar,
+  },
+  computed: {
+    ...mapState(["grade","school"]),
   },
 };
 </script>
