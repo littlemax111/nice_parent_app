@@ -5,12 +5,8 @@
         <h2>HI，肖剑同学</h2>
         <h3>纳思书院与你一起进步</h3>
         <ul class="modules">
-          <li
-            v-for="(item, index) in navList"
-            :key="index"
-            @click="goRouter(item.router)"
-          >
-            <img :src="item.icon" alt="" />
+          <li v-for="(item, index) in navList" :key="index" @click="goRouter(item.router)">
+            <img :src="item.icon" alt />
             <p>{{ item.name }}</p>
           </li>
         </ul>
@@ -20,7 +16,7 @@
       <div class="select-nav">
         <div>我的课程</div>
         <div @click="show = true">
-          <img :src="selectIcon" alt="" />
+          <img :src="selectIcon" alt />
           <span>筛选</span>
         </div>
       </div>
@@ -28,14 +24,14 @@
         <li v-for="(item, index) in courseList" :key="index">
           <div class="top">
             <div class="time">
-              <div class="ing-l-status" v-if="!item.flag"></div>
-              <span class="l-status" v-if="item.flag">今日</span>
+              <div class="ing-l-status" v-if="item.flag"></div>
+              <span class="l-status" v-if="!item.flag">今日</span>
               <span class="l-time">{{ item.Ltime }}</span>
             </div>
             <span class="over-status" v-if="item.flag">已完结</span>
             <span class="ing-status" v-if="!item.flag">进入课堂</span>
           </div>
-          <div class="bottom" @click="toCourse">
+          <div class="bottom" @click="toCourse(item)">
             <div class="title">
               <span class="tips">{{ item.tips }}</span>
               <span class="course-name">{{ item.courseNmae }}</span>
@@ -58,11 +54,7 @@
     </div>
 
     <!-- 筛选弹窗 -->
-    <van-popup
-      v-model="show"
-      position="right"
-      :style="{ height: '100%', width: '310px' }"
-    >
+    <van-popup v-model="show" position="right" :style="{ height: '100%', width: '310px' }">
       <ul class="select_wrap">
         <h3>筛选</h3>
         <li v-for="(item, index) in screenList" :key="index">
@@ -72,49 +64,16 @@
               v-for="(value, index) in item.small"
               :key="index"
               :class="{ active: index === 0 }"
-              >{{ value }}</i
-            >
+            >{{ value }}</i>
           </div>
         </li>
       </ul>
-       <div class="operation-bar clear">
-          <div class="l" @click="(flag = true), (show = false)">重置</div>
-          <div class="r" @click="(flag = false), (show = false)">确定</div>
-        </div>
+      <div class="operation-bar clear">
+        <div class="l" @click="(flag = true), (show = false)">重置</div>
+        <div class="r" @click="(flag = false), (show = false)">确定</div>
+      </div>
     </van-popup>
     <tab-bar></tab-bar>
-    <!-- <div class="tabbar_wrap">
-      <van-tabbar
-        v-model="active"
-        active-color="#E94831"
-        inactive-color="#A1A5BB"
-      >
-        <van-tabbar-item icon="home-o" to="/homePage/index">
-          <span>首页</span>
-          <template #icon="props">
-            <img :src="props.active ? icon.active : icon.inactive" />
-          </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="home-o" to="/coursePage/index">
-          <span>选课</span>
-          <template #icon="props">
-            <img :src="props.active ? icon2.active : icon2.inactive" />
-          </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="home-o" to="/studyPage/index">
-          <span>学习</span>
-          <template #icon="props">
-            <img :src="props.active ? icon3.active : icon3.inactive" />
-          </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="home-o" to="/myPage/index">
-          <span>我的</span>
-          <template #icon="props">
-            <img :src="props.active ? icon4.active : icon4.inactive" />
-          </template>
-        </van-tabbar-item>
-      </van-tabbar>
-    </div> -->
   </div>
 </template>
 <script>
@@ -126,12 +85,11 @@ export default {
   components: {
     navBar,
     noData,
-    tabBar
+    tabBar,
   },
   data() {
     return {
       flag: true,
-     
       content: "暂无课程，快去选课吧~",
       show: false,
       navList: [
@@ -158,10 +116,10 @@ export default {
       ],
       courseList: [
         {
-          flag: true,
+          flag: false,
           Ltime: "19:00-20:00",
-          tips: "面授",
-          courseNmae: "初二数学寒假精品课",
+          tips: "在线",
+          courseNmae: "初三物理秋季小班 ",
           time: "09月02日-01月07日",
           couse: "10课时",
           place: "滨江学习中心",
@@ -171,7 +129,7 @@ export default {
           flag: false,
           Ltime: "2020.04.20 ",
           tips: "在线",
-          courseNmae: "初二语文寒假精品课",
+          courseNmae: "初三化学秋季1对1",
           time: "09月02日-01月07日",
           couse: "12课时",
           place: "滨江学习中心",
@@ -181,8 +139,8 @@ export default {
           flag: false,
           Ltime: "2020.04.20 ",
           tips: "面授",
-          courseNmae: "初一英语寒假精品课",
-          time: "09月02日-01月07日",
+          courseNmae: "初三数学秋季小班",
+          time: "每周日下午3点",
           couse: "6课时",
           place: "滨江学习中心",
           total: 2299,
@@ -191,8 +149,48 @@ export default {
           flag: false,
           Ltime: "2020.04.20 ",
           tips: "面授",
-          courseNmae: "初三科学寒假精品课",
-          time: "09月02日-01月07日",
+          courseNmae: "初三英语秋季大班",
+          time: "每周日下午5点",
+          couse: "8课时",
+          place: "滨江学习中心",
+          total: 999,
+        },
+        {
+          flag: true,
+          Ltime: "2020.04.20 ",
+          tips: "在线",
+          courseNmae: "初二数学秋季大班",
+          time: "每周日下午5点",
+          couse: "8课时",
+          place: "滨江学习中心",
+          total: 999,
+        },
+        {
+          flag: true,
+          Ltime: "2020.04.20 ",
+          tips: "在线",
+          courseNmae: "初一英语秋季小班",
+          time: "每周日下午5点",
+          couse: "8课时",
+          place: "滨江学习中心",
+          total: 999,
+        },
+        {
+          flag: true,
+          Ltime: "2020.04.20 ",
+          tips: "面授",
+          courseNmae: "初二数学秋季1对1",
+          time: "每周六下午5点",
+          couse: "8课时",
+          place: "滨江学习中心",
+          total: 999,
+        },
+        {
+          flag: true,
+          Ltime: "2020.04.20 ",
+          tips: "面授",
+          courseNmae: "初二英语秋季大班",
+          time: "每周六上午9点",
           couse: "8课时",
           place: "滨江学习中心",
           total: 999,
@@ -240,8 +238,10 @@ export default {
     goRouter(url) {
       this.$router.push(`${url}`);
     },
-    toCourse() {
-      this.$router.push(`/studyPage/courseList`);
+    toCourse(item) {
+      if (item.tips !== "面授") {
+        this.$router.push(`/studyPage/courseList`);
+      } 
     },
   },
 };
@@ -322,7 +322,7 @@ export default {
     }
   }
   ul.list {
-    padding-top:16px;
+    padding-top: 16px;
     width: 100%;
     height: calc(100vh - 312px);
     overflow-y: auto;
@@ -378,9 +378,9 @@ export default {
       .bottom {
         padding-top: 18px;
         .title {
-          height: 18px;
-          line-height: 18px;
+          height: 16px;
           display: flex;
+          align-items: center;
           .tips {
             display: block;
             width: 29px;
@@ -463,7 +463,7 @@ export default {
 .select_wrap {
   padding: 18px 15px 20px 16px;
   height: calc(100vh - 66px);
-    overflow-y: auto;
+  overflow-y: auto;
   h3 {
     height: 25px;
     font-size: 20px;
@@ -504,28 +504,27 @@ export default {
       border-radius: 43px;
     }
   }
- 
 }
- .operation-bar {
-   padding-left: 16px;
-    position: fixed;
-    bottom: 20px;
-    div {
-      width: 135px;
-      height: 34px;
-      line-height: 32px;
-      text-align: center;
-      border-radius: 17px;
-      font-size: 14px;
-      border: 1px solid #e94831;
-    }
-    .l {
-      color: #e94831;
-      margin-right: 10px;
-    }
-    .r {
-      color: #ffffff;
-      background: #e94831;
-    }
+.operation-bar {
+  padding-left: 16px;
+  position: fixed;
+  bottom: 20px;
+  div {
+    width: 135px;
+    height: 34px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 17px;
+    font-size: 14px;
+    border: 1px solid #e94831;
   }
+  .l {
+    color: #e94831;
+    margin-right: 10px;
+  }
+  .r {
+    color: #ffffff;
+    background: #e94831;
+  }
+}
 </style>

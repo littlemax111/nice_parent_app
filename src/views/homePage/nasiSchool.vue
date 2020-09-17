@@ -2,11 +2,11 @@
   <div class="wrap">
     <nav-bar :title="title" :routeName="routeName"></nav-bar>
     <div>
-      <img src="../../assets/images/home/online1.png" alt />
+      <img src="../../assets/images/home/nice1.png" alt />
     </div>
     <div class="fomr_wrap">
       <div class="form_list">
-        <h3 class="title">预约在线体验课</h3>
+        <h3 class="title">免费领取价值299元测评课</h3>
         <div class="input_wrap">
           <input type="text" placeholder="请输入学生姓名" />
         </div>
@@ -23,23 +23,32 @@
             <i class="icon_arrow"></i>
           </div>
         </div>
-        <button class="btn">立即预约</button>
+        <button class="btn">立即领取</button>
         <p class="committed">
           <i>*</i>纳思书院尊重并承诺保护您的个人信息
         </p>
       </div>
     </div>
     <div>
-      <img src="../../assets/images/home/online2.png" alt />
+      <img src="../../assets/images/home/nice2.png" alt />
     </div>
     <div>
-      <img src="../../assets/images/home/online3.png" alt />
+      <img src="../../assets/images/home/nice3.png" alt />
     </div>
     <div>
-      <img src="../../assets/images/home/online4.png" alt />
+      <img src="../../assets/images/home/nice4.png" alt />
     </div>
     <div>
-      <img src="../../assets/images/home/online5.png" alt />
+      <img src="../../assets/images/home/nice5.png" alt />
+    </div>
+    <div>
+      <img src="../../assets/images/home/nice6.png" alt />
+    </div>
+    <div>
+      <img src="../../assets/images/home/nice7.png" alt />
+    </div>
+    <div>
+      <img src="../../assets/images/home/nice8.png" alt />
     </div>
     <van-popup v-model="gradePicker" position="bottom">
       <van-picker
@@ -106,8 +115,8 @@ export default {
   .fomr_wrap {
     width: 375px;
     height: 300px;
-    background:  #FFAD8E;
-    padding: 0px 18px;
+    background: #FF4142;
+    padding:0px 18px;
     .form_list {
       background: #ffffff;
       border-radius: 30px;
@@ -163,7 +172,7 @@ export default {
       padding-left: 14px;
       position: relative;
     }
-     .icon_arrow{
+    .icon_arrow{
       background: url("../../assets/images/home/down_arrow.svg");
       background-size: cover;
       display: inline-block;
@@ -177,7 +186,7 @@ export default {
     .btn {
       width: 100%;
       height: 40px;
-      background: #fd6934;
+      background: #FF4142;
       border-radius: 20px;
       line-height: 40px;
       text-align: center;

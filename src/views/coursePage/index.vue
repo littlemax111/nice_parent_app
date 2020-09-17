@@ -55,7 +55,7 @@
           </div>
           <div class="bottom">
             <div class="price">
-              <span class="tag">¥</span>
+              <span class="tag" v-if='item.type!==2'>¥</span>
               <span class="total">{{ item.total }}</span>
             </div>
           </div>
@@ -101,32 +101,63 @@ export default {
       tabIndex:0,
       courseList: [
         {
+          type:1,
           tips: "面授",
-          courseNmae: "初二数学寒假精品课",
+          courseNmae: "初二数学秋季精品课",
           time: "09月02日-01月07日",
           couse: "10课时",
           place: "滨江学习中心",
           total: 1299,
         },
         {
+          type:2,
           tips: "在线",
-          courseNmae: "初二语文寒假精品课",
+          courseNmae: "初三物理秋季1对1",
+          time: "09月02日-01月07日",
+          couse: "8课时",
+          place: "滨江学习中心",
+          total: '立即预约',
+        },
+        {
+          type:1,
+          tips: "在线",
+          courseNmae: "初二语文秋季精品课",
           time: "09月02日-01月07日",
           couse: "12课时",
           place: "滨江学习中心",
           total: 2099,
         },
         {
+          type:1,
           tips: "面授",
-          courseNmae: "初一英语寒假精品课",
+          courseNmae: "初一英语秋季精品课",
           time: "09月02日-01月07日",
           couse: "6课时",
           place: "滨江学习中心",
           total: 2299,
         },
         {
+          type:1,
           tips: "面授",
-          courseNmae: "初三科学寒假精品课",
+          courseNmae: "初三科学秋季精品课",
+          time: "09月02日-01月07日",
+          couse: "8课时",
+          place: "滨江学习中心",
+          total: 999,
+        },
+        {
+          type:3,
+          tips: "面授",
+          courseNmae: "初三数学秋季小班",
+          time: "09月02日-01月07日",
+          couse: "8课时",
+          place: "滨江学习中心",
+          total: 999,
+        },
+        {
+          type:1,
+          tips: "在线",
+          courseNmae: "初三英语秋季大班",
           time: "09月02日-01月07日",
           couse: "8课时",
           place: "滨江学习中心",
@@ -294,6 +325,7 @@ export default {
           height: 17px;
           line-height: 17px;
           display: flex;
+          align-items: center;
           .tips {
             display: block;
             width: 29px;

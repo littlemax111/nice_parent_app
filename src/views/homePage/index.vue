@@ -5,12 +5,12 @@
         <span class="grade">{{grade.name}}</span>
         <i class="down_icon"></i>
       </div>
-      <i class="seacher_icon"></i>
+      <i class="seacher_icon" @click='goRoute("/homePage/search")'></i>
       <i class="shop_icon" @click='goRoute("/coursePage/courseCar")'></i>
     </div>
     <div class="banner_wrap">
-      <van-swipe :autoplay="3000" :show-indicators="false">
-        <van-swipe-item v-for="(image, index) in bannerList" :key="index">
+      <van-swipe :autoplay="3000" :show-indicators="false" >
+        <van-swipe-item v-for="(image, index) in bannerList" :key="index" >
           <img :src="image" />
         </van-swipe-item>
       </van-swipe>
@@ -117,12 +117,12 @@ export default {
       sortList: [
         {
           img: require("../../assets/images/home/icon_one.png"),
-          titel: "1对1",
-          page: "/coursePage/index",
+          titel: "纳思书院",
+          page: "/homePage/nasiSchool",
         },
         {
           img: require("../../assets/images/home/icon_grade.png"),
-          titel: "小班课",
+          titel: "纳思锐才",
           page: "/coursePage/index",
         },
         {
@@ -133,7 +133,7 @@ export default {
         {
           img: require("../../assets/images/home/icon_school.png"),
           titel: "校区查询",
-          page: "/homePage/school",
+          page: "/homePage/campusQuery",
         },
       ],
     };
@@ -142,12 +142,23 @@ export default {
     tabBar,
   },
   watch: {},
-  created() {},
+  created() {
+    this.selectGrade();
+  },
   mounted() {},
   computed: {
     ...mapState(["grade"]),
   },
   methods: {
+    //选择年级
+    selectGrade(){
+      if(this.grade.id===0){
+        setTimeout(()=>{
+          this.$router.push(`/homePage/grade`);
+        },1000)
+        
+      }
+    },
     //路由跳转
     goRoute(name) {
       window.scroll(0, 0); //失焦后强制让页面归位
@@ -242,13 +253,13 @@ export default {
     }
   }
   .banner_wrap {
-    padding: 20px 17px 0 17px;
+    padding:20px 17px 0 17px;
     height: 140px;
     margin-top: 38px;
   }
   .van-swipe-item {
     img {
-      width: 100%;
+      width: 343px;
       border-radius: 10px;
       height: 120px;
     }

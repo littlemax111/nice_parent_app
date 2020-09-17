@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="13px" viewBox="0 0 22 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>返回</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.913725 0 0 0 0 0.282353 0 0 0 0 0.192157 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3.12首页-校区查询-筛选区域" transform="translate(-160.000000, -269.000000)">
+            <g id="编组-7" transform="translate(75.000000, 65.000000)">
+                <g id="编组-6" transform="translate(0.000000, 101.000000)">
+                    <g id="返回" transform="translate(0.000000, 81.000000)" filter="url(#filter-1)">
+                        <g transform="translate(96.000000, 28.500000) scale(1, -1) rotate(-90.000000) translate(-96.000000, -28.500000) translate(90.000000, 18.000000)">
+                            <path d="M11.0973971,0.918640202 C10.5604312,0.360453266 9.69000932,0.360453266 9.15304336,0.918640202 L0.902602854,9.49773009 C0.365799049,10.0560856 0.365799049,10.96118 0.902602854,11.5195356 L9.15304336,20.0986255 C9.69259328,20.6404972 10.5502339,20.6327472 11.0806458,20.0812068 C11.6110576,19.5296664 11.6185108,18.6378624 11.0973971,18.07682 L3.81913357,10.5086328 L11.0973971,2.9404457 C11.634201,2.38209014 11.634201,1.47699576 11.0973971,0.918640202 Z" id="路径" fill="#9BA1B0" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

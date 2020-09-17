@@ -50,7 +50,7 @@
           <i>选择上课时间</i>
         </span>
       </div>
-      <div class="class-time">
+      <div class="class-time" >
         <p>选择上课时间</p>
       </div>
       <div class="nav">

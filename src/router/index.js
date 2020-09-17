@@ -5,7 +5,7 @@ export default new Router({
   routes: [
     {
       path:'/',
-      redirect:"/login",
+      redirect:"/homePage/index",
     },
     {
       path: "/login",
@@ -34,14 +34,37 @@ export default new Router({
     {
       path: "/homePage/index",
       name: "homePage",
-      
       component: () => import('@/views/homePage/index'),
+    },
+    // 搜索页
+    {
+      path: "/homePage/search",
+      name: "search",
+      component: () => import('@/views/homePage/search'),
+    },
+    // 纳思书院
+    {
+      path: "/homePage/nasiSchool",
+      name: "nasiSchool",
+      component: () => import('@/views/homePage/nasiSchool'),
     },
     // 网校
     {
       path: "/homePage/online",
       name: "online",
       component: () => import('@/views/homePage/online'),
+    },
+    // 校区查询
+    {
+      path: "/homePage/campusQuery",
+      name: "campusQuery",
+      component: () => import('@/views/homePage/campusQuery'),
+    },
+    // 校区查询
+    {
+      path: "/homePage/campusDetail",
+      name: "campusDetail",
+      component: () => import('@/views/homePage/campusDetail'),
     },
     // 校区
     {
@@ -217,6 +240,18 @@ export default new Router({
       path: "/myPage/about",
       name: "about",
       component: () => import('@/views/myPage/setAbout'),
+    },
+    // 设置-关于-用户协议
+    {
+      path: "/myPage/userAgreement",
+      name: "userAgreement",
+      component: () => import('@/views/myPage/userAgreement'),
+    },
+    // 设置-关于-隐私协议
+    {
+      path: "/myPage/privacyAgreement",
+      name: "privacyAgreement",
+      component: () => import('@/views/myPage/privacyAgreement'),
     },
     // 设置-账号安全
     {

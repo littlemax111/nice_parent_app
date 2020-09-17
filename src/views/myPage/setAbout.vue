@@ -12,11 +12,11 @@
           <span>检查新版本</span>
           <i class="enter_arrow"></i>
         </li>
-        <li>
+        <li @click="$router.push(`/myPage/userAgreement`)">
           <span>用户协议</span>
           <i class="enter_arrow"></i>
         </li>
-        <li>
+        <li @click="$router.push(`/myPage/privacyAgreement`)">
           <span>隐私协议</span>
           <i class="enter_arrow"></i>
         </li>
