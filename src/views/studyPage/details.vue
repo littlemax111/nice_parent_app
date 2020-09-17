@@ -1,7 +1,13 @@
 <template>
   <div>
     <navBar :title="title"></navBar>
-    <div class="header">
+    <div v-if="link" class="out-wrap">
+      <iframe :src="link
+" width="100%" height="100%" frameborder="0"></iframe>
+      
+    </div>
+   <div v-else>
+      <div class="header">
       <h2>第1讲 数学 · 有理数和数轴</h2>
       <h3>01月04日-01月06日</h3>
       <div class="teacher-message">
@@ -31,6 +37,7 @@
         <div class="status">已完成</div>
       </div>
     </div>
+   </div>
   </div>
 </template>
 <script>
@@ -43,6 +50,7 @@ export default {
   data() {
     return {
       title: "讲义详情",
+      link:this.$route.query.link,
       teacherPic: require("../../assets/images/study/teacher-pic.png"),
       courseIcon: require("../../assets/images/study/course-red.svg"),
     };
@@ -51,6 +59,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.out-wrap{
+  height: calc(100vh - 46px);
+}
 .header {
   width: 100%;
   min-height: 135px;

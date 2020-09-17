@@ -40,7 +40,7 @@
         <li
           v-for="(item, index) in courseList"
           :key="index"
-          @click="toDetails(index)"
+          @click="toDetails(item.type,item.courseNmae)"
         >
           <div class="top">
             <div class="title">
@@ -169,9 +169,15 @@ export default {
     };
   },
   methods: {
-    toDetails(val) {
-      let type = val % 2 === 0 ? "done" : "wait";
-      this.$router.push(`/coursePage/courseDetail?type=${type}`);
+    toDetails(type,courseName) {
+      let routeType = '';
+      if(type === 2){
+        routeType = 'wait'
+      }else{
+        routeType = 'done'
+      }
+      // let type = val % 2 === 0 ? "done" : "wait";
+      this.$router.push(`/coursePage/courseDetail?type=${routeType}&courseName=${courseName}`);
     },
     changeTab(index){
       this.tabIndex = index

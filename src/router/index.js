@@ -177,7 +177,7 @@ export default new Router({
     },
     // 精品课列表
     {
-      path: "/studyPage/courseList/:type",
+      path: "/studyPage/courseList",
       name: "courseList",
       component: () => import('@/views/studyPage/courseList'),
     },

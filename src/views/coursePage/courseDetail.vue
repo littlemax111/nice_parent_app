@@ -4,7 +4,7 @@
     <div class="wrap">
       <div class="out-course">
         <div class="course-message">
-          <h2>初二数学寒假精品课</h2>
+          <h2>{{courseName}}</h2>
           <p>
             <span>时间</span>
             <span>09月02日-01月07日</span>
@@ -58,6 +58,7 @@ export default {
     return {
       type: this.$route.query.type,
       title: "课程详情",
+      courseName:this.$route.query.courseName,
       imgList: [
         require("../../assets/images/course/course-one.png"),
         require("../../assets/images/course/course-two.png"),

@@ -116,7 +116,7 @@ export default {
       ],
       courseList: [
         {
-          type:1,
+          link:'https://demo.chnnice.com/agora1vn/',
           flag: false,
           Ltime: "19:00-20:00",
           tips: "在线",
@@ -127,7 +127,7 @@ export default {
           total: 1299,
         },
         {
-          type:2,
+          link:'https://demo.chnnice.com/agora1v1/',
           flag: false,
           Ltime: "2020.04.20 ",
           tips: "在线",
@@ -138,6 +138,7 @@ export default {
           total: 2099,
         },
         {
+          link:'',
           flag: false,
           Ltime: "2020.04.20 ",
           tips: "面授",
@@ -148,6 +149,7 @@ export default {
           total: 2299,
         },
         {
+           link:'',
           flag: false,
           Ltime: "2020.04.20 ",
           tips: "面授",
@@ -158,6 +160,7 @@ export default {
           total: 999,
         },
         {
+           link:'',
           type:3,
           flag: true,
           Ltime: "2020.04.20 ",
@@ -169,6 +172,7 @@ export default {
           total: 999,
         },
         {
+           link:'',
           type:3,
           flag: true,
           Ltime: "2020.04.20 ",
@@ -180,6 +184,7 @@ export default {
           total: 999,
         },
         {
+           link:'',
           flag: true,
           Ltime: "2020.04.20 ",
           tips: "面授",
@@ -190,6 +195,7 @@ export default {
           total: 999,
         },
         {
+           link:'',
           flag: true,
           Ltime: "2020.04.20 ",
           tips: "面授",
@@ -244,7 +250,7 @@ export default {
     },
     toCourse(item) {
       if (item.tips !== "面授") {
-        this.$router.push(`/studyPage/courseList/${item.type}`);
+        this.$router.push(`/studyPage/courseList?link=${item.link}`);
       } 
     },
   },
