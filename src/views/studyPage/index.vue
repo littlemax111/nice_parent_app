@@ -116,6 +116,7 @@ export default {
       ],
       courseList: [
         {
+          type:1,
           flag: false,
           Ltime: "19:00-20:00",
           tips: "在线",
@@ -126,6 +127,7 @@ export default {
           total: 1299,
         },
         {
+          type:2,
           flag: false,
           Ltime: "2020.04.20 ",
           tips: "在线",
@@ -156,6 +158,7 @@ export default {
           total: 999,
         },
         {
+          type:3,
           flag: true,
           Ltime: "2020.04.20 ",
           tips: "在线",
@@ -166,6 +169,7 @@ export default {
           total: 999,
         },
         {
+          type:3,
           flag: true,
           Ltime: "2020.04.20 ",
           tips: "在线",
@@ -240,7 +244,7 @@ export default {
     },
     toCourse(item) {
       if (item.tips !== "面授") {
-        this.$router.push(`/studyPage/courseList`);
+        this.$router.push(`/studyPage/courseList/${item.type}`);
       } 
     },
   },

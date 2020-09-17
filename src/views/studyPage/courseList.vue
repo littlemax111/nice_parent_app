@@ -18,7 +18,7 @@
       </div>
       <div class="wrap">
         <ul class="list">
-          <li class="clear" v-for="(item, index) in courseList" :key="index" @click="toDetails">
+          <li class="clear" v-for="(item, index) in courseList" :key="index" @click="toDetails" >
             <div class="l">
               <p class="course-nmae single_wrap">{{ item.courseNmae }}</p>
               <p class="time single_wrap">{{ item.time }}</p>
