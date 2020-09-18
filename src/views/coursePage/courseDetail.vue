@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navBar :title="title" class="nav_wrap"></navBar>
+    <navBar :title="title" class="nav_wrap" :routeName="routeName"></navBar>
     <div class="wrap">
       <div class="out-course">
         <div class="course-message">
@@ -56,6 +56,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      routeName:'/coursePage/index',
       type: this.$route.query.type,
       title: "课程详情",
       courseName:this.$route.query.courseName,

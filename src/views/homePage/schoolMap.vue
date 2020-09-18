@@ -16,6 +16,16 @@ export default {
   data() {
     return {
       title: "校区详情",
+      list:[
+        {
+          name:'古墩校区',
+          position: [120.097325, 30.290273],
+        },
+        {
+          name:'西湖校区',
+          position: [120.097325, 30.290273],
+        }
+      ]
     };
   },
   created() {},
@@ -29,12 +39,14 @@ export default {
         center: [120.097325, 30.290273],
         zoom: 13,
       });
-      console.log(map);
       var marker = new AMap.Marker({
         position: [120.097325, 30.290273],
       });
+      marker.setLabel({
+        content:'古墩校区'
+      })
       map.add(marker);
-      marker.on("click", this.onMarkerClick); //绑定click事件
+     // marker.on("click", this.onMarkerClick); //绑定click事件
     },
     onMarkerClick() {
       var d = new Date();

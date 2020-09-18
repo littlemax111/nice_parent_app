@@ -120,6 +120,12 @@ export default new Router({
       name: "orderDetail",
       component: () => import('@/views/coursePage/orderDetail'),
     },
+    //选择时间
+    {
+      path: "/coursePage/timeTable",
+      name: "timeTable",
+      component: () => import('@/views/coursePage/timeTable'),
+    },
      // 购课信息确认
      {
       path: "/coursePage/byingCourseMessage",
@@ -174,6 +180,12 @@ export default new Router({
       path: "/studyPage/studyReport",
       name: "studyReport",
       component: () => import('@/views/studyPage/studyReport'),
+    },
+    // 课堂报告
+    {
+      path: "/studyPage/classReport",
+      name: "classReport",
+      component: () => import('@/views/studyPage/classReport'),
     },
     // 待看回放
     {

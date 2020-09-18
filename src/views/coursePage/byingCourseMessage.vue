@@ -1,18 +1,18 @@
 <template>
   <div>
-    <navBar :title="title" class="nav_wrap"></navBar>
+    <navBar :title="title" :routeName="routeName" class="nav_wrap"></navBar>
     <div class="wrap">
       <div class="title">
         <h2>初二数学寒假精品课长期班</h2>
         <p>
-          <img :src="timeIcon" alt="" />
+          <img :src="timeIcon" alt />
           09月02日-01月07日
         </p>
       </div>
       <div class="nav">
         <span class="nav-one">
           <i>学习中心</i>
-          <i v-if='school'>{{school.title}}</i>
+          <i v-if="school">{{school.title}}</i>
           <i v-else>选择意向学习中心</i>
         </span>
         <span class="nav-two" @click="$router.push(`/homePage/school`)">查看全部</span>
@@ -22,25 +22,25 @@
           <van-swipe-item>
             <div class="card">
               <h2>滨江学习中心</h2>
-            <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
+              <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
             </div>
           </van-swipe-item>
           <van-swipe-item>
             <div class="card">
               <h2>滨江学习中心</h2>
-            <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
+              <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
             </div>
           </van-swipe-item>
           <van-swipe-item>
             <div class="card">
               <h2>滨江学习中心</h2>
-            <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
+              <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
             </div>
           </van-swipe-item>
           <van-swipe-item>
             <div class="card">
               <h2>滨江学习中心</h2>
-            <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
+              <h3>杭州市滨江区滨河路中赢国际3楼纳思书院</h3>
             </div>
           </van-swipe-item>
         </van-swipe>
@@ -51,8 +51,12 @@
           <i>选择上课时间</i>
         </span>
       </div>
-      <div class="class-time" >
-        <p>选择上课时间</p>
+      <div class="class-time" @click='$router.push(`/coursePage/timeTable`)'>
+        <p v-if="!classDate">选择上课时间</p>
+        <div v-else>
+          <p class="time">{{classDate}}</p>
+          <p class="frequency">每周一1次课，共19次课</p>
+        </div>
       </div>
       <div class="nav">
         <span class="nav-one">
@@ -62,7 +66,12 @@
       </div>
       <div class="time-range">
         <ul class="clear">
-          <li   :class="{'active':tabIndex===index}" v-for="(item,index) in timeRange" :key="index" @click="classTab(index)">{{item}}</li>
+          <li
+            :class="{'active':tabIndex===index}"
+            v-for="(item,index) in timeRange"
+            :key="index"
+            @click="classTab(index)"
+          >{{item}}</li>
         </ul>
       </div>
     </div>
@@ -76,33 +85,45 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      routeName:'/coursePage/courseDetail?type=done&courseName=初二数学秋季精品课',
       title: "购课信息确认",
       timeIcon: require("../../assets/images/course/time-icon.png"),
-      tabIndex:0,
-      timeRange:['08:00~10:00','12:00~14:00','14:00~16:00','16:00~18:00','18:00~20:00']
+      tabIndex: 0,
+      timeRange: [
+        "08:00~10:00",
+        "12:00~14:00",
+        "14:00~16:00",
+        "16:00~18:00",
+        "18:00~20:00",
+      ],
     };
   },
   components: {
     navBar,
   },
   watch: {},
-  created() {},
+  created() {
+  },
   mounted() {},
 
   methods: {
+    clearFix(){
+      this.$store.commit("classDate", '');
+    },
     onConfirm(value) {
       this.value = value;
       this.showPicker = false;
     },
-    classTab(val){
-        this.tabIndex = val
+    classTab(val) {
+      this.tabIndex = val;
     },
-     goOrderDetail(){
-        this.$router.push(`/coursePage/orderDetail?type=waitPay`)
-    }
+    goOrderDetail() {
+      this.clearFix();
+      this.$router.push(`/coursePage/orderDetail?type=waitPay`);
+    },
   },
   computed: {
-    ...mapState(["grade","school"]),
+    ...mapState(["classDate",'school']),
   },
 };
 </script>
@@ -132,11 +153,11 @@ export default {
   }
   .swiper {
     padding-left: 8px;
-    .card{
+    .card {
       background: linear-gradient(270deg, #ed7e57 0%, #fa9261 100%);
-    border-radius: 0.13333rem;
-    height: 3.46667rem;
-    padding: 0.64rem 0.4rem 0;
+      border-radius: 0.13333rem;
+      height: 3.46667rem;
+      padding: 0.64rem 0.4rem 0;
     }
     h2 {
       height: 30px;
@@ -164,6 +185,23 @@ export default {
       margin-top: 27px;
       text-align: center;
     }
+    .time {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333333;
+      line-height: 20px;
+      margin-top:18px;
+      padding-left: 22px;
+      text-align: left;
+    }
+    .frequency {
+      font-size: 12px;
+      color: #999999;
+      line-height: 16px;
+      margin-top:3px;
+      padding-left: 22px;
+      text-align: left;
+    }
   }
   .time-range {
     overflow-x: auto;
@@ -183,9 +221,9 @@ export default {
         color: #333333;
         margin-right: 8px;
       }
-      li.active{
-          color: #E94831;
-          border-color: #E94831;
+      li.active {
+        color: #e94831;
+        border-color: #e94831;
       }
     }
   }

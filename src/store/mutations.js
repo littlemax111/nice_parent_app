@@ -8,5 +8,8 @@ const mutations = {
     school(state,payload){
         state.school=payload
     },
+    classDate(state,payload){
+        state.classDate=payload
+    },
 }
 export default mutations

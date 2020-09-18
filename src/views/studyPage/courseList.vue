@@ -58,7 +58,7 @@ export default {
         {
           name: "课堂报告",
           icon: require("../../assets/images/study/couser-nav-three.svg"),
-          router: "",
+          router: "/studyPage/classReport",
         },
       ],
       courseList: [
