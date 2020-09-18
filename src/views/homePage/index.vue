@@ -54,7 +54,7 @@
           <i class="icon_phone"></i> 400-688-1614
         </p>
       </div>
-      <div class="study_btn">详情</div>
+      <div class="study_btn" @click="$router.push(`/homePage/schoolMap`)">详情</div>
     </div>
     <div class="hot_news">
       <h3 class="title">热门资讯</h3>

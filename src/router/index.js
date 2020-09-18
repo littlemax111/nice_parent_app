@@ -48,6 +48,12 @@ export default new Router({
       name: "nasiSchool",
       component: () => import('@/views/homePage/nasiSchool'),
     },
+     // 地图
+     {
+      path: "/homePage/schoolMap",
+      name: "online",
+      component: () => import('@/views/homePage/schoolMap'),
+    },
     // 网校
     {
       path: "/homePage/online",
