@@ -12,9 +12,10 @@
       <div class="nav">
         <span class="nav-one">
           <i>学习中心</i>
-          <i>选择意向学习中心</i>
+          <i v-if='school'>{{school.title}}</i>
+          <i v-else>选择意向学习中心</i>
         </span>
-        <span class="nav-two">查看全部</span>
+        <span class="nav-two" @click="$router.push(`/homePage/school`)">查看全部</span>
       </div>
       <div class="swiper">
         <van-swipe :loop="false" :width="290" :show-indicators="false">
@@ -71,6 +72,7 @@
 <script>
 import navBar from "../../components/navBar.vue";
 import { Swipe, SwipeItem } from "vant";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -98,6 +100,9 @@ export default {
      goOrderDetail(){
         this.$router.push(`/coursePage/orderDetail?type=waitPay`)
     }
+  },
+  computed: {
+    ...mapState(["grade","school"]),
   },
 };
 </script>

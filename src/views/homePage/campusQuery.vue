@@ -26,7 +26,7 @@
         </ul>
       </div>
     </div>
-    <div class="shade_wrap" v-if="show"></div>
+    <van-popup v-model="show" position="top" />
     <div class="list_wrap">
       <ul>
         <li v-for="(item, index) in list" :key="index" @click='goDetail'>
@@ -120,20 +120,10 @@ export default {
 .wrap {
   background: #fcfdff;
   min-height: 100vh;
-  .shade_wrap {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.6);
-    overflow: hidden;
-    z-index: 10;
-  }
   .top_wrap {
     position: sticky;
     top: 0;
-    z-index: 99;
+    z-index: 9999;
     background: #fcfdff;
     .school_wrap {
       display: flex;

@@ -51,7 +51,7 @@ export default new Router({
      // 地图
      {
       path: "/homePage/schoolMap",
-      name: "online",
+      name: "schoolMap",
       component: () => import('@/views/homePage/schoolMap'),
     },
     // 网校
