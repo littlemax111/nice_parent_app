@@ -49,15 +49,18 @@ export default {
       marker.on("click", this.onMarkerClick); //绑定click事件
     },
     onMarkerClick() {
+      var map = new AMap.Map("container", {
+        resizeEnable: false,
+        center: [120.097325, 30.290273],
+        zoom: 13,
+      });
       var d = new Date();
       var t0 = d.getTime();
       let lng = '120.097325';
-      let lat = '30.290273.1';
-      let name = '纳思学院古墩校区';
+      let lat = '30.290273';
+      let name ='古墩校区'
       window.location.href =
-      `https://ditu.amap.com/regeo?lng=${lng}&lat=${lat}&name=${name}&src=uriapi`
-      // `https://uri.amap.com/marker?position=${lon},${lat}&name=${name}`
-        //  "androidamap://viewMap?sourceApplication=appname&poiname=纳思学院古墩校区&lat=120.097325&lon=30.290273.1&dev=0";
+      `https://m.amap.com/share/index/lnglat=${lng},${lat}&name=${name}`
       //判断是否切出浏览器
       setTimeout(function() {
         let hidden =
