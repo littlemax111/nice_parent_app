@@ -3,7 +3,7 @@
     <navBar :title="title"></navBar>
     <div v-if="link" class="out-wrap">
       <iframe :src="link
-" width="100%" height="100%" frameborder="0"></iframe>
+" width="100%" height="100%" frameborder="0" allow="microphone;camera;midi;encrypted-media;"></iframe>
       
     </div>
    <div v-else>
