@@ -62,18 +62,18 @@ export default {
       window.location.href =
       `https://m.amap.com/share/index/lnglat=${lng},${lat}&name=${name}`
       //判断是否切出浏览器
-      setTimeout(function() {
-        let hidden =
-          window.document.hidden ||
-          window.document.mozHidden ||
-          window.document.msHidden ||
-          window.document.webkitHidden;
-        if (typeof hidden == "undefined" || hidden == false) {
-          //应用宝下载地址
-          window.location.href =
-            "https://uri.amap.com/marker?position=116.473195,39.993253";
-        }
-      }, 2500);
+      // setTimeout(function() {
+      //   let hidden =
+      //     window.document.hidden ||
+      //     window.document.mozHidden ||
+      //     window.document.msHidden ||
+      //     window.document.webkitHidden;
+      //   if (typeof hidden == "undefined" || hidden == false) {
+      //     //应用宝下载地址
+      //     window.location.href =
+      //       "https://uri.amap.com/marker?position=116.473195,39.993253";
+      //   }
+      // }, 2500);
     },
   },
 };
