@@ -131,8 +131,8 @@ export default {
   },
   methods: {
     toDetails() {
-      
-      this.$router.push(`/studyPage/details?link=${this.$route.query.link}`);
+      window.location.href=`${this.$route.query.link}`
+      //this.$router.push(`/studyPage/details?link=${this.$route.query.link}`);
     },
     toMoudles(url) {
       if (url) {
