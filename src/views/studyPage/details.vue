@@ -1,43 +1,57 @@
 <template>
-  <div class='wrap'>
-    <navBar :title="title"></navBar>
+  <div class="wrap">
+    <div class="navWrap">
+      <van-nav-bar @click-left="backFn">
+        <template #title>
+          <span class="navTitle single_wrap">{{title}}</span>
+        </template>
+        <template #left>
+          <i class="icon_back"></i>
+        </template>
+      </van-nav-bar>
+    </div>
     <div v-if="link" class="out-wrap">
-      <iframe :src="link
-" width="100%" height="100%" frameborder="0" allow="microphone;camera;midi;encrypted-media;"></iframe>
-      
+      <iframe
+        :src="link
+"
+        width="100%"
+        height="100%"
+        frameborder="0"
+        allow="microphone;camera;midi;encrypted-media;"
+      ></iframe>
     </div>
-   <div v-else>
+    <div v-else>
       <div class="header">
-      <h2>第1讲 数学 · 有理数和数轴</h2>
-      <h3>01月04日-01月06日</h3>
-      <div class="teacher-message">
-        <img :src="teacherPic" alt="" />
-        <span>
-          <i>赵静</i>
-          <i>主讲老师</i>
-        </span>
+        <h2>第1讲 数学 · 有理数和数轴</h2>
+        <h3>01月04日-01月06日</h3>
+        <div class="teacher-message">
+          <img :src="teacherPic" alt />
+          <span>
+            <i>赵静</i>
+            <i>主讲老师</i>
+          </span>
+        </div>
+      </div>
+      <div class="task">
+        <h2>课堂任务</h2>
+        <div class="record-card clear">
+          <div class="l">
+            <p>回放已生成</p>
+            <p>2月21日 · 周五 19:00-21:00</p>
+          </div>
+          <div class="r">
+            <p>观看回放</p>
+          </div>
+        </div>
+        <div class="tips">
+          <div class="record">
+            <img :src="courseIcon" alt />
+            <span>课堂报告</span>
+          </div>
+          <div class="status">已完成</div>
+        </div>
       </div>
     </div>
-    <div class="task">
-      <h2>课堂任务</h2>
-      <div class="record-card clear">
-        <div class="l">
-          <p>回放已生成</p>
-          <p>2月21日 · 周五 19:00-21:00</p>
-        </div>
-        <div class="r">
-          <p>观看回放</p>
-        </div>
-      </div>
-      <div class="tips">
-        <div class="record">
-          <img :src="courseIcon" alt="" />
-          <span>课堂报告</span>
-        </div>
-        <div class="status">已完成</div>
-      </div>
-    </div>
-   </div>
   </div>
 </template>
 <script>
@@ -50,21 +64,28 @@ export default {
   data() {
     return {
       title: "纳思云课堂",
-      link:this.$route.query.link,
+      link: this.$route.query.link,
       teacherPic: require("../../assets/images/study/teacher-pic.png"),
       courseIcon: require("../../assets/images/study/course-red.svg"),
     };
   },
-  destroyed(){
-    alert(2)
+  destroyed() {
     plus.screen.lockOrientation("portrait");
   },
-  methods: {},
+  methods: {
+    backFn(){
+      if(this.routeName){
+        this.$router.push(this.routeName)
+      }else{
+        this.$router.go(-1);//返回上一层
+      }
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>
-.out-wrap{
-  height: calc(100vw - 46px);
+.out-wrap {
+  height: calc(100vh - 12.13vh);
 }
 .header {
   width: 100%;
@@ -163,14 +184,14 @@ export default {
   }
 }
 .tips {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   .record {
-      display: flex;
+    display: flex;
     img {
-        width: 13px;
-        margin-right: 6px;
+      width: 13px;
+      margin-right: 6px;
     }
     span {
       font-size: 14px;
@@ -182,5 +203,26 @@ export default {
 
     color: #979ea7;
   }
+}
+.navWrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  .icon_back {
+    width: 2.4vh;
+    height: 4vh;
+    display: inline-block;
+    background: url("../../assets/images/home/back.svg");
+    background-size: cover;
+  }
+  .navTitle {
+    color: #232b36;
+    font-size: 4.2vh;
+    font-weight: 400;
+  }
+}
+/deep/ .van-nav-bar {
+  height: 12.13vh;
+  line-height: 12.13vh;
 }
 </style>
