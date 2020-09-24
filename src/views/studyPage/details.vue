@@ -60,10 +60,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wrap{
-width:100vh;
-  height: 100vw;
-  transform: rotate(90deg);
-  transform-origin: 28% 50%
+// width:100vh;
+//   height: 100vw;
+//   transform: rotate(90deg);
+//   transform-origin: 28% 50%
 }
 .out-wrap{
   height: calc(100vw - 46px);
