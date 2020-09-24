@@ -18,7 +18,7 @@
       </div>
       <div class="wrap">
         <ul class="list">
-          <li class="clear" v-for="(item, index) in courseList" :key="index" @click="toDetails" >
+          <li class="clear" v-for="(item, index) in courseList" :key="index" @click="toDetails">
             <div class="l">
               <p class="course-nmae single_wrap">{{ item.courseNmae }}</p>
               <p class="time single_wrap">{{ item.time }}</p>
@@ -129,13 +129,10 @@ export default {
       selectIcon: require("../../assets/images/study/screen.svg"),
     };
   },
-  created(){
-    alert(1)
-    plus.screen.lockOrientation("portrait");
-  },
   methods: {
     toDetails() {
-      window.location.href=`${this.$route.query.link}`
+      this.$router.push(`/studyPage/details?link=${this.$route.query.link}`);
+      //window.location.href = `${this.$route.query.link}`;
       plus.screen.lockOrientation("landscape");
     },
     toMoudles(url) {

@@ -49,22 +49,20 @@ export default {
   },
   data() {
     return {
-      title: "讲义详情",
+      title: "纳思云课堂",
       link:this.$route.query.link,
       teacherPic: require("../../assets/images/study/teacher-pic.png"),
       courseIcon: require("../../assets/images/study/course-red.svg"),
     };
   },
+  destroyed(){
+    alert(2)
+    plus.screen.lockOrientation("portrait");
+  },
   methods: {},
 };
 </script>
 <style lang="scss" scoped>
-.wrap{
-// width:100vh;
-//   height: 100vw;
-//   transform: rotate(90deg);
-//   transform-origin: 28% 50%
-}
 .out-wrap{
   height: calc(100vw - 46px);
 }
