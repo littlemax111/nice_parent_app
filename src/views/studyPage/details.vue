@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='wrap'>
     <navBar :title="title"></navBar>
     <div v-if="link" class="out-wrap">
       <iframe :src="link
@@ -59,8 +59,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.wrap{
+width:100vh;
+  height: 100vw;
+  transform: rotate(90deg);
+  transform-origin: 28% 50%
+}
 .out-wrap{
-  height: calc(100vh - 46px);
+  height: calc(100vw - 46px);
 }
 .header {
   width: 100%;

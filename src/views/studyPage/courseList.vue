@@ -132,7 +132,8 @@ export default {
   methods: {
     toDetails() {
       window.location.href=`${this.$route.query.link}`
-      //this.$router.push(`/studyPage/details?link=${this.$route.query.link}`);
+      //plus.screen.lockOrientation("landscape");
+      //this.$router.push(`/studyPage/details?link=${this.$route.query.link}`)
     },
     toMoudles(url) {
       if (url) {
