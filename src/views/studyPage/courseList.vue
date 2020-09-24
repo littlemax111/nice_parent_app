@@ -130,6 +130,7 @@ export default {
     };
   },
   created(){
+    alert(1)
     plus.screen.lockOrientation("portrait");
   },
   methods: {
