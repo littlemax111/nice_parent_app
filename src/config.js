@@ -9,5 +9,5 @@
 /*  API_HOME: 'http://47.97.155.179',//浙能*/
 // API_HOME: 'http://47.96.114.235',//敏行
 window.LOCAL_CONFIG = {
-    API_HOME: '',
+    API_HOME: 'https://demo.chnnice.com/collegemgr',
 };
