@@ -31,7 +31,7 @@
           <ul
             class="public_class"
             v-if="tabIndex == 0"
-            @click="goRoute('/homePage/classDetail')"
+            @click="goRoute(`/homePage/classDetail?id=${item.article_id}`)"
           >
             <li v-for="(item, index) in classList" :key="index">
               <img :src="item.thumb" alt />
@@ -54,7 +54,7 @@
             <li
               v-for="(item, index) in newsList"
               :key="index"
-              @click="goRoute('/homePage/newsDetail')"
+              @click="goRoute(`/homePage/newsDetail?id=${item.article_id}`)"
             >
               <div>
                 <h3 class="new_title double_wrap">{{ item.title }}</h3>
