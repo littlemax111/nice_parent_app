@@ -6,9 +6,11 @@
           <li
             v-for="(item, index) in tabTitle"
             :key="index"
-            :class="{'active':tabIndex==index,'mr':index===0}"
+            :class="{ active: tabIndex == index, mr: index === 0 }"
             @click="addClassname(index)"
-          >{{item}}</li>
+          >
+            {{ item }}
+          </li>
         </ul>
       </template>
       <template #left>
@@ -16,105 +18,86 @@
       </template>
     </van-nav-bar>
 
-    <div class="content_wrap">
-      <h3 class="title">{{tabTitle2}}</h3>
-      <!-- 公开课 -->
-      <ul class="public_class" v-if="tabIndex==0" @click='goRoute("/homePage/classDetail")'>
-        <li v-for="(item, index) in classList" :key="index" > 
-          <img :src="item.img" alt />
-          <div>
-            <h4 class="single_wrap">{{item.title}}</h4>
-            <p class="message">
-              <span>{{item.name}}</span>
-              {{item.work}}
-            </p>
-            <p class="time">
-              <span>{{item.time}}</span>
-              <span>|</span>
-              <span>{{item.long}}</span>
-            </p>
-          </div>
-        </li>
-      </ul>
-      <!-- 资讯 -->
-      <ul class="hot_news" v-if="tabIndex==1">
-        <li v-for="(item, index) in newsList" :key="index"  @click='goRoute("/homePage/newsDetail")'>
-          <div>
-            <h3 class="new_title double_wrap">{{item.title}}</h3>
-            <p class="time">{{item.time}}</p>
-          </div>
-          <img :src="item.img" />
-        </li>
-      </ul>
-    </div>
+    <!-- <van-pull-refresh v-model="refreshing" @refresh="onRefresh"> -->
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div class="content_wrap">
+          <h3 class="title">{{ tabTitle2 }}</h3>
+          <!-- 公开课 -->
+          <ul
+            class="public_class"
+            v-if="tabIndex == 0"
+            @click="goRoute('/homePage/classDetail')"
+          >
+            <li v-for="(item, index) in classList" :key="index">
+              <img :src="item.thumb" alt />
+              <div>
+                <h4 class="single_wrap">{{ item.title }}</h4>
+                <p class="message">
+                  <span>{{ item.author }}</span>
+                  {{ item.work }}
+                </p>
+                <p class="time">
+                  <span>{{ item.ctime }}</span>
+                  <span v-if="item.long">|</span>
+                  <span>{{ item.long }}</span>
+                </p>
+              </div>
+            </li>
+          </ul>
+          <!-- 资讯 -->
+          <ul class="hot_news" v-if="tabIndex == 1">
+            <li
+              v-for="(item, index) in newsList"
+              :key="index"
+              @click="goRoute('/homePage/newsDetail')"
+            >
+              <div>
+                <h3 class="new_title double_wrap">{{ item.title }}</h3>
+                <p class="time">{{ item.ctime }}</p>
+              </div>
+              <img :src="item.thumb" />
+            </li>
+          </ul>
+        </div>
+      </van-list>
+    <!-- </van-pull-refresh> -->
   </div>
 </template>
 
 <script>
 import noData from "../../components/noData.vue";
 import navBar from "../../components/navBar.vue";
-import { Icon } from 'vant';
-import { NavBar } from "vant";
+import { formatDate } from "../../utils/utils.js";
 
 export default {
   data() {
     return {
+      loading: false,
+      finished: false,
+      refreshing: false,
+      pageIndex: 1,
+      pageSize: 1,
       title: "",
       content: "当前暂无内容",
       active: 0,
       tabTitle: ["公开课", "资讯"],
       tabIndex: 0,
       tabTitle2: "精选公开课",
-      newsList: [
-        {
-          img: require("../../assets/images/home/new1.png"),
-          title: "孩子如果不懂得与世界如何相处 所有的教育都是徒劳",
-          time: "2018-12-07 16:58",
-        },
-        {
-          img: require("../../assets/images/home/new2.png"),
-          title: "阅卷老师最讨厌的哪几种字体， 如果你写的是那样就糟了",
-          time: "2018-12-06 17:58",
-        },
-        {
-          img: require("../../assets/images/home/new1.png"),
-          title: "让教育温暖起来,让每一个学生都喜欢上学习",
-          time: "2018-12-05 12:58",
-        },
-      ],
+      newsList: [],
       classList: [
-        {
-          img: require("../../assets/images/home/teacher.png"),
-          title: "如何利用小游戏，帮助孩子学英语",
-          name: "田慧珍",
-          work: "北京大学心理学教授",
-          time: "2020-04-12 16:00",
-          long: "60分钟",
-        },
-        {
-          img: require("../../assets/images/home/teacher.png"),
-          title: "如何利用小游戏，帮助孩子学英语",
-          name: "田慧珍",
-          work: "北京大学心理学教授",
-          time: "2020-04-12 16:00",
-          long: "60分钟",
-        },
-        {
-          img: require("../../assets/images/home/teacher.png"),
-          title: "如何利用小游戏，帮助孩子学英语",
-          name: "田慧珍",
-          work: "北京大学心理学教授",
-          time: "2020-04-12 16:00",
-          long: "60分钟",
-        },
-        {
-          img: require("../../assets/images/home/teacher.png"),
-          title: "如何利用小游戏，帮助孩子学英语",
-          name: "田慧珍",
-          work: "北京大学心理学教授",
-          time: "2020-04-12 16:00",
-          long: "60分钟",
-        },
+        // {
+        //   img: require("../../assets/images/home/teacher.png"),
+        //   title: "如何利用小游戏，帮助孩子学英语",
+        //   author: "田慧珍",
+        //   work: "北京大学心理学教授",
+        //   ctime: "2020-04-12 16:00",
+        //   long: "60分钟",
+        // },
       ],
     };
   },
@@ -122,23 +105,114 @@ export default {
     noData,
     navBar,
   },
+  created() {
+    this.getclassList();
+  },
   methods: {
     //路由跳转
     goRoute(name) {
       window.scroll(0, 0); //失焦后强制让页面归位
       this.$router.push(name);
     },
-    backFn(){
-      this.$router.go(-1);//返回上一层
+    onLoad() {
+      setTimeout(() => {
+        if (this.pageIndex != 1) {
+          if (this.tabIndex == 0) {
+            console.log(1);
+            this.getclassList();
+          } else {
+            this.getNews();
+          }
+        }
+      }, 3000);
+    },
+    onRefresh() {
+      this.loading = false;
+      this.finished = false;
+      this.pageIndex = 1;
+      this.pageSize = 1;
+      if (this.tabIndex == 0) {
+        this.getclassList();
+        this.classList = [];
+      } else {
+        this.getNews();
+        this.newsList = [];
+      }
+    },
+    //获取资讯
+    getNews() {
+      let method = "post";
+      let data = {
+        data: {
+          type: "1",
+          category_id: "1",
+        },
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+      };
+      this.$services.article({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          list.map((item, index) => {
+            item.ctime = formatDate(item.ctime * 1000, 1);
+          });
+          this.newsList = this.newsList.concat(list);
+          this.pageIndex++;
+          this.loading = false;
+          if (this.newsList.length >= res.totalCount) {
+            this.finished = true;
+          }
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+    //获取公开课
+    getclassList() {
+      let method = "post";
+      let data = {
+        data: {
+          type: "2",
+        },
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+      };
+      this.$services.article({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          list.map((item, index) => {
+            item.ctime = formatDate(item.ctime * 1000, 1);
+          });
+          this.classList = this.classList.concat(list);
+          this.pageIndex++;
+          this.loading = false;
+          if (this.classList.length >= res.totalCount) {
+            this.finished = true;
+          }
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+    backFn() {
+      this.$router.go(-1); //返回上一层
     },
     addClassname(index) {
       this.tabIndex = index;
+      this.pageIndex = 1;
+      this.pageSize = 1;
+      this.loading = false;
+      this.finished = false;
       switch (index) {
         case 0:
           this.tabTitle2 = "精选公开课";
+          this.classList = [];
+          this.getclassList();
           break;
         case 1:
           this.tabTitle2 = "热门资讯";
+          this.newsList = [];
+          this.getNews();
           break;
         default:
           this.tabTitle2 = "精选公开课";
@@ -150,9 +224,9 @@ export default {
 <style lang="scss" scoped>
 .wrap {
   background: #fff;
-  height: 100vh;
-  .mr{
-    margin-right:37px;
+  min-height: 100vh;
+  .mr {
+    margin-right: 37px;
   }
   .icon_back {
     width: 9px;
@@ -171,7 +245,6 @@ export default {
     .active {
       color: #e94831;
       border-bottom: 2px solid #e94831;
-      
     }
   }
   .content_wrap {

@@ -41,7 +41,7 @@
           :key="index"
           @click="goRoute(`/homePage/classDetail?id=${item.article_id}`)"
         >
-          <img :src="item.img" alt />
+          <img :src="item.thumb" alt />
           <p class="title class='single_wrap'">{{ item.title }}</p>
           <p class="sub_title">{{ item.author }}</p>
         </li>
@@ -62,64 +62,58 @@
     </div>
     <div class="hot_news">
       <h3 class="title">热门资讯</h3>
-      <ul>
-        <li
-          v-for="(item, index) in newsList"
-          :key="index"
-          @click="goRoute(`/homePage/newsDetail?id=${item.article_id}`)"
-        >
-          <div>
-            <h3 class="title double_wrap">{{ item.title }}</h3>
-            <p class="time">{{ item.mtime }}</p>
-          </div>
-          <img :src="item.img" />
-        </li>
-      </ul>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
+        <ul>
+          <li
+            v-for="(item, index) in newsList"
+            :key="index"
+            @click="goRoute(`/homePage/newsDetail?id=${item.article_id}`)"
+          >
+            <div>
+              <h3 class="title double_wrap">{{ item.title }}</h3>
+              <p class="time">{{ item.ctime }}</p>
+            </div>
+            <img :src="item.thumb" />
+          </li>
+        </ul>
+      </van-list>
     </div>
     <tab-bar></tab-bar>
   </div>
 </template>
 
 <script>
-import { Icon } from "vant";
 import { Swipe, SwipeItem, Lazyload, Tabbar, TabbarItem } from "vant";
 import tabBar from "../../components/tabBar.vue";
 import { mapState } from "vuex";
+import { formatDate } from "../../utils/utils.js";
+import { Dialog } from "vant";
 
 export default {
   data() {
     return {
+      list: [],
+      loading: false,
+      finished: false,
+      pageIndex: 1,
+      pageSize: 1,
       bannerList: [
         require("../../assets/images/home/banner1.png"),
         require("../../assets/images/home/banner1.png"),
       ],
       newsList: [
-        {
-          img: require("../../assets/images/home/new1.png"),
-          title: "孩子如果不懂得与世界如何相处 所有的教育都是徒劳",
-          time: "2018-12-07 16:58",
-        },
-        {
-          img: require("../../assets/images/home/new2.png"),
-          title: "阅卷老师最讨厌的哪几种字体， 如果你写的是那样就糟了",
-          time: "2018-12-06 17:58",
-        },
-        {
-          img: require("../../assets/images/home/new1.png"),
-          title: "让教育温暖起来,让每一个学生都喜欢上学习",
-          time: "2018-12-05 12:58",
-        },
       ],
       classList: [
         {
           img: require("../../assets/images/home/class1.png"),
           title: "如何高效学习英语",
           sub_title: "讲师:顾颖",
-        },
-        {
-          img: require("../../assets/images/home/class2.png"),
-          title: "如何学习动能定理",
-          sub_title: "讲师:章进",
         },
       ],
       sortList: [
@@ -162,6 +156,16 @@ export default {
     ...mapState(["grade"]),
   },
   methods: {
+    onLoad() {
+      setTimeout(() => {
+        if (this.pageIndex != 1) {
+          console.log(1)
+          setTimeout(() => {
+            this.getNews();
+          }, 100);
+        }
+      }, 1000);
+    },
     //选择年级
     selectGrade() {
       if (this.grade.config_id === 0) {
@@ -236,18 +240,27 @@ export default {
           type: "1",
           category_id: "1",
         },
-        pageIndex: 1,
-        pageSize: 10,
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
       };
       this.$services.article({ method, data }).success((res) => {
         if (res.code === 200) {
-          this.newsList = res.data.list;
+          let list = res.data.list
+          list.map((item, index) => {
+            item.ctime = formatDate(item.ctime * 1000, 2);
+          });
+          this.newsList = this.newsList.concat(list);
+          this.pageIndex++;
+          this.loading = false;
+          if (this.newsList.length >= res.totalCount) {
+            this.finished = true;
+          }
         } else {
           Dialog({ message: res.msg });
         }
       });
     },
-      //获取公开课
+    //获取公开课
     getclassList() {
       let method = "post";
       let data = {

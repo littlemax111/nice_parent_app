@@ -27,50 +27,67 @@
         <div class="left">
           <span>查看意向校区课程</span>
           <span>
-            {{school.title}}
+            {{ school.title }}
             <img :src="moreIcon" alt />
           </span>
         </div>
         <div class="right" @click="$router.push(`/homePage/school`)">
-          <img :src="addressIcon" alt  />
+          <img :src="addressIcon" alt />
           更换校区
         </div>
       </div>
-      <ul class="list">
-        <li
-          v-for="(item, index) in courseList"
-          :key="index"
-          @click="toDetails(item.type,item.courseNmae)"
+      <!-- <van-pull-refresh v-model="refreshing" @refresh="onRefresh"> -->
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
         >
-          <div class="top">
-            <div class="title">
-              <span class="tips">{{ item.tips }}</span>
-              <span class="course-name">{{ item.courseNmae }}</span>
-            </div>
-            <div class="time">
-              <span class="time-tips">{{ item.time }}</span>
-              <span class="course-tips">{{ item.couse }}</span>
-            </div>
-            <div class="place">{{ item.place }}</div>
-          </div>
-          <div class="bottom">
-            <div class="price">
-              <span class="tag" v-if='item.type!==2'>¥</span>
-              <span class="total">{{ item.total }}</span>
-            </div>
-          </div>
-        </li>
-      </ul>
+          <ul class="list">
+            <li
+              v-for="(item, index) in courseList"
+              :key="index"
+              @click="toDetails(item.class_mode, item.title)"
+            >
+              <div class="top">
+                <div class="title">
+                  <span class="tips">{{ item.tips }}</span>
+                  <span class="course-name">{{ item.title }}</span>
+                </div>
+                <div class="time">
+                  <span class="time-tips"
+                    >{{ item.begin_time }}-{{ item.end_time }}</span
+                  >
+                  <span class="course-tips">{{ item.period_num }}</span>
+                </div>
+                <div class="place">{{ item.place }}</div>
+              </div>
+              <div class="bottom">
+                <div class="price">
+                  <span class="tag" v-if="item.type !== 2">¥</span>
+                  <span class="total">{{ item.total }}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </van-list>
+      <!-- </van-pull-refresh> -->
     </div>
-     <tab-bar></tab-bar>
+    <tab-bar></tab-bar>
   </div>
 </template>
 <script>
 import tabBar from "../../components/tabBar.vue";
 import { mapState } from "vuex";
+import { Dialog } from "vant";
 export default {
   data() {
     return {
+      loading: false,
+      finished: false,
+      refreshing: false,
+      pageIndex: 1,
+      pageSize: 1,
       navList: [
         {
           name: "推荐",
@@ -98,96 +115,99 @@ export default {
         },
       ],
       isActive: true,
-      tabIndex:0,
+      tabIndex: 0,
       courseList: [
-        {
-          type:1,
-          tips: "面授",
-          courseNmae: "初二数学秋季精品课",
-          time: "09月02日-01月07日",
-          couse: "10课时",
-          place: "滨江学习中心",
-          total: 1299,
-        },
-        {
-          type:2,
-          tips: "在线",
-          courseNmae: "初三物理秋季1对1",
-          time: "09月02日-01月07日",
-          couse: "8课时",
-          place: "滨江学习中心",
-          total: '立即预约',
-        },
-        {
-          type:1,
-          tips: "在线",
-          courseNmae: "初二语文秋季精品课",
-          time: "09月02日-01月07日",
-          couse: "12课时",
-          place: "滨江学习中心",
-          total: 2099,
-        },
-        {
-          type:1,
-          tips: "面授",
-          courseNmae: "初一英语秋季精品课",
-          time: "09月02日-01月07日",
-          couse: "6课时",
-          place: "滨江学习中心",
-          total: 2299,
-        },
-        {
-          type:1,
-          tips: "面授",
-          courseNmae: "初三科学秋季精品课",
-          time: "09月02日-01月07日",
-          couse: "8课时",
-          place: "滨江学习中心",
-          total: 999,
-        },
-        {
-          type:3,
-          tips: "面授",
-          courseNmae: "初三数学秋季小班",
-          time: "09月02日-01月07日",
-          couse: "8课时",
-          place: "滨江学习中心",
-          total: 999,
-        },
-        {
-          type:1,
-          tips: "在线",
-          courseNmae: "初三英语秋季大班",
-          time: "09月02日-01月07日",
-          couse: "8课时",
-          place: "滨江学习中心",
-          total: 999,
-        },
+        // {
+        //   type: 1,
+        //   tips: "面授",
+        //   courseNmae: "初二数学秋季精品课",
+        //   time: "09月02日-01月07日",
+        //   couse: "10课时",
+        //   place: "滨江学习中心",
+        //   total: 1299,
+        // },
+        // {
+        //   type: 2,
+        //   tips: "在线",
+        //   courseNmae: "初三物理秋季1对1",
+        //   time: "09月02日-01月07日",
+        //   couse: "8课时",
+        //   place: "滨江学习中心",
+        //   total: "立即预约",
+        // },
       ],
       addressIcon: require("../../assets/images/course/address.png"),
       moreIcon: require("../../assets/images/course/more.png"),
     };
   },
+  created() {
+    this.getCourselist();
+  },
   methods: {
-    toDetails(type,courseName) {
-      let routeType = '';
-      if(type === 2){
-        routeType = 'wait'
-      }else{
-        routeType = 'done'
-      }
-      // let type = val % 2 === 0 ? "done" : "wait";
-      this.$router.push(`/coursePage/courseDetail?type=${routeType}&courseName=${courseName}`);
+    onLoad() {
+      setTimeout(() => {
+        setTimeout(() => {
+          if (this.pageIndex != 1) {
+            setTimeout(() => {
+              this.getCourselist();
+            }, 100);
+          }
+        }, 1000);
+      }, 1000);
     },
-    changeTab(index){
-      this.tabIndex = index
-    }
+    onRefresh() {
+      this.loading = false;
+      this.finished = false;
+      this.pageIndex = 1;
+      this.pageSize = 1;
+      this.courseList = [];
+      this.getCourselist();
+    },
+    //获取资讯
+    getCourselist() {
+      let method = "post";
+      let data = {
+        data: {
+          campus_id: "1",
+        },
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+      };
+      this.$services.classes({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          this.courseList = this.courseList.concat(list);
+          this.pageIndex++;
+          this.loading = false;
+          if (this.courseList.length >= res.totalCount) {
+            this.finished = true;
+            this.loading = false;
+          }
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+    toDetails(type, courseName) {
+      let routeType = "";
+      if (type === "1V1") {
+        routeType = "wait";
+      } else {
+        routeType = "done";
+      }
+      this.$router.push(
+        `/coursePage/courseDetail?type=${routeType}&courseName=${courseName}`
+      );
+    },
+    changeTab(index) {
+      this.tabIndex = index;
+    },
   },
   components: {
     tabBar,
   },
   computed: {
-    ...mapState(["grade","school"]),
+    ...mapState(["grade", "school"]),
   },
 };
 </script>
@@ -255,7 +275,7 @@ export default {
     height: 33px;
     line-height: 33px;
     padding: 0 11px;
-    white-space:nowrap;
+    white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
     li {
@@ -267,7 +287,7 @@ export default {
       text-align: center;
       vertical-align: top;
     }
-    li:first-child{
+    li:first-child {
       position: sticky;
       left: 0;
       z-index: 1;

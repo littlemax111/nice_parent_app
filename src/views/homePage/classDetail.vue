@@ -45,26 +45,6 @@ export default {
       title: "趣味跟读",
       message: {},
       classList: [
-        {
-          img: require("../../assets/images/home/class1.png"),
-          title: "如何高效学习英语",
-          sub_title: "讲师:顾颖",
-        },
-        {
-          img: require("../../assets/images/home/class2.png"),
-          title: "如何学习动能定理",
-          sub_title: "讲师:章进",
-        },
-        {
-          img: require("../../assets/images/home/class3.png"),
-          title: "疯狂的动物实验室",
-          sub_title: "讲师:薛可可",
-        },
-        {
-          img: require("../../assets/images/home/class4.png"),
-          title: "高中语法入门指南",
-          sub_title: "讲师:刘婷",
-        },
       ],
     };
   },

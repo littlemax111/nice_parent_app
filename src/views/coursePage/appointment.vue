@@ -13,11 +13,15 @@
         <ul>
           <li>
             <p>联系方式</p>
-            <p>187****9210</p>
+            <div class='item_wrap'>
+              <van-field v-model="mobile" label="" placeholder="请输入联系方式" />
+            </div>
           </li>
           <li>
             <p>孩子姓名</p>
-            <p>肖剑</p>
+            <div class='item_wrap'>
+              <van-field v-model="student_name" label="" placeholder="请输入姓名" />
+            </div>
           </li>
           <li>
             <p>学习中心</p>
@@ -48,6 +52,7 @@
 </template>
 <script>
 import navBar from "../../components/navBar.vue";
+import { Dialog } from "vant";
 
 export default {
   data() {
@@ -56,6 +61,8 @@ export default {
       value: "",
       columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
       showPicker: false,
+      mobile:'',
+      student_name:'',
     };
   },
   components: {
@@ -70,9 +77,25 @@ export default {
       this.value = value;
       this.showPicker = false;
     },
-     goAppointment(){
-        this.$router.push(`/coursePage/appointmented`)
-    }
+    goAppointment() {
+      let method = "post";
+      let token = localStorage.getItem("token");
+      let data = {
+        data: {
+          mobile: this.mobile,
+          child_name: this.student_name,
+          campus_id: "1",
+        },
+        token: token,
+      };
+      this.$services.createReserve({ method, data }).success((res) => {
+        if (res.code === 200) {
+          this.$router.push(`/coursePage/appointmented`);
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
   },
 };
 </script>

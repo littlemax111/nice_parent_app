@@ -1,24 +1,38 @@
 <template>
   <div class="wrap">
     <nav-bar :title="title" :routeName="routeName"></nav-bar>
-    <div v-if="orderList.length > 0">
-      <ul class="list_wrap">
-        <li v-for="(item, index) in orderList" :key="index">
-          <p class="order_wrap">
-            <span class="number">订单编号: Y{{ item.reserve_id }}</span>
-            <span class="status">{{ item.ctime }}</span>
-          </p>
-          <div class="msg_wrap">
-            <h4 class="title">
-              <span>{{ item.name }}</span>
-            </h4>
-            <p>孩子姓名: {{ item.child_name }}</p>
-            <p>联系方式: {{ item.mobile }}</p>
-            <p>学习中心: {{ item.campus_id }}</p>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <van-pull-refresh
+      v-model="refreshing"
+      @refresh="onRefresh"
+      v-if="orderList.length > 0"
+    >
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div>
+          <ul class="list_wrap">
+            <li v-for="(item, index) in orderList" :key="index">
+              <p class="order_wrap">
+                <span class="number">订单编号: Y{{ item.reserve_id }}</span>
+                <span class="status">{{ item.ctime }}</span>
+              </p>
+              <div class="msg_wrap">
+                <h4 class="title">
+                  <span>{{ item.name }}</span>
+                </h4>
+                <p>孩子姓名: {{ item.child_name }}</p>
+                <p>联系方式: {{ item.mobile }}</p>
+                <p>学习中心: {{ item.campus_id }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </van-list>
+    </van-pull-refresh>
+
     <no-data :content="content" v-else></no-data>
   </div>
 </template>
@@ -27,18 +41,23 @@
 import noData from "../../components/noData.vue";
 import navBar from "../../components/navBar.vue";
 import { Dialog } from "vant";
-import { formatDate,prefixInteger } from "../../utils/utils.js";
+import { formatDate, prefixInteger } from "../../utils/utils.js";
 import { campusFilter } from "../../utils/filters.js";
 import { mapState } from "vuex";
 
 export default {
   data() {
     return {
+      loading: false,
+      finished: false,
+      refreshing: false,
       routeName: "",
       title: "我的预定",
       content: "您还没有相关订单哦~",
       orderList: [],
       tabIndex: 0,
+      pageIndex: 1,
+      pageSize: 1,
     };
   },
   components: {
@@ -57,25 +76,49 @@ export default {
       window.scroll(0, 0); //失焦后强制让页面归位
       this.$router.push(name);
     },
+    onLoad() {
+      setTimeout(() => {
+        setTimeout(() => {
+          if (this.pageIndex != 1) {
+            setTimeout(() => {
+              this.getPreordain();
+            }, 100);
+          }
+        }, 1000);
+      }, 1000);
+    },
+    onRefresh() {
+      this.loading = false;
+      this.finished = false;
+      this.pageIndex = 1;
+      this.pageSize = 1;
+      this.orderList = [];
+      this.getPreordain();
+    },
     //预定
     getPreordain() {
       let method = "post";
-      let token = localStorage.getItem('token')
+      let token = localStorage.getItem("token");
       let data = {
         data: {},
         token: token,
-        pageIndex: 1,
-        pageSize: 2,
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
       };
       this.$services.reserveList({ method, data }).success((res) => {
         if (res.code === 200) {
           let list = res.data.list;
           list.map((item, index) => {
             item.ctime = formatDate(item.ctime * 1000, 1);
-            item.campus_id = campusFilter(this.campusList,item.campus_id)
-            item.reserve_id = prefixInteger(item.reserve_id,8)
+            item.campus_id = campusFilter(this.campusList, item.campus_id);
+            item.reserve_id = prefixInteger(item.reserve_id, 8);
           });
-          this.orderList = list;
+          this.orderList = this.orderList.concat(list);
+          this.pageIndex++;
+          this.loading = false;
+          if (this.orderList.length >= res.totalCount) {
+            this.finished = true;
+          }
         } else {
           Dialog({ message: res.msg });
         }
