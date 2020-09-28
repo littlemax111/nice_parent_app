@@ -14,6 +14,7 @@ const state={
   classDate:'',
   gradeList:[],
   campusList:[],
+  studentMsg:{},
 }
 
 export default new Vuex.Store({

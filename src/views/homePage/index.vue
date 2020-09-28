@@ -11,7 +11,7 @@
     <div class="banner_wrap">
       <van-swipe :autoplay="3000" :show-indicators="false">
         <van-swipe-item v-for="(item, index) in bannerList" :key="index">
-          <img :src="item.banner_url" :title="item.title"/>
+          <img :src="item.banner_url" :title="item.title" />
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -39,11 +39,11 @@
         <li
           v-for="(item, index) in classList"
           :key="index"
-          @click="goRoute('/homePage/classDetail')"
+          @click="goRoute(`/homePage/classDetail?id=${item.article_id}`)"
         >
           <img :src="item.img" alt />
           <p class="title class='single_wrap'">{{ item.title }}</p>
-          <p class="sub_title">{{ item.sub_title }}</p>
+          <p class="sub_title">{{ item.author }}</p>
         </li>
       </ul>
     </div>
@@ -66,11 +66,11 @@
         <li
           v-for="(item, index) in newsList"
           :key="index"
-          @click="goRoute('/homePage/newsDetail')"
+          @click="goRoute(`/homePage/newsDetail?id=${item.article_id}`)"
         >
           <div>
             <h3 class="title double_wrap">{{ item.title }}</h3>
-            <p class="time">{{ item.time }}</p>
+            <p class="time">{{ item.mtime }}</p>
           </div>
           <img :src="item.img" />
         </li>
@@ -154,6 +154,8 @@ export default {
     this.getCampuslist();
     this.getGradelist();
     this.getBannerlist();
+    this.getNews();
+    this.getclassList();
   },
   mounted() {},
   computed: {
@@ -164,7 +166,7 @@ export default {
     selectGrade() {
       if (this.grade.config_id === 0) {
         setTimeout(() => {
-          this.$router.push(`/homePage/grade`);
+          this.$router.push(`/homePage/grade?mark=1`);
         }, 1000);
       }
     },
@@ -183,14 +185,13 @@ export default {
     },
     //校区列表
     getCampuslist() {
-      let that = this;
       let method = "post";
       let data = {
-        data:{}
+        data: {},
       };
       this.$services.getCampus({ method, data }).success((res) => {
-        if (res.code===200) {
-          let list = res.data.list
+        if (res.code === 200) {
+          let list = res.data.list;
           this.$store.commit("campusList", list);
         } else {
           Dialog({ message: res.msg });
@@ -199,14 +200,13 @@ export default {
     },
     //年级列表
     getGradelist() {
-      let that = this;
       let method = "post";
       let data = {
-        data:{}
+        data: {},
       };
       this.$services.getGrade({ method, data }).success((res) => {
-        if (res.code===200) {
-          let list = res.data.list
+        if (res.code === 200) {
+          let list = res.data.list;
           this.$store.commit("gradeList", list);
           this.selectGrade();
         } else {
@@ -216,14 +216,50 @@ export default {
     },
     //获取banner
     getBannerlist() {
-      let that = this;
       let method = "post";
       let data = {
-        data:{}
+        data: {},
       };
       this.$services.banner({ method, data }).success((res) => {
-        if (res.code===200) {
-          this.bannerList = res.data.list
+        if (res.code === 200) {
+          this.bannerList = res.data.list;
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+    //获取资讯
+    getNews() {
+      let method = "post";
+      let data = {
+        data: {
+          type: "1",
+          category_id: "1",
+        },
+        pageIndex: 1,
+        pageSize: 10,
+      };
+      this.$services.article({ method, data }).success((res) => {
+        if (res.code === 200) {
+          this.newsList = res.data.list;
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+      //获取公开课
+    getclassList() {
+      let method = "post";
+      let data = {
+        data: {
+          type: "2",
+        },
+        pageIndex: 1,
+        pageSize: 10,
+      };
+      this.$services.article({ method, data }).success((res) => {
+        if (res.code === 200) {
+          this.classList = res.data.list;
         } else {
           Dialog({ message: res.msg });
         }

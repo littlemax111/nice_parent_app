@@ -1,21 +1,17 @@
 <template>
   <div class="wrap">
-    <navBar :title="title"></navBar>
+    <navBar :title="message.title"></navBar>
     <div class="news_wrap">
-      <h3 class="title">学霸作息时间表刷爆朋友圈，99%家长都感叹不已!</h3>
+      <h3 class="title">{{message.title}}</h3>
       <p class="message">
-        <span>{{message.name}}</span>
-        <span class="time">{{message.time}}</span>
+        <span>{{ message.author }}</span>
+        <span class="time">{{ message.ctime }}</span>
         <i class="look"></i>
-        {{message.look}}
+        {{ message.read_num }}
         <i class="good"></i>
-        {{message.good}}
+        {{ message.zan_num }}
       </p>
-      <div class="content">
-        <p>左手交易手续费，右手项目上币费，在疯狂增长的数字货币市场，交易所毋容置疑是最大赢家，许多创业者对其趋之若鹜。同时，黑客针对交易所的安全攻击越来越多，监管所带来的不确定性也越来越大。</p>
-        <img src="../../assets/images/home/new2.png" alt />
-        <span>2018年上海外滩全景图</span>
-        <p>左手交易手续费，右手项目上币费，在疯狂增长的数字货币市场，交易所毋容置疑是最大赢家，许多创业者对其趋之若鹜。同时，黑客针对交易所的安全攻击越来越多，监管所带来的不确定性也越来越大。</p>
+      <div class="content" v-html="message.content">
       </div>
     </div>
   </div>
@@ -23,6 +19,7 @@
 
 <script>
 import navBar from "../../components/navBar.vue";
+import { formatDate } from "../../utils/utils.js";
 
 export default {
   data() {
@@ -30,15 +27,34 @@ export default {
       title: "学霸作息时间表刷爆朋友圈…",
       content: "当前暂无内容",
       message: {
-        name: "纳小思",
-        time: "2020-04-14",
-        look: "5656",
-        good: "80",
       },
     };
   },
   components: {
     navBar,
+  },
+  created() {
+    this.getDetail();
+  },
+  methods: {
+    getDetail() {
+      let method = "post";
+      let id = this.$route.query.id;
+      let data = {
+        data: {
+          article_id: id,
+        },
+      };
+      this.$services.articleDetail({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.article;
+          list.ctime = formatDate(list.ctime*1000,3)
+          this.message = list
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
   },
 };
 </script>

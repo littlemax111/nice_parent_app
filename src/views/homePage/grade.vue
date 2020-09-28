@@ -44,7 +44,8 @@ export default {
     return {};
   },
   watch: {},
-  created() {},
+  created() {
+  },
   mounted() {},
   computed: {
     ...mapState(["grade", "city", "gradeList"]),
@@ -60,6 +61,10 @@ export default {
     },
     addClassname(value) {
       this.$store.commit("grade", value);
+      let mark = this.$route.query.mark;
+      if (mark) {
+        this.$router.push("/homePage/index");
+      }
     },
   },
 };

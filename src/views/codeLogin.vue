@@ -12,7 +12,7 @@
       <p class="sub_title">若该手机号未注册，我们将为您自动注册</p>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="number" placeholder="请输入手机号码" v-model="phone" />
+          <input type="text" placeholder="请输入手机号码" v-model="phone" />
         </div>
         <div class="input_item">
           <input
@@ -21,7 +21,12 @@
             v-model="code"
             class="yan_input"
           />
-          <span @click='getYZM'>获取验证码</span>
+          <span v-if="getYan" @click="getYZM">获取验证码</span>
+          <span
+            v-else
+            v-html="yanTime"
+            style="color: #666; padding-left: 40px"
+          ></span>
         </div>
         <button
           class="submit_btn"
@@ -52,8 +57,10 @@ import { Icon } from "vant";
 export default {
   data() {
     return {
+      yanTime: "60",
       phone: "",
       code: "",
+      getYan: true,
     };
   },
   watch: {},
@@ -77,15 +84,28 @@ export default {
       this.$router.go(-1); //返回上一层
     },
     getYZM() {
+      if (!this.phone) {
+        Dialog({ message: "请填写手机号码" });
+      }
       let method = "post";
       let data = {
         data: {
-          mobile: "admin",
+          mobile: this.phone,
         },
       };
       this.$services.getVerifyCode({ method, data }).success((res) => {
         if (res.code === 200) {
-          
+          this.getYan = false;
+          let time = 60;
+          clearInterval(timer); //清除计时器
+          let timer = setInterval(() => {
+            this.yanTime = time + "s";
+            time--;
+            if (time < 0) {
+              this.getYan = true;
+              clearInterval(timer);
+            }
+          }, 1000);
         } else {
           Dialog({ message: res.msg });
         }
@@ -95,11 +115,11 @@ export default {
       let method = "post";
       let data = {
         data: {
-          mobile: "admin",
-          passwd: "admin",
+          mobile: this.phone,
+          verify_code: this.code,
         },
       };
-      this.$services.login({ method, data }).success((res) => {
+      this.$services.checkVerifyCode({ method, data }).success((res) => {
         if (res.code === 200) {
           let token = res.data.token;
           localStorage.setItem("token", token);

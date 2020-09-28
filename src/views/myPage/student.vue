@@ -4,17 +4,18 @@
     <div class="student_wrap">
       <div class="student_msg">
         <div class="msg_wrap">
-          <img src="../../assets/images/my/person.jpg" alt />
+          <img v-if="studentMsg.avatar" :src="studentMsg.avatar" alt />
+          <img v-else src="../../assets/images/my/person.jpg" alt />
           <div class="name_wrap">
-            <p class="name">{{msg.name}}</p>
-            <p class="grade">{{msg.grade}}</p>
+            <p class="name">{{studentMsg.student_name}}</p>
+            <p class="grade">{{studentMsg.school_grade}}</p>
           </div>
           <i class="icon_login">当前登录</i>
         </div>
-        <p class="id_wrap">ID: {{msg.id}}</p>
+        <p class="id_wrap">ID: {{studentMsg.student_id}}</p>
         <p class="address_wrap">
           <i class="icon_address"></i>
-          <span>{{msg.address}}</span>
+          <span>{{studentMsg.address}}杭州</span>
         </p>
       </div>
       <p class="title">其他学员</p>
@@ -34,6 +35,7 @@
 
 <script>
 import navBar from "../../components/navBar.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -54,6 +56,9 @@ export default {
   },
   components: {
     navBar,
+  },
+  computed: {
+    ...mapState(["studentMsg"]),
   },
   methods:{
     //路由跳转

@@ -1,76 +1,22 @@
 <template>
   <div class="wrap">
-    <nav-bar :title="title" :routeName="routeName"></nav-bar>
+    <nav-bar :title="message.title" :routeName="routeName"></nav-bar>
     <div class="video_wrap">
-      <video src="../../assets/images/home/case.mp4" controls></video>
+      <video v-if="message.vedio_url" :src="message.vedio_url" controls></video>
+      <video v-else src="../../assets/images/home/case.mp4" controls></video>
     </div>
     <div class="message_wrap">
       <div class="title_wrap">
-        <h3 class="title">如何高效学习英语</h3>
-        <i class="share" @click="show=true"></i>
+        <h3 class="title">{{ message.title }}</h3>
+        <i class="share" @click="show = true"></i>
       </div>
       <p class="teacher">
-        <span>讲师：顾颖</span>
+        <span>讲师：{{ message.author }}</span>
         <span class="shu">|</span>
-        <span>2000人观看</span>
+        <span>{{ message.read_num }}人观看</span>
       </p>
     </div>
-    <div class="teacher_wrap">
-      <h3 class="common_title">
-        <i></i>
-        <span>讲师介绍</span>
-      </h3>
-      <div class="detail_wrap">
-        <p class="name">
-          <span>田宏杰</span>
-          <span class="shu">|</span>
-          <span>北京师范大学资深心理学老师</span>
-        </p>
-        <p class="detail">
-          国家二级心理咨询师，20年实战心理教学经验，帮
-          助上万家庭解决孩子问题，被誉为“最了解儿童心
-          理”之一
-        </p>
-      </div>
-    </div>
-    <div class="teacher_wrap">
-      <h3 class="common_title">
-        <i></i>
-        课程内容
-      </h3>
-      <div class="detail_wrap">
-        <div>
-          <p class="name">
-            <span>1、孩子的心理状况分析</span>
-          </p>
-          <p class="detail">在老师的带领下，分析孩子的心理问题，从孩子的描述中查找孩子的心理状况。</p>
-        </div>
-
-        <div>
-          <p class="name">
-            <span>2、挫折教育的误区</span>
-          </p>
-          <p class="detail">多给孩子制造挫折,他才能愈挫愈勇。很多父母觉得现在的小孩,没吃过苦,没遇到什么挫折。</p>
-        </div>
-      </div>
-    </div>
-    <div class="recommend">
-      <h3 class="common_title">
-        <i></i>
-        课程推荐
-      </h3>
-      <ul class="class_list">
-        <li
-          v-for="(item, index) in classList"
-          :key="index"
-          @click='goRoute("/homePage/classDetail")'
-        >
-          <img :src="item.img" alt />
-          <p class="title class='single_wrap'">{{item.title}}</p>
-          <p class="sub_title">{{item.sub_title}}</p>
-        </li>
-      </ul>
-    </div>
+    <div class="content" v-html="message.content"></div>
     <van-popup v-model="show" position="bottom">
       <div class="icon_wrap">
         <p>
@@ -82,20 +28,22 @@
           <span>朋友圈</span>
         </p>
       </div>
-      <p class="cancel_btn" @click='show=false'>取消</p>
+      <p class="cancel_btn" @click="show = false">取消</p>
     </van-popup>
   </div>
 </template>
 
 <script>
 import navBar from "../../components/navBar.vue";
+import { formatDate } from "../../utils/utils.js";
 
 export default {
   data() {
     return {
-      routeName:'',
+      routeName: "",
       show: false,
       title: "趣味跟读",
+      message: {},
       classList: [
         {
           img: require("../../assets/images/home/class1.png"),
@@ -122,6 +70,29 @@ export default {
   },
   components: {
     navBar,
+  },
+  created() {
+    this.getDetail();
+  },
+  methods: {
+    getDetail() {
+      let method = "post";
+      let id = this.$route.query.id;
+      let data = {
+        data: {
+          article_id: id,
+        },
+      };
+      this.$services.articleDetail({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.article;
+          list.ctime = formatDate(list.ctime * 1000, 3);
+          this.message = list;
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
   },
 };
 </script>
@@ -169,44 +140,10 @@ export default {
   .teacher_wrap {
     border-bottom: 1px solid #f2f2f2;
   }
-  .common_title {
-    line-height: 25px;
-    font-weight: 500;
-    color: #050505;
-    padding-left: 20px;
-    margin-top: 22px;
-    font-size: 18px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 19px;
-    i {
-      width: 4px;
-      height: 18px;
-      background: #e94831;
-      border-radius: 4px;
-      display: inline-block;
-      padding-top: 5px;
-      margin-right: 6px;
-    }
-  }
-  .detail_wrap {
-    padding: 0 33px;
-    .name {
-      font-size: 14px;
-      line-height: 20px;
-      font-weight: 500;
-      color: #050505;
-      margin-bottom: 8px;
-    }
-    .detail {
-      color: #666666;
-      font-size: 14px;
-      line-height: 24px;
-      margin-bottom: 20px;
-    }
-    .shu {
-      color: #e5e5e5;
+  .content {
+    padding: 0 20px;
+    p {
+      padding: 0 20px;
     }
   }
   .class_list {
@@ -246,7 +183,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    p{
+    p {
       display: flex;
       flex-direction: column;
       justify-content: center;

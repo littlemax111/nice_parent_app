@@ -12,7 +12,7 @@
       <p class="sub_title">已注册用户可以使用密码登录</p>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="number" placeholder="请输入手机号码" v-model="moible" />
+          <input type="text" placeholder="请输入手机号码" v-model="moible" />
         </div>
         <div class="input_item">
           <input
@@ -76,8 +76,8 @@ export default {
       let method = "post";
       let data = {
         data: {
-          mobile: "admin",
-          passwd: "admin",
+          mobile: this.moible,
+          passwd: this.password,
         }
       };
       this.$services.login({ method, data }).success((res) => {

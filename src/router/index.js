@@ -229,6 +229,12 @@ export default new Router({
       name: "order",
       component: () => import('@/views/myPage/order'),
     },
+    // 预定
+    {
+      path: "/myPage/preordain",
+      name: "preordain",
+      component: () => import('@/views/myPage/preordain'),
+    },
     // 课程
     {
       path: "/myPage/course",

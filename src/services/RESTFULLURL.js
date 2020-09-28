@@ -14,9 +14,11 @@ export default {
   //首页
   'banner':'/api/Home/banner',//获取banner
   'article':'/api/Home/article',//获取资讯
+  'articleDetail':'/api/Home/articleDetail',//获取资讯
 
   //选课
   'classes':'/api/Classes/querylist',//获取课程列表
+  'classesDetail':'/api/Class/queryone',//获取课程列表
   'createReserve':'/api/Reserve/create',//提交课程预定
 
   //我的

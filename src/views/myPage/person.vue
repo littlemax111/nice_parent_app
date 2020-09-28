@@ -5,7 +5,8 @@
       <li class="photo">
         <span>孩子头像</span>
         <div class="img_wrap">
-          <img :src="msg.img" alt />
+          <img v-if="studentMsg.avatar" :src="studentMsg.avatar" alt />
+          <img v-else src="../../assets/images/my/person.jpg" alt />
           <i class="icon_arrow"></i>
         </div>
         <van-uploader>
@@ -14,33 +15,33 @@
       </li>
       <li>
         <span>孩子姓名</span>
-        <span class="icon_word">{{msg.name}}</span>
+        <span class="icon_word">{{ studentMsg.student_name }}</span>
       </li>
       <li>
         <span>在读年级</span>
-        <span class="icon_word">{{msg.grade}}</span>
+        <span class="icon_word">{{ studentMsg.school_grade }}</span>
       </li>
       <li>
         <span>所在城市</span>
-        <span class="icon_word">{{msg.city}}</span>
+        <span class="icon_word">{{ studentMsg.city }}杭州</span>
       </li>
       <li @click="showPicker2 = true">
         <span>孩子性别</span>
         <p class="disflex">
-          <span class="icon_word">{{msg.sex}}</span>
+          <span class="icon_word">{{ studentMsg.gander }}</span>
           <i class="icon_arrow ml"></i>
         </p>
       </li>
-      <li @click='goRoute("/myPage/editSchool")'>
+      <li @click="goRoute('/myPage/editSchool')">
         <span>在读学校</span>
         <p class="disflex">
-          <span class="icon_word">{{msg.school}}</span>
+          <span class="icon_word">{{ studentMsg.school_name }}</span>
           <i class="icon_arrow ml"></i>
         </p>
       </li>
       <li>
         <span>学员编号</span>
-        <span class="icon_word">{{msg.num}}</span>
+        <span class="icon_word">{{ studentMsg.student_sn }}</span>
       </li>
     </ul>
     <p class="contact">如需修改孩子姓名、在读年级和所在城市，请联系我们</p>
@@ -57,27 +58,22 @@
 
 <script>
 import navBar from "../../components/navBar.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      routeName:'',
+      routeName: "",
       title: "个人资料",
       sexList: ["女", "男"],
       showPicker2: false,
-      msg: {
-        img: require("../../assets/images/my/person.jpg"),
-        name: "肖剑",
-        grade: "初二",
-        city: "杭州",
-        sex: "女",
-        school: "江南实验小学",
-        num: "571020073138343",
-      },
     };
   },
   components: {
     navBar,
+  },
+  computed: {
+    ...mapState(["studentMsg"]),
   },
   methods: {
     //路由跳转
@@ -89,7 +85,7 @@ export default {
       //Toast('取消');
     },
     onConfirm2(value) {
-      this.msg.sex = value;
+      this.studentMsg.gander = value;
       this.showPicker2 = false;
     },
   },
@@ -159,7 +155,7 @@ export default {
   top: 0;
   left: 0;
 }
-/deep/ .van-uploader__input-wrapper{
+/deep/ .van-uploader__input-wrapper {
   height: 92px;
   width: 355px;
 }

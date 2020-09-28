@@ -17,5 +17,8 @@ const mutations = {
     campusList(state,payload){
         state.campusList=payload
     },
+    studentMsg(state,payload){
+        state.studentMsg=payload
+    },
 }
 export default mutations

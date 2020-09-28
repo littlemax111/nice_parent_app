@@ -160,7 +160,7 @@ export default function _Axios(url, {
       // 服务器收到的raw body(原始数据) "{name:"jhon",sex:"man"}"（普通字符串）
       // defaultConfig.data = JSON.stringify(data);
       // defaultConfig.data = Qs.stringify(data);
-      defaultConfig.data.date = '20-08-05 19:28:21';
+      defaultConfig.data.date = '20-09-28 11:28:21';
       defaultConfig.data.version = "0.1"
       if (defaultConfig.method === 'post') {
         defaultConfig.data = JSON.stringify(data);

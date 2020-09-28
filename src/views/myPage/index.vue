@@ -5,13 +5,14 @@
         <i class="icon_change"></i>切换学员
       </p>
       <div class="person_wrap" @click='goRoute("/myPage/person")'>
-        <img src="../../assets/images/my/person.jpg" alt />
+        <img v-if='studentMsg.avatar' :src="studentMsg.avatar" alt />
+        <img v-else src="../../assets/images/my/person.jpg" alt />
         <div class="msg_wrap">
           <p class="name">
-            {{msg.name}}
-            <i class="grade">{{msg.grade}}</i>
+            {{studentMsg.student_name}}
+            <i class="grade">{{studentMsg.school_grade}}</i>
           </p>
-          <p class="phone">{{msg.phone}}</p>
+          <p class="phone">{{studentMsg.phone}}</p>
         </div>
         <i class="right_arrow"></i>
       </div>
@@ -30,6 +31,11 @@
       <li @click='goRoute("/myPage/order")'>
         <i class="order" ></i>
         <span>我的订单</span>
+        <i class="enter_arrow"></i>
+      </li>
+      <li @click='goRoute("/myPage/preordain")'>
+        <i class="preordain" ></i>
+        <span>我的预定</span>
         <i class="enter_arrow"></i>
       </li>
        <li @click='goRoute("/myPage/course")'>
@@ -60,22 +66,22 @@
 <script>
 import { Dialog } from "vant";
 import tabBar from "../../components/tabBar.vue";
+import { mapState } from "vuex";
+import { genderFilter } from "../../utils/filters.js";
 export default {
    components: {
     tabBar
   },
   data() {
     return {
-      msg: {
-        name: "肖剑",
-        grade: "初二",
-        phone: "15967119576",
-      },
-     
     };
   },
-  watch: {},
-  created() {},
+  computed: {
+    ...mapState(["studentMsg"]),
+  },
+  created() {
+    this.getStudent();
+  },
   mounted() {},
 
   methods: {
@@ -86,6 +92,26 @@ export default {
     },
     backFn() {
       this.$router.go(-1); //返回上一层
+    },
+    //我的学员
+    getStudent() {
+      let method = "post";
+      let token = localStorage.getItem('token')
+      let data = {
+        data: {},
+        token: token,
+      };
+      this.$services.studentList({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          if(list.length&&list.length>0){
+            list[0].gander = genderFilter(list[0].gander)
+            this.$store.commit('studentMsg',list[0])
+          }
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
     },
   },
 };
@@ -209,6 +235,14 @@ export default {
       height: 20px;
       display: inline-block;
       background: url("../../assets/images/my/icon_order.svg");
+      background-size: cover;
+      margin-right: 18px;
+    }
+    .preordain {
+      width: 23px;
+      height: 20px;
+      display: inline-block;
+      background: url("../../assets/images/my/preordain.svg");
       background-size: cover;
       margin-right: 18px;
     }

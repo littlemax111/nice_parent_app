@@ -5,19 +5,32 @@
       <h3 class="title">修改密码</h3>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="password" placeholder="请输入原密码" v-model="oldPassword"/>
+          <input
+            type="password"
+            placeholder="请输入原密码"
+            v-model="oldPassword"
+          />
         </div>
         <div class="input_item">
-          <input type="password" placeholder="请输入新密码" v-model="newPassword"/>
+          <input
+            type="password"
+            placeholder="请输入新密码"
+            v-model="newPassword"
+          />
         </div>
         <div class="input_item">
-          <input type="password" placeholder="请重复输入新密码" v-model="rePassword"/>
+          <input
+            type="password"
+            placeholder="请重复输入新密码"
+            v-model="rePassword"
+          />
         </div>
-        <button 
+        <button
           class="input_item submit_btn"
-          :class="{'disable-btn':!submitAllow,'orange-btn':submitAllow}" 
+          :class="{ 'disable-btn': !submitAllow, 'orange-btn': submitAllow }"
           :disabled="!submitAllow"
-          @click.stop="handleSubmit('/myPage/setting')">
+          @click.stop="handleSubmit('/myPage/setting')"
+        >
           完成
         </button>
       </div>
@@ -31,35 +44,52 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
-      routeName:'',
+      routeName: "",
       title: "设置密码",
-      oldPassword:'',
-      newPassword:'',
-      rePassword:'',
+      oldPassword: "",
+      newPassword: "",
+      rePassword: "",
     };
   },
   components: {
     navBar,
   },
-  computed:{
-    submitAllow(){
-      if(this.oldPassword && this.newPassword && this.rePassword ){
-        return true
+  computed: {
+    submitAllow() {
+      if (this.oldPassword && this.newPassword && this.rePassword) {
+        return true;
       }
-      return false
-    }
+      return false;
+    },
   },
-  methods:{
+  methods: {
     //路由跳转+表单提交
     submitFn(name) {
       window.scroll(0, 0); //失焦后强制让页面归位
       this.$router.push(name);
     },
-    handleSubmit(name){
-      window.scroll(0, 0); //失焦后强制让页面归位
-      this.$router.push(name);
+    handleSubmit(name) {
+      let method = "post";
+      let token = localStorage.getItem('token')
+      let data = {
+        data: {
+          mobile: this.oldPassword,
+          passwd: this.newPassword,
+          confirmpwd: this.rePassword,
+        },
+        token: token,
+      };
+      this.$services.resetPwd({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let token = res.data.token;
+          window.scroll(0, 0); //失焦后强制让页面归位
+          this.$router.push(name);
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
     },
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -110,17 +140,17 @@ export default {
       resize: none;
     }
   }
-  .disable-btn{
+  .disable-btn {
     background: rgba(233, 72, 49, 0.2);
   }
-  .orange-btn{
-    background: rgb(233, 72, 49,);
+  .orange-btn {
+    background: rgb(233, 72, 49);
   }
   .submit_btn {
-    border:none;
+    border: none;
     color: #ffffff;
     text-align: center;
-    padding:0;
+    padding: 0;
     display: block;
   }
 }
