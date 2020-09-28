@@ -1,9 +1,15 @@
 <template>
   <div class="wrap">
     <div class="top_wrap">
-      <van-icon name="cross" color="#9BA1B0" class="close_icon" size="18" @click="backFn()" />
-      <div class="city_wrap" @click='goRoute("/homePage/city")'>
-        <span class="city">{{city.name}}</span>
+      <van-icon
+        name="cross"
+        color="#9BA1B0"
+        class="close_icon"
+        size="18"
+        @click="backFn()"
+      />
+      <div class="city_wrap" @click="goRoute('/homePage/city')">
+        <span class="city">{{ city.name }}</span>
         <i class="down_icon"></i>
       </div>
     </div>
@@ -12,14 +18,15 @@
     <div>
       <ul class="select_wrap">
         <li v-for="(item, index) in gradeList" :key="index">
-          <p>{{item.big}}</p>
+          <p>{{ item.name }}</p>
           <div class="grade_item">
             <i
-              v-for="(value, index) in item.small"
-              :key="value.id"
-              :class="{'active':grade.id===value.id}"
+              v-for="(value, index) in item.subgrade"
+              :key="value.config_id"
+              :class="{ active: grade.config_id === value.config_id }"
               @click="addClassname(value)"
-            >{{value.name}}</i>
+              >{{ value.name }}</i
+            >
           </div>
         </li>
       </ul>
@@ -34,43 +41,13 @@ import { mapState } from "vuex";
 
 export default {
   data() {
-    return {
-      gradeList: [
-        {
-          big: "小学",
-          small: [
-            { name: "一年级", id: 1 },
-            { name: "二年级", id: 2 },
-            { name: "三年级", id: 3 },
-            { name: "四年级", id: 4 },
-            { name: "五年级", id: 5 },
-            { name: "六年级", id: 6 },
-          ],
-        },
-        {
-          big: "初中",
-          small: [
-            { name: "初一", id: 7 },
-            { name: "初二", id: 8 },
-            { name: "初三", id: 9 },
-          ],
-        },
-        {
-          big: "高中",
-          small: [
-            { name: "高一", id: 10 },
-            { name: "高二", id: 11 },
-            { name: "高三", id: 12 },
-          ],
-        },
-      ],
-    };
+    return {};
   },
   watch: {},
   created() {},
   mounted() {},
   computed: {
-    ...mapState(["grade","city"]),
+    ...mapState(["grade", "city", "gradeList"]),
   },
   methods: {
     //路由跳转

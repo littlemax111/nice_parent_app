@@ -11,5 +11,11 @@ const mutations = {
     classDate(state,payload){
         state.classDate=payload
     },
+    gradeList(state,payload){
+        state.gradeList=payload
+    },
+    campusList(state,payload){
+        state.campusList=payload
+    },
 }
 export default mutations

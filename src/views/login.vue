@@ -73,25 +73,20 @@ export default {
       this.$router.push(name);
     },
     handleSubmit(name) {
-      let that = this;
       let method = "post";
       let data = {
         data: {
           mobile: "admin",
           passwd: "admin",
-        },
-        date: "20-08-05 19:28:21",
-        version: "0.1",
+        }
       };
-      data= JSON.stringify(data)
-      console.log(data)
       this.$services.login({ method, data }).success((res) => {
-        if (res.success) {
-          // localStorage.setItem("user", JSON.stringify(res.data));
-          // window.scroll(0, 0); //失焦后强制让页面归位
-          // this.$router.push(name);
+        if (res.code===200) {
+          let token = res.data.token
+          localStorage.setItem("token", token);
+          window.scroll(0, 0); //失焦后强制让页面归位
+          this.$router.push(name);
         } else {
-          that.getYZM();
           Dialog({ message: res.msg });
         }
       });

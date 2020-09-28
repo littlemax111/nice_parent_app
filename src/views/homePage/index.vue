@@ -1,25 +1,29 @@
 <template>
   <div class="wrap">
     <div class="top_wrap">
-      <div class="grade_wrap" @click='goRoute("/homePage/grade")'>
-        <span class="grade">{{grade.name}}</span>
+      <div class="grade_wrap" @click="goRoute('/homePage/grade')">
+        <span class="grade">{{ grade.name }}</span>
         <i class="down_icon"></i>
       </div>
-      <i class="seacher_icon" @click='goRoute("/homePage/search")'></i>
-      <i class="shop_icon" @click='goRoute("/coursePage/courseCar")'></i>
+      <i class="seacher_icon" @click="goRoute('/homePage/search')"></i>
+      <i class="shop_icon" @click="goRoute('/coursePage/courseCar')"></i>
     </div>
     <div class="banner_wrap">
-      <van-swipe :autoplay="3000" :show-indicators="false" >
-        <van-swipe-item v-for="(image, index) in bannerList" :key="index" >
-          <img :src="image" />
+      <van-swipe :autoplay="3000" :show-indicators="false">
+        <van-swipe-item v-for="(item, index) in bannerList" :key="index">
+          <img :src="item.banner_url" :title="item.title"/>
         </van-swipe-item>
       </van-swipe>
     </div>
     <div class="sort_wrap">
       <ul>
-        <li v-for="(item, index) in sortList" :key="index" @click="goRoute(item.page)">
+        <li
+          v-for="(item, index) in sortList"
+          :key="index"
+          @click="goRoute(item.page)"
+        >
           <img :src="item.img" />
-          <span>{{item.titel}}</span>
+          <span>{{ item.titel }}</span>
         </li>
       </ul>
     </div>
@@ -29,17 +33,17 @@
     <div class="public_class">
       <div class="title_wrap">
         <h3 class="title">精选公开课</h3>
-        <span class="more" @click='goRoute("/homePage/publicClass")'>更多</span>
+        <span class="more" @click="goRoute('/homePage/publicClass')">更多</span>
       </div>
       <ul class="class_list">
         <li
           v-for="(item, index) in classList"
           :key="index"
-          @click='goRoute("/homePage/classDetail")'
+          @click="goRoute('/homePage/classDetail')"
         >
           <img :src="item.img" alt />
-          <p class="title class='single_wrap'">{{item.title}}</p>
-          <p class="sub_title">{{item.sub_title}}</p>
+          <p class="title class='single_wrap'">{{ item.title }}</p>
+          <p class="sub_title">{{ item.sub_title }}</p>
         </li>
       </ul>
     </div>
@@ -50,19 +54,23 @@
         <p class="address">
           <i class="icon_address"></i> 杭州市西湖区古墩路543号大昌盛商务楼2
         </p>
-        <p class="phone">
-          <i class="icon_phone"></i> 400-688-1614
-        </p>
+        <p class="phone"><i class="icon_phone"></i> 400-688-1614</p>
       </div>
-      <div class="study_btn" @click="$router.push(`/homePage/schoolMap`)">详情</div>
+      <div class="study_btn" @click="$router.push(`/homePage/schoolMap`)">
+        详情
+      </div>
     </div>
     <div class="hot_news">
       <h3 class="title">热门资讯</h3>
       <ul>
-        <li v-for="(item, index) in newsList" :key="index" @click='goRoute("/homePage/newsDetail")'>
+        <li
+          v-for="(item, index) in newsList"
+          :key="index"
+          @click="goRoute('/homePage/newsDetail')"
+        >
           <div>
-            <h3 class="title double_wrap">{{item.title}}</h3>
-            <p class="time">{{item.time}}</p>
+            <h3 class="title double_wrap">{{ item.title }}</h3>
+            <p class="time">{{ item.time }}</p>
           </div>
           <img :src="item.img" />
         </li>
@@ -143,7 +151,9 @@ export default {
   },
   watch: {},
   created() {
-    this.selectGrade();
+    this.getCampuslist();
+    this.getGradelist();
+    this.getBannerlist();
   },
   mounted() {},
   computed: {
@@ -151,12 +161,11 @@ export default {
   },
   methods: {
     //选择年级
-    selectGrade(){
-      if(this.grade.id===0){
-        setTimeout(()=>{
+    selectGrade() {
+      if (this.grade.config_id === 0) {
+        setTimeout(() => {
           this.$router.push(`/homePage/grade`);
-        },1000)
-        
+        }, 1000);
       }
     },
     //路由跳转
@@ -167,32 +176,55 @@ export default {
     changeBlur() {
       window.scroll(0, 0); //失焦后强制让页面归位
     },
-    getYZM() {
-      let date = new Date();
-      this.YZM =
-        window.LOCAL_CONFIG.API_HOME +
-        "/api/GetValidImg.png?v=" +
-        date.getTime();
-    },
     getFullText() {
       if (this.username && this.password && this.valid_code) {
         this.fullLogin = 1;
       }
     },
-    loginIn() {
+    //校区列表
+    getCampuslist() {
       let that = this;
       let method = "post";
       let data = {
-        username: this.username,
-        password: this.password,
-        valid_code: this.valid_code,
+        data:{}
       };
-      this.$services.login({ method, data }).success((res) => {
-        if (res.success) {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          this.$router.replace(`index`);
+      this.$services.getCampus({ method, data }).success((res) => {
+        if (res.code===200) {
+          let list = res.data.list
+          this.$store.commit("campusList", list);
         } else {
-          that.getYZM();
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+    //年级列表
+    getGradelist() {
+      let that = this;
+      let method = "post";
+      let data = {
+        data:{}
+      };
+      this.$services.getGrade({ method, data }).success((res) => {
+        if (res.code===200) {
+          let list = res.data.list
+          this.$store.commit("gradeList", list);
+          this.selectGrade();
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+    //获取banner
+    getBannerlist() {
+      let that = this;
+      let method = "post";
+      let data = {
+        data:{}
+      };
+      this.$services.banner({ method, data }).success((res) => {
+        if (res.code===200) {
+          this.bannerList = res.data.list
+        } else {
           Dialog({ message: res.msg });
         }
       });
@@ -211,9 +243,9 @@ export default {
     align-items: center;
     height: 38px;
     position: fixed;
-    top:0px;
-    width:100%;
-    z-index:99;
+    top: 0px;
+    width: 100%;
+    z-index: 99;
     background: #fff;
     .grade_wrap {
       display: flex;
@@ -253,7 +285,6 @@ export default {
     }
   }
   .banner_wrap {
-    padding:20px 17px 0 17px;
     height: 140px;
     margin-top: 38px;
   }
@@ -262,6 +293,7 @@ export default {
       width: 343px;
       border-radius: 10px;
       height: 120px;
+      margin-left: 17px;
     }
   }
   .sort_wrap {

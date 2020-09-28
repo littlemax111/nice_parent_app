@@ -1,27 +1,39 @@
 <template>
   <div class="wrap">
-    <van-icon name="cross" color="#9BA1B0" class="close_icon" size="21" @click="backFn" />
+    <van-icon
+      name="cross"
+      color="#9BA1B0"
+      class="close_icon"
+      size="21"
+      @click="backFn"
+    />
     <div class="content">
       <h3 class="title">验证码登录</h3>
       <p class="sub_title">若该手机号未注册，我们将为您自动注册</p>
       <div class="input_wrap">
         <div class="input_item">
-          <input type="number" placeholder="请输入手机号码" v-model="phone"/>
+          <input type="number" placeholder="请输入手机号码" v-model="phone" />
         </div>
         <div class="input_item">
-          <input type="password" placeholder="请输入验证码" v-model="code" class="yan_input" />
-          <span>获取验证码</span>
+          <input
+            type="password"
+            placeholder="请输入验证码"
+            v-model="code"
+            class="yan_input"
+          />
+          <span @click='getYZM'>获取验证码</span>
         </div>
-        <button 
+        <button
           class="submit_btn"
-          :class="{'disable-btn':!submitAllow,'orange-btn':submitAllow}" 
+          :class="{ 'disable-btn': !submitAllow, 'orange-btn': submitAllow }"
           :disabled="!submitAllow"
-          @click.stop="handleSubmit('/homePage/index')">
+          @click.stop="handleSubmit('/homePage/index')"
+        >
           登录
         </button>
       </div>
       <div class="forget_wrap">
-        <i @click='goRoute("/login")'>密码登录</i>
+        <i @click="goRoute('/login')">密码登录</i>
       </div>
     </div>
     <div class="agree_wrap">
@@ -40,20 +52,20 @@ import { Icon } from "vant";
 export default {
   data() {
     return {
-      phone:'',
-      code:'',
+      phone: "",
+      code: "",
     };
   },
   watch: {},
   created() {},
   mounted() {},
-  computed:{
-    submitAllow(){
-      if(this.phone && this.code ){
-        return true
+  computed: {
+    submitAllow() {
+      if (this.phone && this.code) {
+        return true;
       }
-      return false
-    }
+      return false;
+    },
   },
   methods: {
     //路由跳转
@@ -64,9 +76,39 @@ export default {
     backFn() {
       this.$router.go(-1); //返回上一层
     },
-    handleSubmit(name){
-      window.scroll(0, 0); //失焦后强制让页面归位
-      this.$router.push(name);
+    getYZM() {
+      let method = "post";
+      let data = {
+        data: {
+          mobile: "admin",
+        },
+      };
+      this.$services.getVerifyCode({ method, data }).success((res) => {
+        if (res.code === 200) {
+          
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
+    handleSubmit(name) {
+      let method = "post";
+      let data = {
+        data: {
+          mobile: "admin",
+          passwd: "admin",
+        },
+      };
+      this.$services.login({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let token = res.data.token;
+          localStorage.setItem("token", token);
+          window.scroll(0, 0); //失焦后强制让页面归位
+          this.$router.push(name);
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
     },
   },
 };
@@ -130,11 +172,11 @@ export default {
       width: 60%;
     }
   }
-  .disable-btn{
+  .disable-btn {
     background: rgba(233, 72, 49, 0.2);
   }
-  .orange-btn{
-    background: rgb(233, 72, 49,);
+  .orange-btn {
+    background: rgb(233, 72, 49);
   }
   .submit_btn {
     color: #ffffff;
@@ -144,10 +186,10 @@ export default {
     border-radius: 23px;
     font-size: 16px;
     margin-bottom: 20px;
-    border:none;
+    border: none;
     display: block;
   }
-    .forget_wrap {
+  .forget_wrap {
     display: flex;
     justify-content: space-between;
     color: #626b80;

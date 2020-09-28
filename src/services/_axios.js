@@ -122,8 +122,8 @@ export default function _Axios(url, {
   } : {
       'X-Requested-With': 'XMLHttpRequest',
        'Accept': 'application/json',
-      // 'Content-Type': 'application/json; charset=UTF-8',
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+       'Content-Type': 'application/json; charset=UTF-8',
+      //'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
      // 'X-Openerp-Session-Id': sid,
      // 'app': 'yes'
     }, headers);
@@ -160,6 +160,8 @@ export default function _Axios(url, {
       // 服务器收到的raw body(原始数据) "{name:"jhon",sex:"man"}"（普通字符串）
       // defaultConfig.data = JSON.stringify(data);
       // defaultConfig.data = Qs.stringify(data);
+      defaultConfig.data.date = '20-08-05 19:28:21';
+      defaultConfig.data.version = "0.1"
       if (defaultConfig.method === 'post') {
         defaultConfig.data = JSON.stringify(data);
       } else {
@@ -209,7 +211,6 @@ export default function _Axios(url, {
     promise.then((response) => {
       if (response) {
         if (!response.success) {
-          console.log(response);
           if (response.code && response.code === 900) { // 未绑定或者未登录
             localStorage.removeItem('user');
             window.router.push('/auth');
