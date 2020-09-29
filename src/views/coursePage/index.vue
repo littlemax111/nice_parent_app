@@ -27,7 +27,7 @@
         <div class="left">
           <span>查看意向校区课程</span>
           <span>
-            {{ school.title }}
+            {{ school.campus_name }}
             <img :src="moreIcon" alt />
           </span>
         </div>
@@ -47,25 +47,26 @@
             <li
               v-for="(item, index) in courseList"
               :key="index"
-              @click="toDetails(item.class_mode, item.title)"
+              @click="toDetails(item.class_mode_type, item.class_id)"
             >
               <div class="top">
                 <div class="title">
-                  <span class="tips">{{ item.tips }}</span>
+                  <span class="tips">{{ item.class_modus }}</span>
                   <span class="course-name">{{ item.title }}</span>
                 </div>
                 <div class="time">
                   <span class="time-tips"
-                    >{{ item.begin_time }}-{{ item.end_time }}</span
+                    >{{ item.begin_time.substr(5,10) }}-{{ item.end_time.substr(5,10) }}</span
                   >
-                  <span class="course-tips">{{ item.period_num }}</span>
+                  <span class="course-tips">{{ item.period_num }}课时</span>
                 </div>
-                <div class="place">{{ item.place }}</div>
+                <div class="place">{{ school.campus_name }}</div>
               </div>
               <div class="bottom">
                 <div class="price">
-                  <span class="tag" v-if="item.type !== 2">¥</span>
-                  <span class="total">{{ item.total }}</span>
+                  <span class="tag" v-if="item.class_mode_type != 1">¥</span>
+                  <span class="total" v-if='item.class_mode_type == 1'>立即预约</span>
+                  <span class="total" v-else>{{ item.total }}</span>
                 </div>
               </div>
             </li>
@@ -87,7 +88,7 @@ export default {
       finished: false,
       refreshing: false,
       pageIndex: 1,
-      pageSize: 1,
+      pageSize: 10,
       navList: [
         {
           name: "推荐",
@@ -163,7 +164,7 @@ export default {
       this.courseList = [];
       this.getCourselist();
     },
-    //获取资讯
+    //获取校区
     getCourselist() {
       let method = "post";
       let data = {
@@ -184,19 +185,19 @@ export default {
             this.loading = false;
           }
         } else {
-          Dialog({ message: res.msg });
+          //Dialog({ message: res.msg });
         }
       });
     },
-    toDetails(type, courseName) {
+    toDetails(type, classId) {
       let routeType = "";
-      if (type === "1V1") {
+      if (type === "1") {
         routeType = "wait";
       } else {
         routeType = "done";
       }
       this.$router.push(
-        `/coursePage/courseDetail?type=${routeType}&courseName=${courseName}`
+        `/coursePage/courseDetail?type=${routeType}&id=${classId}`
       );
     },
     changeTab(index) {

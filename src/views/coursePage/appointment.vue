@@ -1,26 +1,34 @@
 <template>
   <div>
-    <navBar :title="title" class="nav_wrap"></navBar>
+    <navBar :title="title"  class="nav_wrap"></navBar>
     <div class="out-appointment">
       <div class="course-message">
-        <h2>初二数学寒假精品课长期班</h2>
+        <h2>{{info.title}}</h2>
         <p>
           <span>时间</span>
-          <span>09月02日-01月07日</span>
+          <span>{{info.begin_time}}-{{info.end_time}}</span>
         </p>
       </div>
       <div class="person-message">
         <ul>
           <li>
             <p>联系方式</p>
-            <div class='item_wrap'>
-              <van-field v-model="mobile" label="" placeholder="请输入联系方式" />
+            <div class="item_wrap">
+              <van-field
+                v-model="mobile"
+                label=""
+                placeholder="请输入联系方式"
+              />
             </div>
           </li>
           <li>
             <p>孩子姓名</p>
-            <div class='item_wrap'>
-              <van-field v-model="student_name" label="" placeholder="请输入姓名" />
+            <div class="item_wrap">
+              <van-field
+                v-model="student_name"
+                label=""
+                placeholder="请输入姓名"
+              />
             </div>
           </li>
           <li>
@@ -30,14 +38,16 @@
               readonly
               clickable
               name="picker"
-              :value="value"
+              :value="school.campus_name"
               placeholder="请选择学习中心"
               @click="showPicker = true"
             />
             <van-popup v-model="showPicker" position="bottom">
               <van-picker
                 show-toolbar
-                :columns="columns"
+                value='campus_name'
+                :columns="campusList"
+                value-key = "campus_name"
                 @confirm="onConfirm"
                 @cancel="showPicker = false"
               />
@@ -53,28 +63,51 @@
 <script>
 import navBar from "../../components/navBar.vue";
 import { Dialog } from "vant";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       title: "我要预约",
       value: "",
-      columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
       showPicker: false,
-      mobile:'',
-      student_name:'',
+      mobile: "",
+      student_name: "",
+      info:{},
+      campus_id:'',
     };
   },
   components: {
     navBar,
   },
   watch: {},
-  created() {},
-  mounted() {},
-
+  created() {
+    this.getDetail();
+  },
+  computed: {
+    ...mapState(["grade", "school",'campusList']),
+  },
   methods: {
+    getDetail() {
+      let method = "post";
+      let id = this.$route.query.id;
+      let data = {
+        data: {
+          class_id: id,
+        },
+      };
+      this.$services.classesDetail({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let info = res.data.class;
+          this.info = info;
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
     onConfirm(value) {
-      this.value = value;
+      this.campus_id = value.campus_id
+      this.value = value.campus_name;
       this.showPicker = false;
     },
     goAppointment() {
@@ -84,7 +117,7 @@ export default {
         data: {
           mobile: this.mobile,
           child_name: this.student_name,
-          campus_id: "1",
+          campus_id: this.campus_id,
         },
         token: token,
       };

@@ -102,7 +102,7 @@ export default {
       loading: false,
       finished: false,
       pageIndex: 1,
-      pageSize: 1,
+      pageSize: 10,
       bannerList: [
         require("../../assets/images/home/banner1.png"),
         require("../../assets/images/home/banner1.png"),

@@ -92,7 +92,7 @@ export default {
       });
     },
     backFn() {
-      this.$router.go(-1); //返回上一层
+      this.$router.push('/homePage/index'); //返回上一层
     },
   },
 };

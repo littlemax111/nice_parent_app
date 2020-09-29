@@ -57,7 +57,7 @@ export default {
       orderList: [],
       tabIndex: 0,
       pageIndex: 1,
-      pageSize: 1,
+      pageSize: 10,
     };
   },
   components: {
@@ -91,7 +91,7 @@ export default {
       this.loading = false;
       this.finished = false;
       this.pageIndex = 1;
-      this.pageSize = 1;
+      this.pageSize = 10;
       this.orderList = [];
       this.getPreordain();
     },

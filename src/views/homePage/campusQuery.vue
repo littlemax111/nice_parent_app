@@ -30,15 +30,15 @@
     <div class="list_wrap">
       <ul>
         <li v-for="(item, index) in list" :key="index" @click='goDetail'>
-          <p class="title">{{item.title}}</p>
+          <p class="title">{{item.campus_name}}</p>
           <div>
             <i class="icon_address"></i>
-            <span class="name">{{item.address}}</span>
+            <span class="name setWidth single_wrap">{{item.address}}</span>
             <i class="icon_more"></i>
           </div>
           <div>
             <i class="icon_phone"></i>
-            <span class="name">{{item.phone}}</span>
+            <span class="name">{{item.costomer_name}}</span>
           </div>
         </li>
       </ul>
@@ -68,31 +68,6 @@ export default {
         { id: 0, name: "萧山区" },
       ],
       list: [
-        {
-          title: "古墩学习中心",
-          address: "杭州市西湖区古墩路543号大昌盛商务楼2楼",
-          phone: "400-688-1614",
-        },
-        {
-          title: "古墩学习中心",
-          address: "杭州市西湖区古墩路543号大昌盛商务楼2楼",
-          phone: "400-688-1614",
-        },
-        {
-          title: "古墩学习中心",
-          address: "杭州市西湖区古墩路543号大昌盛商务楼2楼",
-          phone: "400-688-1614",
-        },
-        {
-          title: "古墩学习中心",
-          address: "杭州市西湖区古墩路543号大昌盛商务楼2楼",
-          phone: "400-688-1614",
-        },
-        {
-          title: "古墩学习中心",
-          address: "杭州市西湖区古墩路543号大昌盛商务楼2楼",
-          phone: "400-688-1614",
-        },
       ],
     };
   },
@@ -101,6 +76,9 @@ export default {
   },
   computed: {
     ...mapState(["city"]),
+  },
+  created(){
+    this.getCampuslist();
   },
   methods: {
     backFn() {
@@ -112,7 +90,22 @@ export default {
     },
     goDetail(){
       this.$router.push(`/homePage/campusDetail`)
-    }
+    },
+    //校区列表
+    getCampuslist() {
+      let method = "post";
+      let data = {
+        data: {},
+      };
+      this.$services.getCampus({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          this.list = list;
+        } else {
+          //Dialog({ message: res.msg });
+        }
+      });
+    },
   },
 };
 </script>
@@ -120,6 +113,10 @@ export default {
 .wrap {
   background: #fcfdff;
   min-height: 100vh;
+  .setWidth{
+    width:270px;
+    display: block;
+  }
   .top_wrap {
     position: sticky;
     top: 0;
