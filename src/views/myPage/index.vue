@@ -82,7 +82,12 @@ export default {
   created() {
     this.getStudent();
   },
-  mounted() {},
+  mounted() {
+     let token = location.getItem('token');
+     if(!token){
+       this.$router.push(`/login`)
+     }
+  },
 
   methods: {
     //路由跳转
