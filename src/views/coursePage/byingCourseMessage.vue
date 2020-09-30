@@ -12,7 +12,7 @@
       <div class="nav">
         <span class="nav-one">
           <i>学习中心</i>
-          <i v-if="school">{{school.title}}</i>
+          <i v-if="school">{{school.campus_name}}</i>
           <i v-else>选择意向学习中心</i>
         </span>
         <span class="nav-two" @click="$router.push(`/homePage/school`)">查看全部</span>

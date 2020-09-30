@@ -16,10 +16,11 @@
         </div>
         <div class="input_item">
           <input
-            type="password"
+            type="text"
             placeholder="请输入验证码"
             v-model="code"
             class="yan_input"
+            maxlength="4"
           />
           <span v-if="getYan" @click="getYZM">获取验证码</span>
           <span

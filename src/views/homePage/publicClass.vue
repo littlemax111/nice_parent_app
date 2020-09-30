@@ -81,7 +81,7 @@ export default {
       finished: false,
       refreshing: false,
       pageIndex: 1,
-      pageSize: 1,
+      pageSize: 10,
       title: "",
       content: "当前暂无内容",
       active: 0,
@@ -130,7 +130,7 @@ export default {
       this.loading = false;
       this.finished = false;
       this.pageIndex = 1;
-      this.pageSize = 1;
+      this.pageSize = 10;
       if (this.tabIndex == 0) {
         this.getclassList();
         this.classList = [];
@@ -200,7 +200,7 @@ export default {
     addClassname(index) {
       this.tabIndex = index;
       this.pageIndex = 1;
-      this.pageSize = 1;
+      this.pageSize = 10;
       this.loading = false;
       this.finished = false;
       switch (index) {

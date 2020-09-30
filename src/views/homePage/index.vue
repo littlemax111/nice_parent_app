@@ -102,7 +102,7 @@ export default {
       loading: false,
       finished: false,
       pageIndex: 1,
-      pageSize: 1,
+      pageSize: 10,
       bannerList: [
         require("../../assets/images/home/banner1.png"),
         require("../../assets/images/home/banner1.png"),
@@ -159,12 +159,9 @@ export default {
     onLoad() {
       setTimeout(() => {
         if (this.pageIndex != 1) {
-          console.log(1)
-          setTimeout(() => {
             this.getNews();
-          }, 100);
         }
-      }, 1000);
+      }, 2000);
     },
     //选择年级
     selectGrade() {

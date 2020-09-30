@@ -4,14 +4,14 @@
     <div class="wrap">
       <div class="out-course">
         <div class="course-message">
-          <h2>{{courseName}}</h2>
+          <h2>{{info.title}}</h2>
           <p>
             <span>时间</span>
-            <span>09月02日-01月07日</span>
+            <span>{{info.begin_time}}-{{info.end_time}}</span>
           </p>
-          <h3>
-            <span>￥</span>
-            <span>3200</span>
+          <h3 >
+            <span v-if='info.class_mode!="1V1"'>￥</span>
+            <span v-if='info.class_mode!="1V1"'>{{info.price}}</span>
           </h3>
         </div>
         <div class="pic">
@@ -56,6 +56,7 @@ import navBar from "../../components/navBar.vue";
 export default {
   data() {
     return {
+      info:{},
       routeName:'/coursePage/index',
       type: this.$route.query.type,
       title: "课程详情",
@@ -68,7 +69,7 @@ export default {
         require("../../assets/images/course/course-five.png"),
       ],
       customerIcon: require("../../assets/images/course/customer.png"),
-       show: false,
+      show: false,
       actions: [ {
         name:'呼叫  400 688 1614',
         color:'rgb(14, 153, 255)'
@@ -79,7 +80,9 @@ export default {
     navBar,
   },
   watch: {},
-  created() {},
+  created() {
+    this.getDetail();
+  },
   mounted() {},
 
   methods: {
@@ -87,8 +90,25 @@ export default {
       this.value = value;
       this.showPicker = false;
     },
+    getDetail() {
+      let method = "post";
+      let id = this.$route.query.id;
+      let data = {
+        data: {
+          class_id: id,
+        },
+      };
+      this.$services.classesDetail({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let info = res.data.class;
+          this.info = info;
+        } else {
+          Dialog({ message: res.msg });
+        }
+      });
+    },
     goAppointment() {
-      this.$router.push(`/coursePage/appointment`);
+      this.$router.push(`/coursePage/appointment?id=${this.info.class_id}`);
     },
     goBying() {
       this.$router.push(`/coursePage/byingCourseMessage`);

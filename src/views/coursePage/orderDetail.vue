@@ -128,6 +128,31 @@ export default {
     };
   },
   methods: {
+     //获取校区
+    getCourselist() {
+      let method = "post";
+      let data = {
+        data: {
+          campus_id: "1",
+        },
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+      };
+      this.$services.classes({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          this.courseList = this.courseList.concat(list);
+          this.pageIndex++;
+          this.loading = false;
+          if (this.courseList.length >= res.totalCount) {
+            this.finished = true;
+            this.loading = false;
+          }
+        } else {
+          //Dialog({ message: res.msg });
+        }
+      });
+    },
     choosePay() {
       Dialog.confirm({
         title: "订单确认",

@@ -57,14 +57,18 @@ export default {
       this.$router.push(name);
     },
     backFn() {
-      this.$router.go(-1); //返回上一层
+      let mark = this.$route.query.mark;
+      if (!mark) {
+        this.$router.go(-1); //返回上一层
+      }
     },
     addClassname(value) {
       this.$store.commit("grade", value);
-      let mark = this.$route.query.mark;
-      if (mark) {
-        this.$router.push("/homePage/index");
-      }
+      this.$router.push("/homePage/index");
+      // let mark = this.$route.query.mark;
+      // if (mark) {
+        
+      // }
     },
   },
 };

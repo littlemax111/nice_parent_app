@@ -210,10 +210,10 @@ export default function _Axios(url, {
   promise.success = function (fn) {
     promise.then((response) => {
       if (response) {
-        if (!response.success) {
-          if (response.code && response.code === 900) { // 未绑定或者未登录
-            localStorage.removeItem('user');
-            window.router.push('/auth');
+        if (response.code!==200) {
+          if (response.code && response.code === 401) { // 未绑定或者未登录
+            localStorage.removeItem('token');
+            window.router.push('/login');
           }
           if (response && typeof response.success === 'boolean' && !response.success) {
             return;

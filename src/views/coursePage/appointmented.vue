@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navBar :title="title" class="nav_wrap"></navBar>
+    <navBar :title="title" :routeName="routeName" class="nav_wrap"></navBar>
     <div class="appointment-status">
       <img :src="image" alt="" />
       <h2>预约成功</h2>
@@ -42,6 +42,7 @@ export default {
     return {
       title: "预约成功",
       image: require("../../assets/images/course/appoint-success.png"),
+      routeName:'/coursePage/index',
     };
   },
 };

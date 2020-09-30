@@ -20,11 +20,11 @@
           <li
             v-for="(item, index) in schoolList"
             :key="index"
-            :class="{'active':school.id===item.id}"
+            :class="{'active':school.campus_id===item.campus_id}"
             @click="addActive(item)"
           >
-            <h4 class="address_title">{{item.title}}</h4>
-            <p>{{item.detail}}</p>
+            <h4 class="address_title">{{item.campus_name}}</h4>
+            <p>{{item.address}}</p>
             <p>纳思书院</p>
           </li>
         </ul>
@@ -80,41 +80,32 @@ export default {
     ...mapState(["school"]),
   },
   watch: {},
-  created() {},
+  created() {
+    this.getCampuslist();
+  },
   mounted() {},
 
   methods: {
     addClassname(index) {
       this.addressIndex = index;
-      if (index != 0) {
-        this.schoolList = [];
-      } else {
-        this.schoolList = [
-          {
-            id:1,
-            title: "教工路学习中心",
-            detail: "杭州市西湖区教工路88号立元大厦1楼",
-          },
-          {
-            id:2,
-            title: "古墩学习中心",
-            detail: "杭州市西湖区古墩路543号",
-          },
-          {
-            id:3,
-            title: "文一学习中心",
-            detail: "杭州市西湖区教工路88号立元大厦1楼",
-          },
-          {
-            id:4,
-            title: "三墩学习中心",
-            detail: "杭州市西湖区教工路88号立元大厦1楼",
-          },
-        ];
-      }
     },
     addActive(value) {
       this.$store.commit("school", value);
+    },
+    //校区列表
+    getCampuslist() {
+      let method = "post";
+      let data = {
+        data: {},
+      };
+      this.$services.getCampus({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          this.schoolList = list;
+        } else {
+          //Dialog({ message: res.msg });
+        }
+      });
     },
   },
 };
@@ -171,6 +162,9 @@ export default {
         font-size: 12px;
         color: #999999;
         margin-bottom: 17px;
+        p{
+          width:240px;
+        }
       }
       .address_title {
         font-size: 15px;

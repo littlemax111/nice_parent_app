@@ -4,15 +4,20 @@
       <p class="change_student" @click='goRoute("/myPage/student")'>
         <i class="icon_change"></i>切换学员
       </p>
-      <div class="person_wrap" @click='goRoute("/myPage/person")'>
+      <div class="person_wrap" @click='studentDetail()'>
         <img v-if='studentMsg.avatar' :src="studentMsg.avatar" alt />
         <img v-else src="../../assets/images/my/person.jpg" alt />
         <div class="msg_wrap">
           <p class="name">
             {{studentMsg.student_name}}
-            <i class="grade">{{studentMsg.school_grade}}</i>
+            <i class="grade" v-if='studentMsg.school_grade'>{{studentMsg.school_grade}}</i>
           </p>
           <p class="phone">{{studentMsg.phone}}</p>
+        </div>
+        <div>
+          <p class="name" v-if='bindShow'>
+            点击绑定学员
+          </p>
         </div>
         <i class="right_arrow"></i>
       </div>
@@ -74,6 +79,7 @@ export default {
   },
   data() {
     return {
+      bindShow:false,
     };
   },
   computed: {
@@ -84,12 +90,19 @@ export default {
   },
   mounted() {
     //  let token = localStorage.getItem('token');
-    //  if(!token || token === 'undefined'){
+    //  if(!token){
     //    this.$router.push(`/login`)
     //  }
   },
 
   methods: {
+    studentDetail(){
+      if(this.bindShow){
+        this.$router.push('/myPage/addStudent')
+      }else{
+        this.$router.push('/myPage/person')
+      }
+    },
     //路由跳转
     goRoute(name) {
       window.scroll(0, 0); //失焦后强制让页面归位
@@ -112,9 +125,11 @@ export default {
           if(list.length&&list.length>0){
             list[0].gander = genderFilter(list[0].gander)
             this.$store.commit('studentMsg',list[0])
+          }else{
+            this.bindShow = true;
           }
         } else {
-          Dialog({ message: res.msg });
+          //Dialog({ message: res.msg });
         }
       });
     },
