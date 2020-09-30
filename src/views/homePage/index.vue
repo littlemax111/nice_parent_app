@@ -165,7 +165,7 @@ export default {
     },
     //选择年级
     selectGrade() {
-      if (this.grade.config_id === 0) {
+      if (this.grade.config_id === -1) {
         setTimeout(() => {
           this.$router.push(`/homePage/grade?mark=1`);
         }, 1000);

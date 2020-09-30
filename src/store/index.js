@@ -8,8 +8,8 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state={
-  grade:{config_id:0,name:'选择在读年级'},
-  school:{campus_id:1,title:'教工路学习中心'},
+  grade:{config_id:-1,name:'选择在读年级'},
+  school:{campus_id:1,campus_name:'滨江'},
   city:{id:6,name:'杭州'},
   classDate:'',
   gradeList:[],

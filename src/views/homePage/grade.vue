@@ -45,9 +45,10 @@ export default {
   },
   watch: {},
   created() {
+  },
+  mounted() {
     this.getGradelist();
   },
-  mounted() {},
   computed: {
     ...mapState(["grade", "city", "gradeList"]),
   },
@@ -65,13 +66,13 @@ export default {
     },
     addClassname(value) {
       this.$store.commit("grade", value);
-      this.$router.push("/homePage/index");
+      this.$router.go(-1)
       // let mark = this.$route.query.mark;
       // if (mark) {
         
       // }
     },
-   //年级列表
+    //年级列表
     getGradelist() {
       let method = "post";
       let data = {
