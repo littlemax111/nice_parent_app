@@ -45,6 +45,7 @@ export default {
   },
   watch: {},
   created() {
+    this.getGradelist();
   },
   mounted() {},
   computed: {
@@ -69,6 +70,21 @@ export default {
       // if (mark) {
         
       // }
+    },
+   //年级列表
+    getGradelist() {
+      let method = "post";
+      let data = {
+        data: {},
+      };
+      this.$services.getGrade({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          this.$store.commit("gradeList", list);
+        } else {
+          //Dialog({ message: res.msg });
+        }
+      });
     },
   },
 };
