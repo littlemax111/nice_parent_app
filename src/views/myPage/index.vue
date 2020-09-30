@@ -83,8 +83,8 @@ export default {
     this.getStudent();
   },
   mounted() {
-     let token = location.getItem('token');
-     if(!token){
+     let token = localStorage.getItem('token');
+     if(!token || token === 'undefined'){
        this.$router.push(`/login`)
      }
   },
