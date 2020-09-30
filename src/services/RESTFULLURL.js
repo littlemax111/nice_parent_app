@@ -10,6 +10,7 @@ export default {
   //基础模块
   'getGrade':'/api/Base/grade',//获取年级列表
   'getCampus':'/api/Base/campus',//获取校区列表
+  'getSubject':'/api/Base/subject',//获取科目
 
   //首页
   'banner':'/api/Home/banner',//获取banner

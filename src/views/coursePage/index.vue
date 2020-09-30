@@ -89,40 +89,8 @@ export default {
       refreshing: false,
       pageIndex: 1,
       pageSize: 10,
-      subject:'',
+      subject:'16',
       navList: [
-        {
-          name: "推荐",
-          id:"0",
-        },
-        {
-          name: "数学",
-          id:"1",
-        },
-        {
-          name: "英语",
-          id:"2",
-        },
-        {
-          name: "科学",
-          id:"3",
-        },
-        {
-          name: "语文",
-          id:"4",
-        },
-        {
-          name: "政治",
-          id:"5",
-        },
-        {
-          name: "历史",
-          id:"6",
-        },
-        {
-          name: "生物",
-          id:"7",
-        },
       ],
       isActive: true,
       tabIndex: 0,
@@ -153,6 +121,7 @@ export default {
   },
   created() {
     this.getCourselist();
+    this.getSubjectlist();
   },
   methods: {
     onLoad() {
@@ -170,7 +139,21 @@ export default {
       this.courseList = [];
       this.getCourselist();
     },
-    //获取校区
+    //校区列表
+    getSubjectlist() {
+      let method = "post";
+      let data = {
+        data: {},
+      };
+      this.$services.getSubject({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let list = res.data.list;
+          this.navList = list
+        } else {
+          //Dialog({ message: res.msg });
+        }
+      });
+    },
     getCourselist() {
       let method = "post";
       let data = {
@@ -210,7 +193,7 @@ export default {
       );
     },
     changeTab(index,item) {
-      this.subject = item.id;
+      this.subject = item.config_id;
       this.tabIndex = index;
       this.onRefresh();
     },
