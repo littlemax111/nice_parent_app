@@ -38,14 +38,13 @@
               readonly
               clickable
               name="picker"
-              :value="school.campus_name"
+              :value="value"
               placeholder="请选择学习中心"
               @click="showPicker = true"
             />
             <van-popup v-model="showPicker" position="bottom">
               <van-picker
                 show-toolbar
-                value='campus_name'
                 :columns="campusList"
                 value-key = "campus_name"
                 @confirm="onConfirm"
@@ -83,6 +82,7 @@ export default {
   watch: {},
   created() {
     this.getDetail();
+    this.value = this.school.campus_name
   },
   computed: {
     ...mapState(["grade", "school",'campusList']),
@@ -101,13 +101,13 @@ export default {
           let info = res.data.class;
           this.info = info;
         } else {
-          Dialog({ message: res.msg });
+          //Dialog({ message: res.msg });
         }
       });
     },
     onConfirm(value) {
       this.campus_id = value.campus_id
-      this.value = value.campus_name;
+      this.value = value.campus_name
       this.showPicker = false;
     },
     goAppointment() {

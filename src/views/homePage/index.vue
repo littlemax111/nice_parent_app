@@ -159,12 +159,9 @@ export default {
     onLoad() {
       setTimeout(() => {
         if (this.pageIndex != 1) {
-          console.log(1)
-          setTimeout(() => {
             this.getNews();
-          }, 100);
         }
-      }, 1000);
+      }, 2000);
     },
     //选择年级
     selectGrade() {

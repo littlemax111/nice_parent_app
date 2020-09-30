@@ -16,7 +16,7 @@
           :class="{ isActive: index === tabIndex }"
           v-for="(item, index) in navList"
           :key="index"
-          @click="changeTab(index)"
+          @click="changeTab(index,item)"
         >
           {{ item.name }}
         </li>
@@ -89,30 +89,39 @@ export default {
       refreshing: false,
       pageIndex: 1,
       pageSize: 10,
+      subject:'',
       navList: [
         {
           name: "推荐",
+          id:"0",
         },
         {
           name: "数学",
+          id:"1",
         },
         {
           name: "英语",
+          id:"2",
         },
         {
           name: "科学",
+          id:"3",
         },
         {
           name: "语文",
+          id:"4",
         },
         {
           name: "政治",
+          id:"5",
         },
         {
           name: "历史",
+          id:"6",
         },
         {
           name: "生物",
+          id:"7",
         },
       ],
       isActive: true,
@@ -139,6 +148,7 @@ export default {
       ],
       addressIcon: require("../../assets/images/course/address.png"),
       moreIcon: require("../../assets/images/course/more.png"),
+      totalCount:'',
     };
   },
   created() {
@@ -147,20 +157,16 @@ export default {
   methods: {
     onLoad() {
       setTimeout(() => {
-        setTimeout(() => {
-          if (this.pageIndex != 1) {
-            setTimeout(() => {
+          if (this.courseList.length < this.totalCount) {
               this.getCourselist();
-            }, 100);
           }
-        }, 1000);
-      }, 1000);
+      }, 3000);
     },
     onRefresh() {
       this.loading = false;
       this.finished = false;
       this.pageIndex = 1;
-      this.pageSize = 1;
+      this.pageSize = 10;
       this.courseList = [];
       this.getCourselist();
     },
@@ -169,7 +175,9 @@ export default {
       let method = "post";
       let data = {
         data: {
-          campus_id: "1",
+          campus_id: this.school.campus_id,
+          grade:this.grade.config_id,
+          subject:this.subject
         },
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
@@ -180,6 +188,7 @@ export default {
           this.courseList = this.courseList.concat(list);
           this.pageIndex++;
           this.loading = false;
+          this.totalCount = res.totalCount
           if (this.courseList.length >= res.totalCount) {
             this.finished = true;
             this.loading = false;
@@ -200,8 +209,10 @@ export default {
         `/coursePage/courseDetail?type=${routeType}&id=${classId}`
       );
     },
-    changeTab(index) {
+    changeTab(index,item) {
+      this.subject = item.id;
       this.tabIndex = index;
+      this.onRefresh();
     },
   },
   components: {

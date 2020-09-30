@@ -91,7 +91,6 @@ export default {
     },
     addActive(value) {
       this.$store.commit("school", value);
-      console.log(this.school)
     },
     //校区列表
     getCampuslist() {

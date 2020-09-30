@@ -89,10 +89,10 @@ export default {
     this.getStudent();
   },
   mounted() {
-     let token = localStorage.getItem('token');
-     if(!token){
-       this.$router.push(`/login`)
-     }
+    //  let token = localStorage.getItem('token');
+    //  if(!token){
+    //    this.$router.push(`/login`)
+    //  }
   },
 
   methods: {
