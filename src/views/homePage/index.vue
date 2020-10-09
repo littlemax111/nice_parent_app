@@ -49,12 +49,12 @@
     </div>
     <div class="study_center">
       <div class="study_wrap">
-        <p class="distance">距离您6.04km</p>
-        <p class="name">古墩学习中心</p>
-        <p class="address">
-          <i class="icon_address"></i> 杭州市西湖区古墩路543号大昌盛商务楼2
+        <p class="distance">{{nearestCampus.minDistance}}km</p>
+        <p class="name">{{nearestCampus.campus_name}}</p>
+        <p class="address single_wrap">
+          <i class="icon_address"></i> {{nearestCampus.address}}
         </p>
-        <p class="phone"><i class="icon_phone"></i> 400-688-1614</p>
+        <p class="phone"><i class="icon_phone"></i> {{nearestCampus.costomer_mobile}}</p>
       </div>
       <div class="study_btn" @click="$router.push(`/homePage/schoolMap`)">
         详情
@@ -149,12 +149,73 @@ export default {
     this.getBannerlist();
     this.getNews();
     this.getclassList();
+    this.initPosition();
   },
   mounted() {},
   computed: {
-    ...mapState(["grade", "school"]),
+    ...mapState(["grade", "school","nearestCampus"]),
   },
   methods: {
+    initPosition() {
+      let that = this;
+      if (!this.nearestCampus.campus_id) {
+        let mapObj = new AMap.Map("iCenter");
+        mapObj.plugin("AMap.Geolocation", function () {set
+          let geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true, //是否使用高精度定位，默认:true
+            timeout: 10000, //超过10秒后停止定位，默认：无穷大
+            maximumAge: 0, //定位结果缓存0毫秒，默认：0
+            convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+            showButton: true, //显示定位按钮，默认：true
+            buttonPosition: "LB", //定位按钮停靠位置，默认：'LB'，左下角
+            buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            showMarker: true, //定位成功后在定位到的位置显示点标记，默认：true
+            showCircle: true, //定位成功后用圆圈表示定位精度范围，默认：true
+            panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+            zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+          });
+          mapObj.addControl(geolocation);
+          geolocation.getCurrentPosition();
+          AMap.event.addListener(geolocation, "complete", onComplete); //返回定位信息
+          AMap.event.addListener(geolocation, "error", onError); //返回定位出错信息
+        });
+        function onComplete(res) {
+          // 经度
+          let lng = res.position.lng;
+          // 纬度
+          let lat = res.position.lat;
+          console.log(lng, lat);
+          if (lng && lat) {
+            that.setPosition(lng, lat);
+          }
+        }
+        function onError(error) {
+          console.log(error);
+        }
+      }
+    },
+    setPosition(lng, lat) {
+      let method = "post";
+      let data = {
+        data: {
+          location: `${lng},${lat}`, //必填(经度,纬度)
+        },
+      };
+      this.$services.nearestCampus({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let data = res.data.campus;
+          let minDistance = res.data.minDistance
+          let value = {
+            campus_id: data.campus_id,
+            campus_name: data.campus_name,
+            address:data.address,
+            costomer_mobile:data.costomer_mobile,
+            minDistance:minDistance/1000
+          };
+          this.$store.commit("nearestCampus", value);
+        }
+      });
+    },
     onLoad() {
       setTimeout(() => {
         if (this.pageIndex != 1) {
@@ -450,6 +511,7 @@ export default {
     .address {
       font-size: 11px;
       margin-top: 6px;
+      width:258px;
     }
     .icon_address {
       background: url("../../assets/images/home/address.svg");

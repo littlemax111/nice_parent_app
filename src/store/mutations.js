@@ -20,5 +20,8 @@ const mutations = {
     studentMsg(state,payload){
         state.studentMsg=payload
     },
+    nearestCampus(state,payload){
+        state.nearestCampus=payload
+    },
 }
 export default mutations
