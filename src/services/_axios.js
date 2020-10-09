@@ -11,6 +11,7 @@
 import Qs from 'qs';
 import axios from 'axios';
 import autoMatchBaseUrl from './autoMatchBaseUrl';
+import { formatDate } from "../utils/utils.js";
 
 // 添加一个请求拦截器 （于transformRequest之前处理）
 axios.interceptors.request.use(function (config) {
@@ -160,7 +161,8 @@ export default function _Axios(url, {
       // 服务器收到的raw body(原始数据) "{name:"jhon",sex:"man"}"（普通字符串）
       // defaultConfig.data = JSON.stringify(data);
       // defaultConfig.data = Qs.stringify(data);
-      defaultConfig.data.date = '20-09-28 11:28:21';
+      const stam = new Date().getTime();
+      defaultConfig.data.date = formatDate(stam, 2);
       defaultConfig.data.version = "0.1"
       if (defaultConfig.method === 'post') {
         defaultConfig.data = JSON.stringify(data);

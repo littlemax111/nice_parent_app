@@ -140,6 +140,7 @@ export default {
     .addressList {
       width: 105px;
       background: #fff;
+      position: fixed;
       li {
         height: 45px;
         text-align: center;
@@ -155,6 +156,7 @@ export default {
       width: 270px;
       background: #f7f7f7;
       padding-top: 12px;
+      margin-left: 105px;
       li {
         height: 92px;
         border-bottom: 1px solid #eaeaea;

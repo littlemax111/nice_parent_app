@@ -16,7 +16,7 @@
           :class="{ isActive: index === tabIndex }"
           v-for="(item, index) in navList"
           :key="index"
-          @click="changeTab(index,item)"
+          @click="changeTab(index, item)"
         >
           {{ item.name }}
         </li>
@@ -37,41 +37,45 @@
         </div>
       </div>
       <!-- <van-pull-refresh v-model="refreshing" @refresh="onRefresh"> -->
-        <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="onLoad"
-        >
-          <ul class="list">
-            <li
-              v-for="(item, index) in courseList"
-              :key="index"
-              @click="toDetails(item.class_mode_type, item.class_id)"
-            >
-              <div class="top">
-                <div class="title">
-                  <span class="tips">{{ item.class_modus }}</span>
-                  <span class="course-name">{{ item.title }}</span>
-                </div>
-                <div class="time">
-                  <span class="time-tips"
-                    >{{ item.begin_time.substr(5,10) }}-{{ item.end_time.substr(5,10) }}</span
-                  >
-                  <span class="course-tips">{{ item.period_num }}课时</span>
-                </div>
-                <div class="place">{{ school.campus_name }}</div>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <ul class="list">
+          <li
+            v-for="(item, index) in courseList"
+            :key="index"
+            @click="toDetails(item.class_mode_type, item.class_id)"
+          >
+            <div class="top">
+              <div class="title">
+                <span class="tips">{{ item.class_modus }}</span>
+                <span class="course-name">{{ item.title }}</span>
               </div>
-              <div class="bottom">
-                <div class="price">
-                  <span class="tag" v-if="item.class_mode_type != 1">¥</span>
-                  <span class="total" v-if='item.class_mode_type == 1'>立即预约</span>
-                  <span class="total" v-else>{{ item.total }}</span>
-                </div>
+              <div class="time">
+                <span class="time-tips"
+                  >{{ item.begin_time.substr(5, 10) }}-{{
+                    item.end_time.substr(5, 10)
+                  }}</span
+                >
+                <span class="course-tips">{{ item.period_num }}课时</span>
               </div>
-            </li>
-          </ul>
-        </van-list>
+              <div class="place">{{ school.campus_name }}</div>
+            </div>
+            <div class="bottom">
+              <div class="price">
+                <span class="tag" v-if="item.class_mode_type != 1">¥</span>
+                <span class="total" v-if="item.class_mode_type == 1"
+                  >立即预约</span
+                >
+                <span class="total" v-else>{{ item.total }}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </van-list>
       <!-- </van-pull-refresh> -->
     </div>
     <tab-bar></tab-bar>
@@ -89,9 +93,8 @@ export default {
       refreshing: false,
       pageIndex: 1,
       pageSize: 10,
-      subject:'16',
-      navList: [
-      ],
+      subject: "16",
+      navList: [],
       isActive: true,
       tabIndex: 0,
       courseList: [
@@ -116,19 +119,76 @@ export default {
       ],
       addressIcon: require("../../assets/images/course/address.png"),
       moreIcon: require("../../assets/images/course/more.png"),
-      totalCount:'',
+      totalCount: "",
     };
   },
   created() {
-    this.getCourselist();
     this.getSubjectlist();
+    this.initPosition();
   },
   methods: {
+    initPosition() {
+      let mapObj = new AMap.Map("iCenter");
+      mapObj.plugin("AMap.Geolocation", function () {
+        let geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true, //是否使用高精度定位，默认:true
+          timeout: 10000, //超过10秒后停止定位，默认：无穷大
+          maximumAge: 0, //定位结果缓存0毫秒，默认：0
+          convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+          showButton: true, //显示定位按钮，默认：true
+          buttonPosition: "LB", //定位按钮停靠位置，默认：'LB'，左下角
+          buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          showMarker: true, //定位成功后在定位到的位置显示点标记，默认：true
+          showCircle: true, //定位成功后用圆圈表示定位精度范围，默认：true
+          panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+          zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+        });
+        mapObj.addControl(geolocation);
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, "complete", onComplete); //返回定位信息
+        AMap.event.addListener(geolocation, "error", onError); //返回定位出错信息
+      });
+      function onComplete(res) {
+        let that = this;
+        // 经度
+        let lng = res.position.lng;
+        // 纬度
+        let lat = res.position.lat;
+        console.log(lng, lat);
+        if (lng && lat) {
+          that.setPosition(lng, lat);
+        }
+      }
+      function onError(error) {
+        console.log(error);
+      }
+    },
+    setPosition(lng, lat) {
+      let method = "post";
+      let data = {
+        data: {
+          location: `${lng},${lat}`, //必填(经度,纬度)
+        },
+      };
+      this.$services.nearestCampus({ method, data }).success((res) => {
+        if (res.code === 200) {
+          let data = res.data.campus;
+          let value = {
+            campus_id: data.campus_id,
+            campus_name: data.campus_name,
+          };
+          if (!this.school.campus_id) {
+            this.$store.commit("school", value);
+          }
+          this.getCourselist();
+        }
+      });
+    },
     onLoad() {
       setTimeout(() => {
-          if (this.courseList.length < this.totalCount) {
-              this.getCourselist();
-          }
+        if (this.courseList.length < this.totalCount) {
+          this.getCourselist();
+        }
       }, 3000);
     },
     onRefresh() {
@@ -148,7 +208,7 @@ export default {
       this.$services.getSubject({ method, data }).success((res) => {
         if (res.code === 200) {
           let list = res.data.list;
-          this.navList = list
+          this.navList = list;
         } else {
           //Dialog({ message: res.msg });
         }
@@ -159,8 +219,8 @@ export default {
       let data = {
         data: {
           campus_id: this.school.campus_id,
-          grade:this.grade.config_id,
-          subject:this.subject
+          grade: this.grade.config_id,
+          subject: this.subject,
         },
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
@@ -171,7 +231,7 @@ export default {
           this.courseList = this.courseList.concat(list);
           this.pageIndex++;
           this.loading = false;
-          this.totalCount = res.totalCount
+          this.totalCount = res.totalCount;
           if (this.courseList.length >= res.totalCount) {
             this.finished = true;
             this.loading = false;
@@ -192,7 +252,7 @@ export default {
         `/coursePage/courseDetail?type=${routeType}&id=${classId}`
       );
     },
-    changeTab(index,item) {
+    changeTab(index, item) {
       this.subject = item.config_id;
       this.tabIndex = index;
       this.onRefresh();

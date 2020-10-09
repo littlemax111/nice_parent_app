@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 const state={
   grade:{config_id:-1,name:'选择在读年级'},
-  school:{campus_id:1,campus_name:'滨江'},
+  school:{},
   city:{id:6,name:'杭州'},
   classDate:'',
   gradeList:[],

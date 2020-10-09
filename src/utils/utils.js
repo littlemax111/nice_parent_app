@@ -15,7 +15,7 @@ export const timeRangeData = () => {
 export const add0 =(m)=>{return m<10?'0'+m:m }
 
 /*
- * 时间戳转英文日期格式
+ * 时间戳转日期格式
  * value  时间戳
  * type   时间格式  hh:mm/hh:mm:ss
  */

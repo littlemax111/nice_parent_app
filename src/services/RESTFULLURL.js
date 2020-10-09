@@ -11,12 +11,12 @@ export default {
   'getGrade':'/api/Base/grade',//获取年级列表
   'getCampus':'/api/Base/campus',//获取校区列表
   'getSubject':'/api/Base/subject',//获取科目
+  'nearestCampus':'/api/Home/nearestCampus',//最近校区
 
   //首页
   'banner':'/api/Home/banner',//获取banner
   'article':'/api/Home/article',//获取资讯
   'articleDetail':'/api/Home/articleDetail',//获取单条资讯
-  'nearestCampus':'/api/Home/nearestCampus',//定位
 
   //选课
   'classes':'/api/Classes/querylist',//获取课程列表
