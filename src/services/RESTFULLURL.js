@@ -16,6 +16,7 @@ export default {
   'banner':'/api/Home/banner',//获取banner
   'article':'/api/Home/article',//获取资讯
   'articleDetail':'/api/Home/articleDetail',//获取单条资讯
+  'nearestCampus':'/api/Home/nearestCampus',//定位
 
   //选课
   'classes':'/api/Classes/querylist',//获取课程列表

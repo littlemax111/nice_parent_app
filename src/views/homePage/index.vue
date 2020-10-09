@@ -158,7 +158,7 @@ export default {
   methods: {
     initPosition() {
       let mapObj = new AMap.Map("iCenter");
-      mapObj.plugin("AMap.Geolocation", function() {
+      mapObj.plugin("AMap.Geolocation", function () {
         let geolocation = new AMap.Geolocation({
           enableHighAccuracy: true, //是否使用高精度定位，默认:true
           timeout: 10000, //超过10秒后停止定位，默认：无穷大
@@ -178,15 +178,36 @@ export default {
         AMap.event.addListener(geolocation, "error", onError); //返回定位出错信息
       });
       function onComplete(res) {
+        let that = this;
         // 经度
         let lng = res.position.lng;
         // 纬度
         let lat = res.position.lat;
-        console.log(lng,lat)
+        console.log(lng, lat);
+        if(lng && lat){
+          that.setPosition(lng,lat)
+        }
       }
       function onError(error) {
         console.log(error);
       }
+    },
+    setPosition(lng,lat){
+       let method = "post";
+        let data = {
+          data: {
+            location: `${lng},${lat}`, //必填(经度,纬度)
+          },
+          date: "20-08-05 17:47:56",
+          version: "0.1",
+        };
+        that.$services.nearestCampus({ method, data }).success((res) => {
+          if (res.code === 200) {
+          alert('定位成功')
+          } else {
+           
+          }
+        });
     },
     onLoad() {
       setTimeout(() => {
