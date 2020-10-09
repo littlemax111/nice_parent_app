@@ -183,6 +183,7 @@ export default {
             campus_name: data.campus_name,
           };
           this.$store.commit("school", value);
+          this.getCourselist();
         }
       });
     },
