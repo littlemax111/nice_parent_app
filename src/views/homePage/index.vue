@@ -160,7 +160,7 @@ export default {
       let that = this;
       if (!this.nearestCampus.campus_id) {
         let mapObj = new AMap.Map("iCenter");
-        mapObj.plugin("AMap.Geolocation", function () {set
+        mapObj.plugin("AMap.Geolocation", function () {
           let geolocation = new AMap.Geolocation({
             enableHighAccuracy: true, //是否使用高精度定位，默认:true
             timeout: 10000, //超过10秒后停止定位，默认：无穷大
